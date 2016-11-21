@@ -1,0 +1,8 @@
+start server
+  with plugin abap 3.2
+sonar-runner
+verify org.sonarqube:abap-simple-sq-scanner
+  measure lines is 343
+  measure ncloc is 218
+  measure files is 2
+stop server

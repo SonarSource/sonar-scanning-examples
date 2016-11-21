@@ -1,0 +1,32 @@
+<?xml version="1.0"?>
+<!DOCTYPE coverage SYSTEM "http://cobertura.sourceforge.net/xml/coverage-04.dtd">
+
+<coverage line-rate="0.5" branch-rate="0.5" lines-covered="3" lines-valid="6" branches-covered="1" branches-valid="2" complexity="0.0" version="1.9.4" timestamp="1389028128081">
+	<sources>
+		<source>src</source>
+	</sources>
+	<packages>
+		<package name="" line-rate="0.6" branch-rate="1.0" complexity="0.0">
+			<classes>
+				<class name=".Circle" filename="Circle.as" line-rate="1.0" branch-rate="1.0" complexity="0.0">
+					<methods>
+					</methods>
+					<lines>
+						<line number="6" hits="1" branch="false"/>
+						<line number="7" hits="1" branch="false"/>
+						<line number="8" hits="1" branch="false"/>
+					</lines>
+				</class>
+				<class name=".UncoveredCircle" filename="UncoveredCircle.as" line-rate="0.0" branch-rate="0.0" complexity="0.0">
+					<methods>
+					</methods>
+					<lines>
+						<line number="6" hits="0" branch="false"/>
+						<line number="7" hits="0" branch="false"/>
+						<line number="8" hits="0" branch="false"/>
+					</lines>
+				</class>
+			</classes>
+		</package>
+	</packages>
+</coverage>

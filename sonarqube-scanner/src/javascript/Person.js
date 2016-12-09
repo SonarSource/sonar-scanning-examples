@@ -21,11 +21,6 @@ if (a !== NaN) { // Noncompliant; always true
   console.log("a is not NaN"); // this statement is not necessarily true
 }
 
-if (fabrice !== freddy) { // Noncompliant; always true
-  console.log("WTF"); // this statement is not necessarily true
-}
-
-
 for (var i = 0; i < strings.length; i--) {
   console.log("dead code")
 }

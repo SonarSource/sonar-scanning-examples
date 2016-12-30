@@ -11,7 +11,8 @@
   <name>Example of SonarQube Scanner for Maven + Code Coverage by UT and IT</name>
 
   <modules>
-    <module>app</module>
+    <module>app-java</module>
+    <module>app-groovy</module>
     <module>app-it</module>
   </modules>
 
@@ -24,7 +25,7 @@
          in the parent pom and in each module pom. Then JaCoCo will add up information in
          the same report, so that, it will give the cross-module code coverage. -->
     <sonar.jacoco.itReportPath>${project.basedir}/../target/jacoco-it.exec</sonar.jacoco.itReportPath>
-    <sonar.language>java</sonar.language>
+    <sonar.groovy.binaries>target/classes</sonar.groovy.binaries>
   </properties>
 
   <dependencies>
@@ -41,11 +42,12 @@
       <plugin>
         <groupId>org.apache.maven.plugins</groupId>
         <artifactId>maven-compiler-plugin</artifactId>
+        <version>3.6.0</version>
         <configuration>
-          <source>1.5</source>
-          <target>1.5</target>
+          <source>1.7</source>
+          <target>1.7</target>
         </configuration>
-      </plugin>
+      </plugin>     
     </plugins>
   </build>
 

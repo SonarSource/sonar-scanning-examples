@@ -1,4 +1,4 @@
-This example demonstrates how to analyze a C++ project with the SonarQube Scanner on Linux
+This example demonstrates how to use the BuildWrapper to analyze a C++ project with the SonarQube Scanner on Linux
 
 Prerequisites
 =============

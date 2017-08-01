@@ -1,0 +1,7 @@
+# Gradle files
+.gradle/
+
+# Build output
+build/
+.sonar
+target/

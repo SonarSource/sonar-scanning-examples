@@ -17,5 +17,8 @@ public class HelloWorld {
   public void notCovered() {
     System.out.println("notCovered");
   }
+  public void notCovered2() {
+    System.out.println("notCovered method 2");
+  }
 
 }

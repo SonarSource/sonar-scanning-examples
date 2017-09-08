@@ -18,12 +18,7 @@ public class HelloWorld {
     System.out.println("notCovered");
   }
   public void notCovered2() {
-    if(1==1){
-      if(2==2)
-        if(3==3)
-          if(4==4)
       System.out.println("notCovered method 2");
-    }
   }
 
 }

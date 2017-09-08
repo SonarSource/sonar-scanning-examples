@@ -5,6 +5,7 @@ public class HelloWorld {
   public void coveredByUnitTest() {
     System.out.println("coveredByUnitTest1");
     System.out.println("coveredByUnitTest2");
+    System.out.println("coveredByUnitTest3");
   }
 
   public void coveredByIntegrationTest() {
@@ -15,6 +16,9 @@ public class HelloWorld {
 
   public void notCovered() {
     System.out.println("notCovered");
+  }
+  public void notCovered2() {
+      System.out.println("notCovered method 2");
   }
 
 }

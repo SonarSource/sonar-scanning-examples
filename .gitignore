@@ -1,0 +1,11 @@
+**/target/*
+.settings/*
+.classpath
+.project
+.idea
+*.iml
+/target
+_site/
+*_token
+.vagrant
+*.log

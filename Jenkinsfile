@@ -19,25 +19,44 @@ pipeline {
       }
     }
     stage('Code Quality') {
+      steps {
+        sh 'mvn org.sonarsource.scanner.maven:sonar-maven-plugin:3.4.0.905:sonar -f $PWD/sonarqube-scanner-maven/pom.xml -Dsonar.host.url=http://node1:9000'
+      }
+    }
+    stage('Deployment') {
       parallel {
-        stage('Code Quality') {
-          steps {
-            sh 'mvn org.sonarsource.scanner.maven:sonar-maven-plugin:3.4.0.905:sonar -f $PWD/sonarqube-scanner-maven/pom.xml -Dsonar.host.url=http://node1:9000'
-          }
-        }
         stage('Dev Deployment') {
           steps {
-            input 'deploy?'
-            timeout(time: 60) {
-              echo 'Aborting due to in-action'
-            }
-            
             echo 'Deployment starting'
           }
         }
         stage('Test Deployment') {
           steps {
+            input 'Deploy'
+            echo 'Provisioning Environment'
+            echo 'Preparing DB'
+            echo 'Preparing deployment'
+            echo 'Running regression testing'
+          }
+        }
+        stage('Destroy Test env') {
+          steps {
+            input 'Destroy env?'
+            echo 'Tearing down test environment'
+          }
+        }
+      }
+    }
+    stage('UAT') {
+      parallel {
+        stage('UAT deployment decision') {
+          steps {
             input 'Deploy?'
+          }
+        }
+        stage('Prepare UAT') {
+          steps {
+            echo 'Prepare env'
           }
         }
       }

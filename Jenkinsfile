@@ -9,11 +9,13 @@ pipeline {
   stages {
     stage('Build') {
       steps {
-        sh 'mvn clean install -f $PWD/sonarqube-scanner-maven/pom.xml'
+        sh 'mvn clean install -DskipTests=true -f $PWD/sonarqube-scanner-maven/pom.xml'
       }
     }
-  }
-  environment {
-    foo = 'bar'
+    stage('Test') {
+      steps {
+        sh 'mvn test -f $PWD/sonarqube-scanner-maven/pom.xml'
+      }
+    }
   }
 }

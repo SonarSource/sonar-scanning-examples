@@ -27,7 +27,16 @@ pipeline {
         stage('Dev Deployment') {
           steps {
             input 'deploy?'
-            sh 'echo "Deployment starting"'
+            timeout(time: 60) {
+              echo 'Aborting due to in-action'
+            }
+            
+            echo 'Deployment starting'
+          }
+        }
+        stage('Test Deployment') {
+          steps {
+            input 'Deploy?'
           }
         }
       }

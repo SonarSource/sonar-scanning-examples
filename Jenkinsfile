@@ -15,6 +15,7 @@ pipeline {
     stage('Test') {
       steps {
         sh 'mvn test -f $PWD/sonarqube-scanner-maven/pom.xml'
+        junit(testResults: '**/target/surefire-reports/*.xml', allowEmptyResults: true)
       }
     }
     stage('Code Quality') {

@@ -22,7 +22,7 @@ Vagrant.configure("2") do |config|
         args: "-it -p 9000:9000 -p 9092:9092"
       d.run "jenkins",
         image: "jenkinsci/blueocean",
-        args: "-it -u root -v /var/run/docker.sock:/var/run/docker.sock -p 8080:8080 --env JAVA_OPTS=-Dhudson.footerURL=http://mycompany.com"
+        args: "-it -u root -v /var/run/docker.sock:/var/run/docker.sock -p 8080:8080"
     end
 	end
 end

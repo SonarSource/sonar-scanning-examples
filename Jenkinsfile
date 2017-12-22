@@ -13,9 +13,19 @@ pipeline {
       }
     }
     stage('Test') {
-      steps {
-        sh 'mvn test -f $PWD/sonarqube-scanner-maven/pom.xml'
-        junit(testResults: '**/target/surefire-reports/*.xml', allowEmptyResults: true)
+      parallel {
+        stage('Unit tests') {
+          steps {
+            sh 'mvn test -f $PWD/sonarqube-scanner-maven/pom.xml'
+          }
+        }
+        stage('Integration tests') {
+          steps {
+            echo 'Preparing environment'
+            echo 'Deploying application'
+            echo 'Running integration tests'
+          }
+        }
       }
     }
     stage('Code Quality') {
@@ -23,43 +33,18 @@ pipeline {
         sh 'mvn org.sonarsource.scanner.maven:sonar-maven-plugin:3.4.0.905:sonar -f $PWD/sonarqube-scanner-maven/pom.xml -Dsonar.host.url=http://node1:9000'
       }
     }
-    stage('Deployment') {
-      parallel {
-        stage('Dev Deployment') {
-          steps {
-            echo 'Deployment starting'
-          }
-        }
-        stage('Test Deployment') {
-          steps {
-            input 'Deploy'
-            echo 'Provisioning Environment'
-            echo 'Preparing DB'
-            echo 'Preparing deployment'
-            echo 'Running regression testing'
-          }
-        }
-        stage('Destroy Test env') {
-          steps {
-            input 'Destroy env?'
-            echo 'Tearing down test environment'
-          }
-        }
-      }
-    }
-    stage('UAT') {
-      parallel {
-        stage('UAT deployment decision') {
-          steps {
-            input 'Deploy?'
-          }
-        }
-        stage('Prepare UAT') {
-          steps {
-            echo 'Prepare env'
-          }
-        }
-      }
+  }
+  post {
+  //  failure {
+  //    updateGitlabCommitStatus name: 'build', state: 'failed'
+  //  }
+  //  success {
+  //    updateGitlabCommitStatus name: 'build', state: 'success'
+  //  }
+    always {
+      archive "target/**/*"
+      junit(testResults: '**/target/surefire-reports/*.xml', allowEmptyResults: true)
+      archiveArtifacts(artifacts: '**/target/*.jar', fingerprint: true, onlyIfSuccessful: true, defaultExcludes: true)
     }
   }
 }

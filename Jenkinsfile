@@ -17,7 +17,6 @@ pipeline {
         stage('Unit tests') {
           steps {
             sh 'mvn test -f $PWD/sonarqube-scanner-maven/pom.xml'
-            junit(testResults: '**/target/surefire-reports/*.xml', allowEmptyResults: true)
           }
         }
         stage('Integration tests') {
@@ -33,6 +32,19 @@ pipeline {
       steps {
         sh 'mvn org.sonarsource.scanner.maven:sonar-maven-plugin:3.4.0.905:sonar -f $PWD/sonarqube-scanner-maven/pom.xml -Dsonar.host.url=http://node1:9000'
       }
+    }
+  }
+  post {
+    failure {
+      updateGitlabCommitStatus name: 'build', state: 'failed'
+    }
+    success {
+      updateGitlabCommitStatus name: 'build', state: 'success'
+    }
+    always {
+      archive "target/**/*"
+      junit(testResults: '**/target/surefire-reports/*.xml', allowEmptyResults: true)
+      archiveArtifacts(artifacts: '**/target/*.jar', fingerprint: true, onlyIfSuccessful: true, defaultExcludes: true)
     }
   }
 }

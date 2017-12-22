@@ -35,12 +35,12 @@ pipeline {
     }
   }
   post {
-    failure {
-      updateGitlabCommitStatus name: 'build', state: 'failed'
-    }
-    success {
-      updateGitlabCommitStatus name: 'build', state: 'success'
-    }
+  //  failure {
+  //    updateGitlabCommitStatus name: 'build', state: 'failed'
+  //  }
+  //  success {
+  //    updateGitlabCommitStatus name: 'build', state: 'success'
+  //  }
     always {
       archive "target/**/*"
       junit(testResults: '**/target/surefire-reports/*.xml', allowEmptyResults: true)

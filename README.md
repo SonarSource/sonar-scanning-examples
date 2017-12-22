@@ -9,9 +9,9 @@ This local environment has been testeed on a Windows 10 machine with 12G RAM. Pr
 - Open a GitBash shell
 - `git clone https://github.com/SonarSource/sonar-scanning-examples.git`
 - `cd sonar-scanning-examples`
-- `vagrant up` _(This will start MySQL and SonarQube)_
+- `vagrant up` _(This will start jenkins and SonarQube)_
 - `vagrant ssh`
-- `docker ps -a` _(This is to check MySQL and SonarQube are running)_
+- `docker ps -a` _(This is to check jenkins and SonarQube are running)_
   - If SonarQube is shown as running then navigate to http://node1:9000 _(username/password admin/admin)_ in your web browser and login
   - Install the following SonarQube plugins: `CSS, Checkstyle, Code Smells, Findbugs, PMD, Rules Compliance Index (RCI), Web and jDepend`
   - Follow instructions to restart SonarQube

@@ -34,12 +34,17 @@ pipeline {
       }
     }
     stage('UAT test') {
-      // Using 'agent none' so that the input step doesn't tie up an executor waiting for input, instead it will use a "light weight" process on the master
-      agent none
       steps {
-        // Wrap the input step in a timeout so that Jenkins won't be left waiting for input forever...
         timeout(time: 30, unit: 'SECONDS') {
           input 'Should I deploy?'
+        }
+        
+      }
+    }
+    stage('Prod deploy') {
+      steps {
+        waitUntil() {
+          echo 'waiting for a condition'
         }
         
       }
@@ -52,5 +57,6 @@ pipeline {
       archiveArtifacts(artifacts: '**/target/*.jar', fingerprint: true, onlyIfSuccessful: true, defaultExcludes: true)
       
     }
+    
   }
 }

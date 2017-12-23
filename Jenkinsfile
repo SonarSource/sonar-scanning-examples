@@ -35,8 +35,8 @@ pipeline {
     }
     stage('UAT test') {
       steps {
-        timeout(time: 30) {
-          input 'Should I deploy'
+        timeout(time: 30, unit: 'SECONDS') {
+          input 'Should I deploy?'
         }
         
       }

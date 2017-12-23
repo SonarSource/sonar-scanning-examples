@@ -33,18 +33,22 @@ pipeline {
         sh 'mvn org.sonarsource.scanner.maven:sonar-maven-plugin:3.4.0.905:sonar -f $PWD/sonarqube-scanner-maven/pom.xml -Dsonar.host.url=http://node1:9000'
       }
     }
+    stage('UAT test') {
+      steps {
+        timeout(time: 30) {
+          input 'Should I deploy'
+        }
+        
+      }
+    }
   }
   post {
-  //  failure {
-  //    updateGitlabCommitStatus name: 'build', state: 'failed'
-  //  }
-  //  success {
-  //    updateGitlabCommitStatus name: 'build', state: 'success'
-  //  }
     always {
-      archive "target/**/*"
+      archive 'target/**/*'
       junit(testResults: '**/target/surefire-reports/*.xml', allowEmptyResults: true)
       archiveArtifacts(artifacts: '**/target/*.jar', fingerprint: true, onlyIfSuccessful: true, defaultExcludes: true)
+      
     }
+    
   }
 }

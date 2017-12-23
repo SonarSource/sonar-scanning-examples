@@ -38,7 +38,14 @@ pipeline {
         timeout(time: 5, unit: 'MINUTES') {
           input 'Should I deploy?'
         }
-        
+      }
+    }    
+    stage('Prod deployment') {
+      when {
+		    branch 'master'
+		 }
+      steps {
+        echo 'Deploying to production'
       }
     }
   }
@@ -47,8 +54,6 @@ pipeline {
       archive 'target/**/*'
       junit(testResults: '**/target/surefire-reports/*.xml', allowEmptyResults: true)
       archiveArtifacts(artifacts: '**/target/*.jar', fingerprint: true, onlyIfSuccessful: true, defaultExcludes: true)
-      
     }
-    
   }
 }

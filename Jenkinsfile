@@ -37,6 +37,7 @@ pipeline {
       when {
 	branch 'master'
       }
+      agent none
       steps {
         timeout(time: 5, unit: 'MINUTES') {
           input 'Should I deploy UAT?'
@@ -48,6 +49,7 @@ pipeline {
       when {
 	branch 'master'
       }
+      agent none
       steps {
         timeout(time: 5, unit: 'MINUTES') {
           input 'Should I deploy to PROD?'

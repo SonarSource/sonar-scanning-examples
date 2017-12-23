@@ -35,16 +35,8 @@ pipeline {
     }
     stage('UAT test') {
       steps {
-        timeout(time: 30, unit: 'SECONDS') {
+        timeout(time: 5, unit: 'MINUTES') {
           input 'Should I deploy?'
-        }
-        
-      }
-    }
-    stage('Prod deploy') {
-      steps {
-        waitUntil() {
-          echo 'waiting for a condition'
         }
         
       }

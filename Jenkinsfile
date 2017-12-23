@@ -34,18 +34,25 @@ pipeline {
       }
     }
     stage('UAT test') {
+      when {
+	branch 'master'
+      }
       steps {
         timeout(time: 5, unit: 'MINUTES') {
-          input 'Should I deploy?'
+          input 'Should I deploy UAT?'
+	  echo 'Deploying to UAT'
         }
       }
     }    
     stage('Prod deployment') {
       when {
-		    branch 'master'
-		 }
+	branch 'master'
+      }
       steps {
-        echo 'Deploying to production'
+        timeout(time: 5, unit: 'MINUTES') {
+          input 'Should I deploy to PROD?'
+	  echo 'Deploying to production'
+        }
       }
     }
   }

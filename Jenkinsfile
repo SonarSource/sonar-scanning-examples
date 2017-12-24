@@ -4,7 +4,9 @@ pipeline {
       image 'maven:alpine'
       args '-v /var/run/docker.sock:/var/run/docker.sock -v $HOME/.m2:/root/.m2'
     }
-    
+    parameters {
+        booleanParam(name: 'REL_DEPLOYMENT', defaultValue: false, description: 'Determines if REL deployment takes place')
+    }
   }
   stages {
     stage('Build') {
@@ -13,6 +15,7 @@ pipeline {
       }
     }
     stage('Test') {
+      failFast true
       parallel {
         stage('Unit tests') {
           steps {
@@ -33,27 +36,30 @@ pipeline {
         sh 'mvn org.sonarsource.scanner.maven:sonar-maven-plugin:3.4.0.905:sonar -f $PWD/sonarqube-scanner-maven/pom.xml -Dsonar.host.url=http://node1:9000'
       }
     }
-    stage('UAT test') {
-      when {
-	branch 'master'
+    stage('REL deployment') {
+      steps {
+        echo 'Artifact to be deployed in REL = ${params.REL_DEPLOYMENT}'
       }
-      agent none
+    }
+    stage('UAT deployment') {
+      when {
+	     branch 'master'
+      }
       steps {
         timeout(time: 5, unit: 'MINUTES') {
           input 'Should I deploy UAT?'
-	  echo 'Deploying to UAT'
+	        echo 'Deploying to UAT'
         }
       }
-    }    
+    }
     stage('Prod deployment') {
       when {
-	branch 'master'
+	     branch 'master'
       }
-      agent none
       steps {
         timeout(time: 5, unit: 'MINUTES') {
           input 'Should I deploy to PROD?'
-	  echo 'Deploying to production'
+	        echo 'Deploying to production'
         }
       }
     }

@@ -42,7 +42,6 @@ pipeline {
     }
     stage('REL deployment') {
       when {
-        // expression { return params.DEPLOY_TO_REP }
         expression { params.DEPLOY_TO_REP == true}
       }
       steps {
@@ -51,7 +50,10 @@ pipeline {
     }
     stage('FST deployment') {
       when {
-	     branch 'master'
+        allOf {
+  	     branch 'master'
+         stage 'REL deployment'  != SKIPPED
+        }
       }
       steps {
         timeout(time: 5, unit: 'MINUTES') {

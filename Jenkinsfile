@@ -4,13 +4,13 @@ pipeline {
       image 'maven:alpine'
       args '-v /var/run/docker.sock:/var/run/docker.sock -v $HOME/.m2:/root/.m2'
     }
-    parameters {
-      booleanParam(name: 'REL_DEPLOYMENT', defaultValue: false, description: 'Determines if REL deployment takes place')
-    }
-    options {
-      buildDiscarder(logRotator(numToKeepStr: '5'))
-      disableConcurrentBuilds()
-    }
+  }  
+  parameters {
+    booleanParam(name: 'REL_DEPLOYMENT', defaultValue: false, description: 'Determines if REL deployment takes place')
+  }
+  options {
+    buildDiscarder(logRotator(numToKeepStr: '5'))
+    disableConcurrentBuilds()
   }
   stages {
     stage('Build') {

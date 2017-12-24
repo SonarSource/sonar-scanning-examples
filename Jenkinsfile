@@ -6,8 +6,7 @@ pipeline {
     }
   }
   parameters {
-    // booleanParam(name: 'DEPLOY_TO_REP', defaultValue: false, description: 'Tick this box to deploy to release environment')
-    string(name: 'PERSON', defaultValue: 'Mr Jenkins', description: 'Who should I say hello to?')
+    booleanParam(name: 'DEPLOY_TO_REP', defaultValue: false, description: 'Tick this box to deploy build artifact to release environment')
   }
   options {
     buildDiscarder(logRotator(numToKeepStr: '5'))
@@ -42,9 +41,11 @@ pipeline {
       }
     }
     stage('REL deployment') {
+      when {
+        expression { return params.DEPLOY_TO_REP }
+      }
       steps {
-        // echo 'Artifact to be deployed in REL = ' ${params.DEPLOY_TO_REP}
-        echo "Hello ${params.PERSON}"
+        echo 'Deploying to Release environment'
       }
     }
     stage('UAT deployment') {

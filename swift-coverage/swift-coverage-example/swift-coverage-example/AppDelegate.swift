@@ -3,7 +3,7 @@
 //  swift-coverage-example
 //
 //  Created by Elena Vilchik on 17/08/16.
-//  Copyright © 2016 SonarSource. All rights reserved.
+//  Copyright © 2016-2018 SonarSource. All rights reserved.
 //
 
 import Cocoa

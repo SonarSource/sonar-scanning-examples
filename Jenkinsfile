@@ -53,6 +53,7 @@ pipeline {
         allOf {
   	     branch 'master'
          stage 'REL deployment'  != SKIPPED
+         stage 'REL deployment'  == SUCCESS
         }
       }
       steps {

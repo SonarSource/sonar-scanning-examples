@@ -4,9 +4,10 @@ pipeline {
       image 'maven:alpine'
       args '-v /var/run/docker.sock:/var/run/docker.sock -v $HOME/.m2:/root/.m2'
     }
-  }  
+  }
   parameters {
-    booleanParam(name: 'REL_DEPLOYMENT', defaultValue: false, description: 'Determines if REL deployment takes place')
+    // booleanParam(name: 'DEPLOY_TO_REP', defaultValue: false, description: 'Tick this box to deploy to release environment')
+    string(name: 'PERSON', defaultValue: 'Mr Jenkins', description: 'Who should I say hello to?')
   }
   options {
     buildDiscarder(logRotator(numToKeepStr: '5'))
@@ -42,7 +43,8 @@ pipeline {
     }
     stage('REL deployment') {
       steps {
-        echo 'Artifact to be deployed in REL = ${params.REL_DEPLOYMENT}'
+        // echo 'Artifact to be deployed in REL = ' ${params.DEPLOY_TO_REP}
+        echo "Hello ${params.PERSON}"
       }
     }
     stage('UAT deployment') {

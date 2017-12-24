@@ -42,20 +42,21 @@ pipeline {
     }
     stage('REL deployment') {
       when {
-        expression { return params.DEPLOY_TO_REP }
+        // expression { return params.DEPLOY_TO_REP }
+        expression { params.DEPLOY_TO_REP == true}
       }
       steps {
         echo 'Deploying to Release environment'
       }
     }
-    stage('UAT deployment') {
+    stage('FST deployment') {
       when {
 	     branch 'master'
       }
       steps {
         timeout(time: 5, unit: 'MINUTES') {
-          input 'Should I deploy UAT?'
-	        echo 'Deploying to UAT'
+          input 'Should I deploy FST?'
+	        echo 'Deploying to FST'
         }
       }
     }

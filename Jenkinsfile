@@ -4,9 +4,9 @@ pipeline {
       image 'maven:alpine'
       args '-v /var/run/docker.sock:/var/run/docker.sock -v $HOME/.m2:/root/.m2'
     }
-  }  
+  }
   parameters {
-    booleanParam(name: 'REL_DEPLOYMENT', defaultValue: false, description: 'Determines if REL deployment takes place')
+    booleanParam(name: 'DEPLOY_TO_REP', defaultValue: false, description: 'Tick this box to deploy build artifact to release environment')
   }
   options {
     buildDiscarder(logRotator(numToKeepStr: '5'))
@@ -41,8 +41,11 @@ pipeline {
       }
     }
     stage('REL deployment') {
+      when {
+        expression { return params.DEPLOY_TO_REP }
+      }
       steps {
-        echo 'Artifact to be deployed in REL = ${params.REL_DEPLOYMENT}'
+        echo 'Deploying to Release environment'
       }
     }
     stage('UAT deployment') {

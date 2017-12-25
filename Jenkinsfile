@@ -11,6 +11,7 @@ pipeline {
   options {
     buildDiscarder(logRotator(numToKeepStr: '5'))
     disableConcurrentBuilds()
+    timestamps()
   }
   stages {
     stage('Build') {
@@ -50,11 +51,10 @@ pipeline {
     }
     stage('FST deployment') {
       when {
-        allOf {
   	     branch 'master'
-         stage 'REL deployment'  != SKIPPED
-         stage 'REL deployment'  == SUCCESS
-        }
+         expression {
+          return (stage.('REL deployment')  != SKIPPED &&  stage.('REL deployment')  == SUCCESS)
+         }
       }
       steps {
         timeout(time: 5, unit: 'MINUTES') {

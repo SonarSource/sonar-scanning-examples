@@ -4,13 +4,18 @@ pipeline {
       image 'maven:alpine'
       args '-v /var/run/docker.sock:/var/run/docker.sock -v $HOME/.m2:/root/.m2'
     }
-  }  
+  }
   parameters {
-    booleanParam(name: 'REL_DEPLOYMENT', defaultValue: false, description: 'Determines if REL deployment takes place')
+    booleanParam(
+      name: 'DEPLOY_TO_REP',
+      defaultValue: false,
+      description: 'Tick this box to deploy build artifact to release environment'
+    )
   }
   options {
     buildDiscarder(logRotator(numToKeepStr: '5'))
     disableConcurrentBuilds()
+    timestamps()
   }
   stages {
     stage('Build') {
@@ -41,18 +46,24 @@ pipeline {
       }
     }
     stage('REL deployment') {
+      when {
+        expression { params.DEPLOY_TO_REP == true}
+      }
       steps {
-        echo 'Artifact to be deployed in REL = ${params.REL_DEPLOYMENT}'
+        echo 'Deploying to Release environment'
       }
     }
-    stage('UAT deployment') {
+    stage('FST deployment') {
       when {
-	     branch 'master'
+  	     branch 'master'
+         expression {
+          return (stage 'REL deployment'  != SKIPPED &&  stage 'REL deployment'  == SUCCESS)
+         }
       }
       steps {
         timeout(time: 5, unit: 'MINUTES') {
-          input 'Should I deploy UAT?'
-	        echo 'Deploying to UAT'
+          input 'Should I deploy FST?'
+	        echo 'Deploying to FST'
         }
       }
     }

@@ -11,6 +11,7 @@ pipeline {
   options {
     buildDiscarder(logRotator(numToKeepStr: '5'))
     disableConcurrentBuilds()
+    timestamps()
   }
   stages {
     stage('Build') {
@@ -42,20 +43,23 @@ pipeline {
     }
     stage('REL deployment') {
       when {
-        expression { return params.DEPLOY_TO_REP }
+        expression { params.DEPLOY_TO_REP == true}
       }
       steps {
         echo 'Deploying to Release environment'
       }
     }
-    stage('UAT deployment') {
+    stage('FST deployment') {
       when {
-	     branch 'master'
+  	     branch 'master'
+         expression {
+          return (stage.('REL deployment')  != SKIPPED &&  stage.('REL deployment')  == SUCCESS)
+         }
       }
       steps {
         timeout(time: 5, unit: 'MINUTES') {
-          input 'Should I deploy UAT?'
-	        echo 'Deploying to UAT'
+          input 'Should I deploy FST?'
+	        echo 'Deploying to FST'
         }
       }
     }

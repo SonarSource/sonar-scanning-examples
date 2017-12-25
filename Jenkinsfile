@@ -53,7 +53,7 @@ pipeline {
       when {
   	     branch 'master'
          expression {
-          return (stage.('REL deployment')  != SKIPPED &&  stage.('REL deployment')  == SUCCESS)
+          return (stage 'REL deployment'  != SKIPPED &&  stage 'REL deployment'  == SUCCESS)
          }
       }
       steps {

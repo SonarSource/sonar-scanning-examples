@@ -5,9 +5,6 @@ pipeline {
       args '-v /var/run/docker.sock:/var/run/docker.sock -v $HOME/.m2:/root/.m2'
     }
   }
-  environment {
-    BAR = 'foo'
-  }
   parameters {
     booleanParam(
       name: 'DEPLOY_TO_REP',

@@ -56,9 +56,9 @@ pipeline {
     stage('FST deployment') {
       when {
   	     branch 'master'
-         expression {
-          return ( stage('REL deployment') == stable )
-         }
+//         expression {
+//          return ( stage('REL deployment') == stable )
+//         }
       }
       steps {
         timeout(time: 5, unit: 'MINUTES') {

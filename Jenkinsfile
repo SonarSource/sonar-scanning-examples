@@ -57,7 +57,7 @@ pipeline {
       when {
   	     branch 'master'
          expression {
-          return ( stage('REL deployment') != SKIPPED )
+          return ( stage('REL deployment') == stable )
          }
       }
       steps {

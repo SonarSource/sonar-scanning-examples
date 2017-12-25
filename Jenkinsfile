@@ -4,18 +4,7 @@ pipeline {
       image 'maven:alpine'
       args '-v /var/run/docker.sock:/var/run/docker.sock -v $HOME/.m2:/root/.m2'
     }
-  }
-  parameters {
-    booleanParam(
-      name: 'DEPLOY_TO_REP',
-      defaultValue: false,
-      description: 'Tick this box to deploy build artifact to release environment'
-    )
-  }
-  options {
-    buildDiscarder(logRotator(numToKeepStr: '5'))
-    disableConcurrentBuilds()
-//    timestamps()
+    
   }
   stages {
     stage('Build') {
@@ -47,7 +36,10 @@ pipeline {
     }
     stage('REL deployment') {
       when {
-        expression { params.DEPLOY_TO_REP == true}
+        expression {
+          params.DEPLOY_TO_REP == true
+        }
+        
       }
       steps {
         echo 'Deploying to Release environment'
@@ -55,27 +47,26 @@ pipeline {
     }
     stage('FST deployment') {
       when {
-  	     branch 'master'
-//         expression {
-//          return ( stage('REL deployment') == stable )
-//         }
+        branch 'master'
       }
       steps {
         timeout(time: 5, unit: 'MINUTES') {
-          input 'Should I deploy FST?'
-	        echo 'Deploying to FST'
+          input(message: 'Should I deploy FST?', submitter: 'shaz', submitterParameter: 'It was ${feedback} who submitted the dialog.')
+          echo 'Deploying to FST'
         }
+        
       }
     }
     stage('Prod deployment') {
       when {
-	     branch 'master'
+        branch 'master'
       }
       steps {
         timeout(time: 5, unit: 'MINUTES') {
           input 'Should I deploy to PROD?'
-	        echo 'Deploying to production'
+          echo 'Deploying to production'
         }
+        
       }
     }
   }
@@ -84,6 +75,15 @@ pipeline {
       archive 'target/**/*'
       junit(testResults: '**/target/surefire-reports/*.xml', allowEmptyResults: true)
       archiveArtifacts(artifacts: '**/target/*.jar', fingerprint: true, onlyIfSuccessful: true, defaultExcludes: true)
+      
     }
+    
+  }
+  options {
+    buildDiscarder(logRotator(numToKeepStr: '5'))
+    disableConcurrentBuilds()
+  }
+  parameters {
+    booleanParam(name: 'DEPLOY_TO_REP', defaultValue: false, description: 'Tick this box to deploy build artifact to release environment')
   }
 }

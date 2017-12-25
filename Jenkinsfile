@@ -51,7 +51,7 @@ pipeline {
       }
       steps {
         timeout(time: 5, unit: 'MINUTES') {
-          input(message: 'Should I deploy FST?', submitter: 'shaz', submitterParameter: 'It was ${feedback} who submitted the dialog.')
+          input(message: 'Should I deploy FST?', submitter: 'admin', submitterParameter: 'It was ${feedback} who submitted the dialog.')
           echo 'Deploying to FST'
         }
         
@@ -63,7 +63,7 @@ pipeline {
       }
       steps {
         timeout(time: 5, unit: 'MINUTES') {
-          input 'Should I deploy to PROD?'
+          input(message: 'Should I deploy to PROD?', submitter: 'admin', submitterParameter: 'It was ${feedback} who submitted the dialog.')
           echo 'Deploying to production'
         }
         

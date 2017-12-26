@@ -69,6 +69,11 @@ pipeline {
         
       }
     }
+    stage('Baseline') {
+      steps {
+        release 'sonar-scanning-examples'
+      }
+    }
   }
   post {
     always {

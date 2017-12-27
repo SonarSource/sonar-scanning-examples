@@ -7,6 +7,8 @@
   <version>${revision}</version>
   <scm>
     <connection>scm:git:git@github.com:shazChaudhry/sonar-scanning-examples.git</connection>
+    <developerConnection>scm:git:git@github.com:shazChaudhry/sonar-scanning-examples.git</developerConnection>
+    <url>https://github.com/shazChaudhry/sonar-scanning-examples</url>
   </scm>
 <!--  <distributionManagement>
     <repository>

@@ -6,7 +6,7 @@
 	<parent>
 		<groupId>org.sonarqube</groupId>
 		<artifactId>parent</artifactId>
-		<version>1.0-SNAPSHOT</version>
+		<version>${revision}</version>
 	</parent>
 
 	<artifactId>app-java</artifactId>

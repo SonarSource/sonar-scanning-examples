@@ -4,7 +4,7 @@ pipeline {
       image 'maven:alpine'
       args '-v /var/run/docker.sock:/var/run/docker.sock -v $HOME/.m2:/root/.m2'
     }
-    
+
   }
   stages {
     stage('Build') {
@@ -39,7 +39,7 @@ pipeline {
         expression {
           params.DEPLOY_TO_REP == true
         }
-        
+
       }
       steps {
         echo 'Deploying to Release environment'
@@ -54,7 +54,7 @@ pipeline {
           input(message: 'Should I deploy FST?', submitter: 'admin', submitterParameter: 'It was ${feedback} who submitted the dialog.')
           echo 'Deploying to FST'
         }
-        
+
       }
     }
     stage('Prod deployment') {
@@ -66,12 +66,16 @@ pipeline {
           input(message: 'Should I deploy to PROD?', submitter: 'admin', submitterParameter: 'It was ${feedback} who submitted the dialog.')
           echo 'Deploying to production'
         }
-        
+
       }
     }
     stage('Baseline') {
+      when {
+        branch 'master'
+      }
       steps {
-        release 'sonar-scanning-examples'
+        // See this blog on how to release maven projects:- https://axelfontaine.com/blog/dead-burried.html
+        sh 'mvn scm:tag -Drevision=$BUILD_NUMBER -f $PWD/sonarqube-scanner-maven/pom.xml'
       }
     }
   }
@@ -80,9 +84,9 @@ pipeline {
       archive 'target/**/*'
       junit(testResults: '**/target/surefire-reports/*.xml', allowEmptyResults: true)
       archiveArtifacts(artifacts: '**/target/*.jar', fingerprint: true, onlyIfSuccessful: true, defaultExcludes: true)
-      
+
     }
-    
+
   }
   options {
     buildDiscarder(logRotator(numToKeepStr: '5'))

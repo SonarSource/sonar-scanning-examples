@@ -1,33 +1,37 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
   <modelVersion>4.0.0</modelVersion>
-
   <groupId>org.sonarqube</groupId>
   <artifactId>parent</artifactId>
   <packaging>pom</packaging>
-  <version>1.0-SNAPSHOT</version>
-
+  <version>${revision}</version>
+  <scm>
+    <connection>scm:git:git@github.com:shazChaudhry/sonar-scanning-examples.git</connection>
+  </scm>
+<!--  <distributionManagement>
+    <repository>
+      <id>artifact-repository</id>
+      <url>
+        <<your-artifact-repo-url>>
+      </url>
+    </repository>
+  </distributionManagement>
+-->
   <name>Example of SonarQube Scanner for Maven + Code Coverage by UT and IT</name>
-
   <modules>
     <module>app-java</module>
     <module>app-groovy</module>
     <module>app-it</module>
   </modules>
-
   <properties>
     <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
     <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
-
+    <revision>1.0-SNAPSHOT</revision>
     <!-- Sonar -->
-    <!-- The destination file for the code coverage report has to be set to the same value
-         in the parent pom and in each module pom. Then JaCoCo will add up information in
-         the same report, so that, it will give the cross-module code coverage. -->
+    <!-- The destination file for the code coverage report has to be set to the same value         in the parent pom and in each module pom. Then JaCoCo will add up information in         the same report, so that, it will give the cross-module code coverage. -->
     <sonar.jacoco.itReportPath>${project.basedir}/../target/jacoco-it.exec</sonar.jacoco.itReportPath>
     <sonar.groovy.binaries>target/classes</sonar.groovy.binaries>
   </properties>
-
   <dependencies>
     <dependency>
       <groupId>junit</groupId>
@@ -36,7 +40,6 @@
       <scope>test</scope>
     </dependency>
   </dependencies>
-
   <build>
     <plugins>
       <plugin>
@@ -48,9 +51,15 @@
           <target>1.7</target>
         </configuration>
       </plugin>
+      <plugin>
+        <artifactId>maven-scm-plugin</artifactId>
+        <version>1.9.4</version>
+        <configuration>
+          <tag>${project.artifactId}-${project.version}</tag>
+        </configuration>
+      </plugin>
     </plugins>
   </build>
-
   <profiles>
     <profile>
       <id>sonar-coverage</id>

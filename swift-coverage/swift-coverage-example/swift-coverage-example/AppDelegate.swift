@@ -25,3 +25,12 @@ class AppDelegate: NSObject, NSApplicationDelegate {
 
 }
 
+class A {
+    func foo(){
+        if (1 > 2) {
+            print("hello")
+        } else {
+            print("Bye")
+        }
+    }
+}

@@ -17,4 +17,4 @@ Usage
   The <device_id> can be found from the XCode tools command: instruments -s devices
   
   * sonar-scanner
-2. Verify that for the project "swift-coverage-example" the coverage value is 50%.
+2. Verify that for the project "swift-coverage-example" the coverage value is 38.5%.

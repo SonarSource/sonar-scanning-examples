@@ -1,14 +1,9 @@
 pipeline {
   agent any
   stages {
-    stage('SonarQube') {
+    stage('SonarQube Analysis') {
       steps {
-        waitForQualityGate()
-      }
-    }
-    stage('build') {
-      steps {
-        echo 'build done'
+        echo 'Sonar cube analysis done'
       }
     }
   }

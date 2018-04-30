@@ -11,6 +11,7 @@
 		44AA047F1D6488A000008699 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 44AA047E1D6488A000008699 /* Assets.xcassets */; };
 		44AA04821D6488A000008699 /* MainMenu.xib in Resources */ = {isa = PBXBuildFile; fileRef = 44AA04801D6488A000008699 /* MainMenu.xib */; };
 		44AA048D1D6488A100008699 /* swift_coverage_exampleTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 44AA048C1D6488A100008699 /* swift_coverage_exampleTests.swift */; };
+		4A05182C2097676A00C423E2 /* AppDelegate2.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4A05182B2097676A00C423E2 /* AppDelegate2.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -32,6 +33,7 @@
 		44AA04881D6488A100008699 /* swift-coverage-exampleTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "swift-coverage-exampleTests.xctest"; sourceTree = BUILT_PRODUCTS_DIR; };
 		44AA048C1D6488A100008699 /* swift_coverage_exampleTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = swift_coverage_exampleTests.swift; sourceTree = "<group>"; };
 		44AA048E1D6488A100008699 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		4A05182B2097676A00C423E2 /* AppDelegate2.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate2.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -77,6 +79,7 @@
 				44AA047E1D6488A000008699 /* Assets.xcassets */,
 				44AA04801D6488A000008699 /* MainMenu.xib */,
 				44AA04831D6488A000008699 /* Info.plist */,
+				4A05182B2097676A00C423E2 /* AppDelegate2.swift */,
 			);
 			path = "swift-coverage-example";
 			sourceTree = "<group>";
@@ -193,6 +196,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				44AA047D1D6488A000008699 /* AppDelegate.swift in Sources */,
+				4A05182C2097676A00C423E2 /* AppDelegate2.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

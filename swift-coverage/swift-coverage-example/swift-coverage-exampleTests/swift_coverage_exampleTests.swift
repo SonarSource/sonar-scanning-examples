@@ -15,4 +15,8 @@ class swift_coverage_exampleTests: XCTestCase {
         A().foo()
     }
     
+    func testFoo2() {
+        AB().foo()
+    }
+    
 }

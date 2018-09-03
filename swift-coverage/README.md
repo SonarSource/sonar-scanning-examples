@@ -24,7 +24,7 @@ XCode version | Command
 XCode 8+ - 9.2 | `xcrun llvm-cov show -instr-profile=Build/ProfileData/<device_id>/Coverage.profdata Build/Products/Debug/swift-coverage-example.app/Contents/MacOS/swift-coverage-example > Coverage.report`
 XCode 9.3+ | `bash xccov-to-sonarqube-generic.sh Build/Logs/Test/*.xccovarchive/ > sonarqube-generic-coverage.xml`
 
-1.b Import code coverage report
+1.c Import code coverage report
 
 XCode version | Command
 --- | ---

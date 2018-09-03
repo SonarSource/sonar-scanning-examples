@@ -1,0 +1,6 @@
+ModuleCache.noindex
+Index/
+Logs/
+Build/
+.scannerwork
+sonarqube-generic-coverage.xml

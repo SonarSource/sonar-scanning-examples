@@ -11,9 +11,8 @@ import XCTest
 
 class swift_coverage_exampleTests: XCTestCase {
     
-    override func setUp() {
-        super.setUp()
-        // Put setup code here. This method is called before the invocation of each test method in the class.
+    func testFoo() {
+        A().foo()
     }
     
     override func tearDown() {
@@ -31,6 +30,9 @@ class swift_coverage_exampleTests: XCTestCase {
         self.measure {
             // Put the code you want to measure the time of here.
         }
+
+    func testFoo2() {
+        AB().foo()
     }
     
 }

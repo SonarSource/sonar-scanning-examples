@@ -2,7 +2,9 @@
 <!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
 <plist version="1.0">
 <dict>
+	<key>LastAccessedDate</key>
+	<date>2018-04-30T15:05:27Z</date>
 	<key>WorkspacePath</key>
-	<string>/Users/elenavilchik/Projects/sonar-examples/projects/languages/swift/swift-coverage/swift-coverage-example/swift-coverage-example.xcodeproj</string>
+	<string>/Users/alexandregigleux/Repos/Training/sonar-scanning-examples/swift-coverage/swift-coverage-example/swift-coverage-example.xcodeproj</string>
 </dict>
 </plist>

@@ -1,5 +1,5 @@
 plugins {
-  id "org.sonarqube" version "2.4"
+  id "org.sonarqube" version "2.6.2"
 }
 
 description = 'Example of SonarQube Scanner for Gradle Usage'
@@ -24,6 +24,8 @@ apply plugin: 'java'
 
 // Apply the application plugin to add support for building an application
 apply plugin: 'application'
+
+apply plugin: 'jacoco'
 
 // In this section you declare where to find the dependencies of your project
 repositories {

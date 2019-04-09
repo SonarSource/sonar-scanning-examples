@@ -13,4 +13,9 @@
 
 	<name>Java :: JaCoco Multi Modules :: App</name>
 
+	<properties>
+		<sonar.coverage.jacoco.xmlReportPaths>../app-it/target/site/jacoco-aggregate/jacoco.xml</sonar.coverage.jacoco.xmlReportPaths>
+	</properties>
+
+
 </project>

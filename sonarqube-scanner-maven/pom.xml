@@ -20,11 +20,6 @@
     <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
     <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
 
-    <!-- Sonar -->
-    <!-- The destination file for the code coverage report has to be set to the same value
-         in the parent pom and in each module pom. Then JaCoCo will add up information in
-         the same report, so that, it will give the cross-module code coverage. -->
-    <sonar.jacoco.itReportPath>${project.basedir}/../target/jacoco-it.exec</sonar.jacoco.itReportPath>
     <sonar.groovy.binaries>target/classes</sonar.groovy.binaries>
   </properties>
 
@@ -63,7 +58,7 @@
             <plugin>
               <groupId>org.jacoco</groupId>
               <artifactId>jacoco-maven-plugin</artifactId>
-              <version>0.8.2</version>
+              <version>0.8.3</version>
             </plugin>
           </plugins>
         </pluginManagement>
@@ -71,25 +66,14 @@
           <plugin>
             <groupId>org.jacoco</groupId>
             <artifactId>jacoco-maven-plugin</artifactId>
-            <configuration>
-              <append>true</append>
-            </configuration>
             <executions>
               <execution>
-                <id>agent-for-ut</id>
                 <goals>
                   <goal>prepare-agent</goal>
                 </goals>
               </execution>
               <execution>
-                <id>agent-for-it</id>
-                <goals>
-                  <goal>prepare-agent-integration</goal>
-                </goals>
-              </execution>
-              <execution>
-                <id>jacoco-site</id>
-                <phase>verify</phase>
+                <id>report</id>
                 <goals>
                   <goal>report</goal>
                 </goals>

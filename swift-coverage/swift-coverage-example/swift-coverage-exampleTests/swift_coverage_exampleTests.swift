@@ -30,6 +30,7 @@ class swift_coverage_exampleTests: XCTestCase {
         self.measure {
             // Put the code you want to measure the time of here.
         }
+    }
 
     func testFoo2() {
         AB().foo()

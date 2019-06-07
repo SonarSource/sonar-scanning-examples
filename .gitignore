@@ -1,5 +1,9 @@
 # Gradle files
 .gradle/
+.classpath
+.project
+.settings/
+bin/
 
 # Build output
 build/

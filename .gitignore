@@ -9,5 +9,5 @@ bin/
 build/
 .sonar
 target/
-
+bw-outputs/
 .scannerwork

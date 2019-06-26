@@ -22,13 +22,14 @@ Usage
 XCode version | Command
 --- | ---
 XCode 8+ - 9.2 | `xcrun llvm-cov show -instr-profile=Build/ProfileData/<device_id>/Coverage.profdata Build/Products/Debug/swift-coverage-example.app/Contents/MacOS/swift-coverage-example > Coverage.report`
-XCode 9.3+ | `bash xccov-to-sonarqube-generic.sh Build/Logs/Test/*.xccovarchive/ > sonarqube-generic-coverage.xml`
+XCode 9.3 - 9.4.1 | `bash xccov-to-sonarqube-generic.sh Build/Logs/Test/*.xccovarchive/ > sonarqube-generic-coverage.xml`
+XCode 10+ | `bash xccov-to-sonarqube-generic.sh Build/Logs/Test/*.xcresult/*_Test/*.xccovarchive/ > sonarqube-generic-coverage.xml`
 
 1.c Import code coverage report
 
 XCode version | Command
 --- | ---
 XCode 8.x - 9.2 | `sonar-scanner -Dsonar.projectKey=TestCoverage -Dsonar.sources=. -Dsonar.swift.coverage.reportPath=Coverage.report -Dsonar.cfamily.build-wrapper-output.bypass=true`
-XCode 9.3+ | `sonar-scanner -Dsonar.projectKey=TestCoverage -Dsonar.sources=. -Dsonar.coverageReportPaths=sonarqube-generic-coverage.xml -Dsonar.cfamily.build-wrapper-output.bypass=true`
+XCode 9.3+ | `sonar-scanner -Dsonar.projectKey=TestCoverage -Dsonar.sources=. -Dsonar.swift.coverage.reportPath=sonarqube-generic-coverage.xml -Dsonar.cfamily.build-wrapper-output.bypass=true`
 
 2. Verify that for the project "swift-coverage-example" the coverage value is 69.2%.

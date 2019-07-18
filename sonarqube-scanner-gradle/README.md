@@ -12,4 +12,3 @@ Usage
     `./gradlew -Dsonar.host.url=http://myhost:9000 sonarqube`
   * On Windows:
     `.\gradle.bat -Dsonar.host.url=http://myhost:9000 sonarqube`
- 

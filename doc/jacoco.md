@@ -1,18 +1,18 @@
 # Importing JaCoCo coverage report in XML format
 
-Version 5.12 of our SonarJava analyzer deprecated usage of the binary format of JaCoCo (`.exec` files) to import coverage. This binary format is internal to the JaCoCo project, and as such there are no guarantees for backward compatibility, so it should not be used for integration purposes. 
+Version 5.12 of our SonarJava analyzer deprecated use JaCoCo's binary format (`.exec` files) to import coverage. This binary format is internal to the JaCoCo project, and as such there are no guarantees for backward compatibility, so it should not be used for integration purposes. 
 
-We developed new [sonar-jacoco](https://docs.sonarqube.org/display/PLUG/JaCoCo+Plugin) plugin, which imports JaCoCo's XML coverage report and this is the preferred option now. In this guide, I will describe how to import this XML report in some common scenarios.
+As a replacment, we developed the [sonar-jacoco](https://docs.sonarqube.org/display/PLUG/JaCoCo+Plugin) plugin, which imports JaCoCo's XML coverage report, and this is the preferred option now. In this guide, I will describe how to import this XML report in some common scenarios.
 
 You can find sample projects using the setup described here in [this repository](https://github.com/SonarSource/sonar-scanning-examples).
 
 ## Maven
 
-Remove any usage of `sonar.jacoco.itReportPath`, `sonar.jacoco.reportPath`, or `sonar.jacoco.reportMissing.force.zero` properties, they are deprecated and related functionality will be removed in the future.
+Remove any use of the `sonar.jacoco.itReportPath`, `sonar.jacoco.reportPath`, and `sonar.jacoco.reportMissing.force.zero` properties; they are deprecated and related functionality will be removed in the future.
 
-We will use [jacoco-maven-plugin](https://www.jacoco.org/jacoco/trunk/doc/maven.html) and its [report goal](https://www.eclemma.org/jacoco/trunk/doc/report-mojo.html) to create a code coverage report. Usually, you would want to create a specific profile which executes unit tests with JaCoCo agent and creates a coverage report. This profile would then only be activated if coverage information is requested (e.g., in the CI pipeline).
+We will use the [jacoco-maven-plugin](https://www.jacoco.org/jacoco/trunk/doc/maven.html) and its [report goal](https://www.eclemma.org/jacoco/trunk/doc/report-mojo.html) to create a code coverage report. Usually, you would want to create a specific profile which executes unit tests with the JaCoCo agent and creates a coverage report. This profile would then only be activated if coverage information is requested (e.g., in the CI pipeline).
 
-In the most basic case we will need to execute two goals - `jacoco:prepare-agent` which creates the command line argument to be used for JVM during unit tests execution and `jacoco:report` which uses data collected during unit test execution to generate a report in html, xml or csv format.
+In the most basic case we will need to execute two goals: `jacoco:prepare-agent` which creates the command line argument to be used for JVM during unit test execution, and `jacoco:report` which uses data collected during unit test execution to generate a report in html, xml or csv format.
 
 Here is an example of such a profile
 
@@ -45,9 +45,9 @@ Here is an example of such a profile
 </profile>
 ```
 
-By default the generated report will be saved under `target/site/jacoco/jacoco.xml`; this location will be checked automatically by sonar-jacoco plugin so there is no further configuration required. Just launch `mvn sonar:sonar` as usual and the report will be picked up.
+By default the generated report will be saved under `target/site/jacoco/jacoco.xml`; this location will be checked automatically by the sonar-jacoco plugin so no further configuration is required. Just launch `mvn sonar:sonar` as usual and the report will be picked up.
 
-In case you need to change the directory where the report is generated you can set the property either on the command line using maven's  `-D` switch 
+If you need to change the directory where the report has been generated you can set the property either on the command line using maven's  `-D` switch 
 
 ```
 mvn -Dsonar.coverage.jacoco.xmlReportPaths=report1.xml,report2.xml sonar:sonar 
@@ -64,9 +64,9 @@ or you can set the property inside your `pom.xml`
 
 ### Multi-module builds
 
-With multi-module builds, we sometimes need to show coverage across the modules. For example, we might have multiple modules implementing business logic and another module which contains integration tests for all these modules. We would like to see also coverage from this integration test module on business logic modules.
+With multi-module builds, we sometimes need to show coverage across modules. For example, we might have multiple modules implementing business logic and another module which contains integration tests for all these modules. We would like to see also coverage from this integration test module on business logic modules.
 
-To achieve this, we can use the [`report-aggregate`](https://www.jacoco.org/jacoco/trunk/doc/report-aggregate-mojo.html) goal of JaCoCo, which will collect coverage information from all modules and create a single report with coverage for the whole project. 
+To achieve this, we can use JaCoCo's [`report-aggregate`](https://www.jacoco.org/jacoco/trunk/doc/report-aggregate-mojo.html) goal, which will collect coverage information from all modules and create a single report with coverage for the whole project. 
 
 First, we still have to use `prepare-agent` goal as we did in basic example in all modules, the best way to achieve this is to configure the execution of this goal in the parent `pom.xml`. Then we need to add execution to the module containing integration tests to generate the report across modules
 
@@ -90,7 +90,7 @@ First, we still have to use `prepare-agent` goal as we did in basic example in a
 </build>
 ```
 
-We will bind this goal to the `verify` phase. Now when we execute
+We snippet binds the goal to the `verify` phase. Now when we execute
 
 ```
 mvn clean verify
@@ -98,7 +98,7 @@ mvn clean verify
 
 we should find the aggregated report in `target/site/jacoco-aggregate/jacoco.xml` of the module containing the integration tests.
 
-JaCoCo plugin, however, imports coverage report module by module, so we need to import the same report multiple times (once for every module) to have coverage for all modules. To achieve this we set property `sonar.coverage.jacoco.xmlReportPaths` in every module 
+However, the JaCoCo plugin imports coverage reports module by module, so we need to import the same report multiple times (once for every module) to have coverage for all modules. To achieve this we set the property `sonar.coverage.jacoco.xmlReportPaths` in every module 
 
 ```
 <properties>
@@ -110,7 +110,7 @@ We can factor out the path to the report in the property of the parent `pom.xml`
 
 ### Troubleshooting
 
-To investigate issues with import of coverage information you can start Maven with the debug flag `-X`
+To investigate issues with the import of coverage information you can run Maven with the debug flag, `-X`:
 
 ```
 mvn -X clean verify sonar:sonar 
@@ -155,7 +155,7 @@ By default report will be saved under the `build/reports/jacoco` directory and t
 gradle build jacocoTestReport sonarqube
 ```
 
-It is convenient to execute the `jacocoTestReport` task every time we execute `test` with the JaCoCo agent; to achieve this, we can run it after the `test` task. We can use [`finalizedBy` ](https://docs.gradle.org/current/userguide/more_about_tasks.html#sec:finalizer_tasks) to create dependency between `test` and `jacocoTestReport`. 
+It is convenient to execute the `jacocoTestReport` task every time we execute `test` with the JaCoCo agent; to achieve this, we can run it after the `test` task. We can use [`finalizedBy` ](https://docs.gradle.org/current/userguide/more_about_tasks.html#sec:finalizer_tasks) to create a dependency between `test` and `jacocoTestReport`. 
 
 ```groovy
 plugins.withType(JacocoPlugin) {

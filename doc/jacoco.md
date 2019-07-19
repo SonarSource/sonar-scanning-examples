@@ -12,7 +12,7 @@ Remove any use of the `sonar.jacoco.itReportPath`, `sonar.jacoco.reportPath`, an
 
 We will use the [jacoco-maven-plugin](https://www.jacoco.org/jacoco/trunk/doc/maven.html) and its [report goal](https://www.eclemma.org/jacoco/trunk/doc/report-mojo.html) to create a code coverage report. Usually, you would want to create a specific profile which executes unit tests with the JaCoCo agent and creates a coverage report. This profile would then only be activated if coverage information is requested (e.g., in the CI pipeline).
 
-In the most basic case we will need to execute two goals: `jacoco:prepare-agent` which creates the command line argument to be used for JVM during unit test execution, and `jacoco:report` which uses data collected during unit test execution to generate a report in html, xml or csv format.
+In the most basic case we will need to execute two goals: `jacoco:prepare-agent` which creates the command line argument for JVM running the tests, and `jacoco:report` which uses data collected during unit test execution to generate a report in html, xml or csv format.
 
 Here is an example of such a profile
 
@@ -102,11 +102,9 @@ However, the JaCoCo plugin imports coverage reports module by module, so we need
 
 ```
 <properties>
-  <sonar.coverage.jacoco.xmlReportPaths>${project.basedir}/../integration_tests/target/site/jacoco-aggregate/jacoco.xml</sonar.coverage.jacoco.xmlReportPaths>
+  <sonar.coverage.jacoco.xmlReportPaths>${project.basedir}/../path_to_module_with_report/target/site/jacoco-aggregate/jacoco.xml</sonar.coverage.jacoco.xmlReportPaths>
 </properties>
 ```
-
-We can factor out the path to the report in the property of the parent `pom.xml` to avoid repetition.
 
 ### Troubleshooting
 
@@ -143,8 +141,6 @@ The plugin provides the `jacocoTestReport` task, which needs to be configured to
 jacocoTestReport {
     reports {
         xml.enabled true
-        csv.enabled false
-        html.enabled false
     }
 }
 ```

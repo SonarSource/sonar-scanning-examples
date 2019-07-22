@@ -11,3 +11,8 @@ build/
 target/
 bw-outputs/
 .scannerwork
+
+# IntelliJ
+
+.idea
+*.iml

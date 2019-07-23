@@ -1,15 +1,15 @@
-#Multi-module Apache Maven example
+# Multi-module Apache Maven example
 
 This project imports JaCoCo's aggregate XML report to be able to report coverage across modules as well as unit
 test coverage inside the module. For a basic example see [basic maven project](../sonarscanner-maven-basic/README.md).
 
-##Usage
+## Usage
 
 * Build the project, execute all the tests and analyze the project with SonarQube Scanner for Maven:
 
         mvn clean verify sonar:sonar
 
-##Description
+## Description
 
 This project consists of 3 modules. [`module1`](module1/pom.xml) and [`module2`](module2/pom.xml) contain "business logic" and 
 related unit tests. The [`tests`](tests/pom.xml) module contains integration tests which test functionality using both modules. 
@@ -85,6 +85,6 @@ mvn -Dsonar.coverage.jacoco.xmlReportPaths=C:\projects\sonar-scanning-examples\s
 We have to use an absolute path, because the report will be imported for each module separately and the path is resolved relative to the module dir.
     
         
-##Documentation
+## Documentation
 
 [SonarScanner for Maven](https://docs.sonarqube.org/latest/analysis/scan/sonarscanner-for-maven/)

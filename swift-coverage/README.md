@@ -30,6 +30,6 @@ XCode 10+ | `bash xccov-to-sonarqube-generic.sh Build/Logs/Test/*.xcresult/*_Tes
 XCode version | Command
 --- | ---
 XCode 8.x - 9.2 | `sonar-scanner -Dsonar.projectKey=TestCoverage -Dsonar.sources=. -Dsonar.swift.coverage.reportPath=Coverage.report -Dsonar.cfamily.build-wrapper-output.bypass=true`
-XCode 9.3+ | `sonar-scanner -Dsonar.projectKey=TestCoverage -Dsonar.sources=. -Dsonar.swift.coverage.reportPath=sonarqube-generic-coverage.xml -Dsonar.cfamily.build-wrapper-output.bypass=true`
+XCode 9.3+ | `sonar-scanner -Dsonar.projectKey=TestCoverage -Dsonar.sources=. -Dsonar.coverageReportPaths=sonarqube-generic-coverage.xml -Dsonar.cfamily.build-wrapper-output.bypass=true`
 
 2. Verify that for the project "swift-coverage-example" the coverage value is 69.2%.

@@ -16,3 +16,6 @@ bw-outputs/
 
 .idea
 *.iml
+
+# mac
+.DS_Store

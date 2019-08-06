@@ -4,7 +4,7 @@ set -euo pipefail
 function convert_file {
   local xccovarchive_file="$1"
   local file_name="$2"
-  echo "  <file path=\"$file_name\">"
+  echo "  <file path=\"$(sed 's/&/\&amp;/g; s/</\&lt;/g; s/>/\&gt;/g; s/"/\&quot;/g; s/'"'"'/\&#39;/g' <<< $file_name)\">"
   xcrun xccov view --file "$file_name" "$xccovarchive_file" | \
     sed -n '
     s/^ *\([0-9][0-9]*\): 0.*$/    <lineToCover lineNumber="\1" covered="false"\/>/p;

@@ -1,6 +1,6 @@
 This example demonstrates how to analyze an Objective-C project with the SonarQube Scanner and how to generate and import llvm-cov coverage report.
 
-Prerequisites
+Prerequisites1
 =============
 * [SonarQube](http://www.sonarqube.org/downloads/) 5.6+
 * [SonarQube Scanner](http://docs.sonarqube.org/display/SCAN/Analyzing+with+SonarQube+Scanner) 2.8+

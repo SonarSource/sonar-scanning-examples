@@ -5,8 +5,8 @@
 
   <groupId>org.sonarqube</groupId>
   <artifactId>sonarscanner-maven-aggregate</artifactId>
-  <packaging>pom</packaging>
   <version>1.0-SNAPSHOT</version>
+  <packaging>pom</packaging>
 
   <name>Example of multi-module Maven project</name>
 

@@ -21,7 +21,7 @@ private:
 };
 
 
-int main()
+int simple_class_main()
 {
    // Declare today to be object of class Date
    // Values are automatically intialised by calling constructor function

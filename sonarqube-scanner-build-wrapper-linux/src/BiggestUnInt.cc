@@ -13,7 +13,7 @@ using namespace std;
 
 void bitsout( unsigned int n );
 
-int main(int argc, char* argv[])
+void biggest_unint_main(int argc, char* argv[])
 {
   int    N=0;
   unsigned int i=1 , oldi , j ;

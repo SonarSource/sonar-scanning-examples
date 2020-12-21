@@ -2,7 +2,7 @@ This example demonstrates how to analyze a multi-module Java project with Gradle
 
 Prerequisites
 =============
-* [SonarQube](http://www.sonarqube.org/downloads/) 5.6+
+* [SonarQube](http://www.sonarqube.org/downloads/) 7.9+
 * A gradle wrapper is included that bundles gradle. All other required plugins will be pulled by gradle as needed.
 
 Usage

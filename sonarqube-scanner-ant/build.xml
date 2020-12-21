@@ -7,7 +7,7 @@
 	<property name="classes.dir" value="${build.dir}/classes" />
 	
 	<!-- Define the SonarQube global properties (the most usual way is to pass these properties via the command line) -->
-	<property name="sonar.host.url" value="http://localhost:9000" />
+	<property name="sonar.host.url" value="https://localhost:9000" />
 
 	<!-- Define the Sonar properties -->
 	<property name="sonar.projectKey" value="org.sonarqube:sonarqube-scanner-ant" />

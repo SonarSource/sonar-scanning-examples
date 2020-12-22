@@ -3,8 +3,8 @@ This example demonstrates how to use the BuildWrapper to analyze a C++ project w
 Prerequisites
 =============
 * G++ compiler to compile the project sample
-* [SonarQube](http://www.sonarqube.org/downloads/) 5.6+
-* [SonarQube Scanner](https://redirect.sonarsource.com/doc/install-configure-scanner.html) 2.8+
+* [SonarQube](http://www.sonarqube.org/downloads/) 7.9+
+* [SonarQube Scanner](https://redirect.sonarsource.com/doc/install-configure-scanner.html) 4.5+
 * [SonarCFamily for C/C++](https://www.sonarsource.com/why-us/products/codeanalyzers/sonarcfamilyforcpp.html)
 * [SonarSource Build Wrapper](https://docs.sonarqube.org/pages/viewpage.action?pageId=7996665)
 

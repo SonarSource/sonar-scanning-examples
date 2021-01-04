@@ -1,0 +1,9 @@
+apply plugin: "org.sonarqube"
+
+sonarqube {
+    properties {
+        // Insert other SonarQube properties here
+        property 'sonar.projectName', 'Example of SonarQube Scanner for Gradle Usage (multimodule with Jacoco code coverage)'
+        property 'sonar.projectKey', 'org.sonarqube.gradle-multi-module-jacoco'
+    }
+}

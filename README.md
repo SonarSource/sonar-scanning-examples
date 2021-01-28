@@ -20,7 +20,7 @@
 
 [SonarQube-Scanner-Maven Multi-Module](sonarqube-scanner-maven/maven-multimodule/)
 
-[SonarQube-Scanner-MSBuild CSharp](sonarqube-scanner-msbuild/)
+[SonarQube-Scanner-MSBuild CSharp](sonarqube-scanner-msbuild/CSharpProject/)
 
 [SonarQube-Scanner-Swift Code Coverage](swift-coverage/)
 

@@ -1,19 +1,22 @@
+# SonarQube-Scanner for Swift Code Coverage
+
 This example demonstrates how to import Xcode Coverage data (aka ProfData) to SonarQube for a Swift project.
 
-Prerequisites
-=============
+## Prerequisites
+
 * [SonarQube](http://www.sonarqube.org/downloads/) 6.7+
 * [SonarQube Scanner](http://docs.sonarqube.org/display/SCAN/Analyzing+with+SonarQube+Scanner) 3.1+
 * [SonarSource Swift Plugin](http://redirect.sonarsource.com/plugins/swift.html) 3.2+
 
-Usage
-=====
+## Usage
 
 1. Run from "swift-coverage-example"
 
 1.a Build project
 
-`xcodebuild -project swift-coverage-example.xcodeproj/ -scheme swift-coverage-example -derivedDataPath Build/ -enableCodeCoverage YES clean build test CODE_SIGN_IDENTITY="" CODE_SIGNING_REQUIRED=NO`
+```shell
+xcodebuild -project swift-coverage-example.xcodeproj/ -scheme swift-coverage-example -derivedDataPath Build/ -enableCodeCoverage YES clean build test CODE_SIGN_IDENTITY="" CODE_SIGNING_REQUIRED=NO
+```
 
 1.b Create code coverage report
 
@@ -33,4 +36,4 @@ XCode version | Command
 XCode 8.x - 9.2 | `sonar-scanner -Dsonar.projectKey=TestCoverage -Dsonar.sources=. -Dsonar.swift.coverage.reportPath=Coverage.report -Dsonar.cfamily.build-wrapper-output.bypass=true`
 XCode 9.3+ | `sonar-scanner -Dsonar.projectKey=TestCoverage -Dsonar.sources=. -Dsonar.coverageReportPaths=sonarqube-generic-coverage.xml -Dsonar.cfamily.build-wrapper-output.bypass=true`
 
-2. Verify that for the project "swift-coverage-example" the coverage value is 69.2%.
+2. Verify that for the project "swift-coverage-example" the coverage value is > 65%.

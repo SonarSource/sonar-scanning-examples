@@ -1,3 +1,3 @@
 # SonarQube-Scanner
 
-Example of SonarQube Scanner usage.
+Examples of SonarQube Scanner usage.  Browse folder, language samples and properties file.

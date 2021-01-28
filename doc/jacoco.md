@@ -2,7 +2,7 @@
 
 Version 5.12 of our SonarJava analyzer deprecated use JaCoCo's binary format (`.exec` files) to import coverage. This binary format is internal to the JaCoCo project, and as such there are no guarantees for backward compatibility, so it should not be used for integration purposes.
 
-As a replacment, we developed the [sonar-jacoco](https://docs.sonarqube.org/display/PLUG/JaCoCo+Plugin) plugin, which imports JaCoCo's XML coverage report, and this is the preferred option now. In this guide, I will describe how to import this XML report in some common scenarios.
+As a replacement, we developed the [sonar-jacoco](https://docs.sonarqube.org/display/PLUG/JaCoCo+Plugin) plugin, which imports JaCoCo's XML coverage report, and this is the preferred option now. In this guide, I will describe how to import this XML report in some common scenarios.
 
 You can find sample projects using the setup described here in [this repository](https://github.com/SonarSource/sonar-scanning-examples).
 

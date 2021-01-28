@@ -19,3 +19,6 @@ bw-outputs/
 
 # mac
 .DS_Store
+
+# MSBuild
+obj/

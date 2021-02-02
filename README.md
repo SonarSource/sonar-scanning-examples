@@ -18,6 +18,8 @@
 
 [SonarQube-Scanner-Maven](sonarqube-scanner-maven/maven-basic/)
 
+[SonarQube-Scanner-Maven (Java + Kotlin with coverage)](sonarqube-scanner-maven/maven-multilingual/)
+
 [SonarQube-Scanner-Maven Multi-Module](sonarqube-scanner-maven/maven-multimodule/)
 
 [SonarQube-Scanner-MSBuild CSharp](sonarqube-scanner-msbuild/CSharpProject/)

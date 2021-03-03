@@ -14,7 +14,7 @@ Run the following command (updating the sonar.host.url property as appropriate):
 * On Unix-like systems:
   `./gradlew -Dsonar.host.url=http://myhost:9000 sonarqube`
 * On Windows:
-  `.\gradlew.bat -Dsonar.host.url=http://myhost:9000 sonarqube`
+  `.\gradlew.bat -D'sonar.host.url=http://myhost:9000' sonarqube`
 
 ## Coverage
 

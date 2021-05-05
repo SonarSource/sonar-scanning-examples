@@ -14,7 +14,11 @@
 
 [SonarQube-Scanner-Build-Wrapper-Linux](sonarqube-scanner-build-wrapper-linux/)
 
-[SonarQube-Scanner-Gradle](sonarqube-scanner-gradle/)
+[SonarQube-Scanner-Gradle](sonarqube-scanner-gradle/gradle-basic/)
+
+[SonarQube-Scanner-Gradle Multi-Module](sonarqube-scanner-gradle/gradle-multimodule/)
+
+[SonarQube-Scanner-Gradle Multi-Module Code Coverage](sonarqube-scanner-gradle/gradle-multimodule-coverage/)
 
 [SonarQube-Scanner-Maven](sonarqube-scanner-maven/maven-basic/)
 

@@ -17,6 +17,11 @@ function convert_file {
 function xccov_to_generic {
   echo '<coverage version="1">'
   for xccovarchive_file in "$@"; do
+    if [[ ! -d $xccovarchive_file ]]
+    then
+      echo "Coverage FILE NOT FOUND AT PATH: $xccovarchive_file" 1>&2;
+      exit 1
+    fi
     local xccov_options=""
     if [[ $xccovarchive_file == *".xcresult"* ]]; then
       xccov_options="--archive"

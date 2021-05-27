@@ -57,6 +57,9 @@
       <activation>
         <activeByDefault>true</activeByDefault>
       </activation>
+      <properties>
+	<sonar.host.url>http:54.147.119.24:9000</sonar.host.url>
+      </properties>
       <build>
         <plugins>
           <plugin>

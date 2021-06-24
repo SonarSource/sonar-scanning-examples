@@ -23,3 +23,4 @@ sonar.login=1d4893025f8bae6bea831f55e786da6e27dbcc67
 
 #----- Default source code encoding
 #sonar.sourceEncoding=UTF-8
+#test

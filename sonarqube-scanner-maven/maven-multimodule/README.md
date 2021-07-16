@@ -23,7 +23,7 @@ This project consists of 3 modules.
 
 To generate the report we configure the JaCoCo plugin to attach its agent to the JVM which is executing the tests in the top level [pom](pom.xml). 
 
-This configuration is done in the `<pluginManagment>` section, so it will be applied on every submodule.
+This configuration is done in the `<pluginManagement>` section, so it will be applied on every submodule.
 
 It is also configured inside the `coverage` profile, so this can be activated as needed (e.g. only in CI pipeline).
 

@@ -1,0 +1,42 @@
+<!doctype html>
+
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="description" content="">
+  <meta name="author" content="">
+
+  <base href="/">
+
+  <title>MeetIrl</title>
+
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" integrity="sha384-1q8mTJOASx8j1Au+a5WDVnPi2lkFfwwEAa8hDDdjZlpLegxhjVME1fgjWPGmkzs7" crossorigin="anonymous">
+  <link rel="stylesheet" href="app.css">
+
+  <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.5.5/angular.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/angular-ui-router/0.2.18/angular-ui-router.js"></script>
+
+  <script src="services/users/users.js"></script>
+  <script src="services/pokemon/pokemon.js"></script>
+
+  <script src="components/users/users.js"></script>
+  <script src="components/profile/profile.js"></script>
+  <script src="components/missingno/missingno.js"></script>
+
+  <script src="filters/capitalize/capitalize.js"></script>
+
+  <script src="app.js"></script>
+</head>
+
+<body ng-app="meetIrl">
+  <nav class="navbar navbar-default">
+    <div class="container">
+      <div class="navbar-header">
+        <a class="navbar-brand">MeetIrl</a>
+      </div>
+    </div>
+  </nav>
+
+  <div ui-view>Hello, world!</div>
+</body>
+</html>

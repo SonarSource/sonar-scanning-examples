@@ -1,0 +1,16 @@
+<div class="container">
+  <div class="row">
+    <div class="col-md-4" ng-repeat="user in uc.users">
+      <div class="panel panel-default">
+        <div class="panel-heading">
+          <h3 class="panel-title text-center"><a ui-sref="profile({id: user.id})">{{user.name}}</a></h3>
+        </div>
+        <div class="panel-body">
+          <div><span class="glyphicon glyphicon-briefcase" aria-hidden="true"></span> {{user.role}}</div>
+          <div><span class="glyphicon glyphicon-map-marker" aria-hidden="true"></span> {{user.location}}</div>
+          <div><span class="glyphicon glyphicon-link" aria-hidden="true"></span> {{user.twitter}}</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

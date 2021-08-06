@@ -1,3 +1,5 @@
+https://github.com/scotch-io/scotch-angular-testing
+
 ### Setup
 
 `nvm use 5.0`

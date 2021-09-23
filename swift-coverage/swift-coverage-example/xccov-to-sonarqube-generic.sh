@@ -69,11 +69,14 @@ function optimize_format {
     echo 'Failed to execute jq (https://stedolan.github.io/jq/)' 1>&2
     exit -1
   fi
-  xcrun xcresulttool export --type directory --path "$xccovarchive_file" --id "$reference" --output-path tmp.xccovarchive
-  if [ $? -ne 0 ]; then 
-    echo 'Failed to execute xcrun xcresulttool export' 1>&2
-    exit -1
-  fi
+  # $reference can be a list of IDs (from a merged .xcresult bundle of multiple test plans)
+  for test_ref in $reference; do
+    xcrun xcresulttool export --type directory --path "$xccovarchive_file" --id "$test_ref" --output-path tmp.xccovarchive
+    if [ $? -ne 0 ]; then 
+      echo "Failed to execute xcrun xcresulttool export for reference ${test_ref}" 1>&2
+      exit -1
+    fi
+  done
   echo "tmp.xccovarchive"
 }
 

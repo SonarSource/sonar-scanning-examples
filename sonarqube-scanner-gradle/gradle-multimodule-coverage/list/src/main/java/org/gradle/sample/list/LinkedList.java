@@ -47,9 +47,7 @@ public class LinkedList {
 
     public int size() {
         int size = 0;
-
         for (Node it = head; it != null; ++size, it = it.next) {}
-
         return size;
     }
 

@@ -41,8 +41,11 @@ tasks.register("codeCoverageReport", JacocoReport) {
     subprojects { subproject ->
         subproject.plugins.withType(JacocoPlugin).configureEach {
             subproject.tasks.matching({ t -> t.extensions.findByType(JacocoTaskExtension) }).configureEach { testTask ->
-                sourceSets subproject.sourceSets.main
-                executionData(testTask)
+                //the jacoco extension may be disabled for some projects
+                if (testTask.extensions.getByType(JacocoTaskExtension).isEnabled()) {
+                    sourceSets subproject.sourceSets.main
+                    executionData(testTask)
+                }
             }
 
             // To automatically run `test` every time `./gradlew codeCoverageReport` is called,

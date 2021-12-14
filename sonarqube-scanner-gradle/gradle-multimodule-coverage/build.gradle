@@ -45,6 +45,8 @@ tasks.register("codeCoverageReport", JacocoReport) {
                 if (testTask.extensions.getByType(JacocoTaskExtension).isEnabled()) {
                     sourceSets subproject.sourceSets.main
                     executionData(testTask)
+                }else{
+                    logger.warn('Jacoco extension is disabled for test task \'{}\' in project \'{}\'. this test task will be excluded from jacoco report.',testTask.getName(),subproject.getName())
                 }
             }
 

@@ -22,6 +22,11 @@ function xccov_to_generic {
       echo "Coverage FILE NOT FOUND AT PATH: $xccovarchive_file" 1>&2;
       exit 1
     fi
+
+    if [ $sdk_version -gt 10 ]; then # Apply optimization
+       xccovarchive_file=$(optimize_format)
+    fi
+
     local xccov_options=""
     if [[ $xccovarchive_file == *".xcresult"* ]]; then
       xccov_options="--archive"
@@ -33,4 +38,52 @@ function xccov_to_generic {
   echo '</coverage>'
 }
 
+function check_sdk_version {
+  sdk_major_version=`xcrun --show-sdk-version | cut -d . -f 1`
+
+  if [ $? -ne 0 ]; then 
+    echo 'Failed to execute xcrun show-sdk-version' 1>&2
+    exit -1
+  fi
+  echo $sdk_major_version
+}
+
+function cleanup_tmp_files {
+  rm -rf tmp.json
+  rm -rf tmp.xccovarchive
+}
+
+# Optimize coverage files conversion time by exporting to a clean xcodearchive directory
+# Credits to silverhammermba on issue #68 for the suggestion
+function optimize_format {
+  cleanup_tmp_files
+  xcrun xcresulttool get --format json --path "$xccovarchive_file" > tmp.json
+  if [ $? -ne 0 ]; then 
+    echo 'Failed to execute xcrun xcresulttool get' 1>&2
+    exit -1
+  fi
+
+  # local reference=$(jq -r '.actions._values[2].actionResult.coverage.archiveRef.id._value'  tmp.json)
+  local reference=$(jq -r '.actions._values[]|[.actionResult.coverage.archiveRef.id],._values'  tmp.json | grep value | cut -d : -f 2 | cut -d \" -f 2)
+  if [ $? -ne 0 ]; then 
+    echo 'Failed to execute jq (https://stedolan.github.io/jq/)' 1>&2
+    exit -1
+  fi
+  # $reference can be a list of IDs (from a merged .xcresult bundle of multiple test plans)
+  for test_ref in $reference; do
+    xcrun xcresulttool export --type directory --path "$xccovarchive_file" --id "$test_ref" --output-path tmp.xccovarchive
+    if [ $? -ne 0 ]; then 
+      echo "Failed to execute xcrun xcresulttool export for reference ${test_ref}" 1>&2
+      exit -1
+    fi
+  done
+  echo "tmp.xccovarchive"
+}
+
+sdk_version=$(check_sdk_version)
+if [ $? -ne 0 ]; then
+  exit -1
+fi
+
 xccov_to_generic "$@"
+cleanup_tmp_files

@@ -22,8 +22,9 @@ function xccov_to_generic {
       echo "Coverage FILE NOT FOUND AT PATH: $xccovarchive_file" 1>&2;
       exit 1
     fi
-
-    if [ $sdk_version -gt 10 ]; then # Apply optimization
+    
+    optimize=$(supports_optimization)
+    if [ $optimize == 1 ]; then # Apply optimization
        xccovarchive_file=$(optimize_format)
     fi
 
@@ -38,14 +39,14 @@ function xccov_to_generic {
   echo '</coverage>'
 }
 
-function check_sdk_version {
+function supports_optimization {
   sdk_major_version=`xcrun --show-sdk-version | cut -d . -f 1`
 
-  if [ $? -ne 0 ]; then 
-    echo 'Failed to execute xcrun show-sdk-version' 1>&2
-    exit -1
+  if [ $? -ne 0 ] || [$sdk_major_version -gt 10]; then 
+    echo 1
+  else
+    echo 0
   fi
-  echo $sdk_major_version
 }
 
 function cleanup_tmp_files {
@@ -79,11 +80,6 @@ function optimize_format {
   done
   echo "tmp.xccovarchive"
 }
-
-sdk_version=$(check_sdk_version)
-if [ $? -ne 0 ]; then
-  exit -1
-fi
 
 xccov_to_generic "$@"
 cleanup_tmp_files

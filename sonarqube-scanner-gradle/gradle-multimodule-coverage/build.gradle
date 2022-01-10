@@ -18,6 +18,7 @@ subprojects {
     sonarqube {
         properties {
             property 'sonar.coverage.jacoco.xmlReportPaths', "$projectDir.parentFile.path/build/reports/jacoco/codeCoverageReport/codeCoverageReport.xml"
+            property 'sonar.qualitygate.wait' , true
         }
     }
 

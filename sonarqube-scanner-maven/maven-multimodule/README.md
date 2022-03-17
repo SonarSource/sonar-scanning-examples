@@ -76,15 +76,13 @@ See [pom.xml](tests/pom.xml)
 ```
 
 This will create a report in `tests/target/site/jacoco-aggregate/jacoco.xml`. To import this report we will set
-`sonar.coverage.jacoco.xmlReportPaths` property in every module on which this coverage should be imported
+`sonar.coverage.jacoco.xmlReportPaths` property with the `${maven.multiModuleProjectDirectory}` so every module knows where the coverage should be imported from
 
 ```xml
 <properties>
-  <sonar.coverage.jacoco.xmlReportPaths>${project.basedir}/../${aggregate.report.dir}</sonar.coverage.jacoco.xmlReportPaths>
+  <sonar.coverage.jacoco.xmlReportPaths>${maven.multiModuleProjectDirectory}/tests/target/site/jacoco-aggregate/jacoco.xml</sonar.coverage.jacoco.xmlReportPaths>
 </properties>
 ```
-
-We use `${aggregate.report.dir}` which is defined in the top level [`pom.xml`](pom.xml) to avoid duplicating the location of the report in every module.
 
 Alternately we can set this property on the command line with the `-D` switch:
 

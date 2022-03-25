@@ -5,7 +5,7 @@ This example demonstrates how to analyze a .NET Solution with the SonarScanner f
 ## Prerequisites
 
 * [SonarQube](http://www.sonarqube.org/downloads/) 7.9+ LTS
-* [SonarScanner for MSBuild](http://docs.sonarqube.org/display/SCAN/Analyzing+with+SonarQube+Scanner+for+MSBuild) 4.1.0+
+* [SonarScanner for .NET](https://docs.sonarqube.org/latest/analysis/scan/sonarscanner-for-msbuild/) 4.1.0+
 * [SonarSource C# Plugin](http://redirect.sonarsource.com/plugins/csharp.html) 7.15+
 * [Compatible .NET Build Environment](https://docs.sonarqube.org/latest/analysis/scan/sonarscanner-for-msbuild/)
 

@@ -26,7 +26,7 @@
 
 [SonarQube-Scanner-Swift Code Coverage](swift-coverage/)
 
-**_NOTE:_** All examples related to C, C++ and Objective-C can be found here: [sonarsource-cfamily-examples](https://github.com/sonarsource-cfamily-examples)
+**_NOTE:_** All SonarQube Scanner examples for C, C++ and Objective-C can be found [here](https://github.com/sonarsource-cfamily-examples?q=-sq).
 
 ## License
 

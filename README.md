@@ -8,11 +8,7 @@
 
 [Java - Jacoco Code Coverage](doc/jacoco.md)
 
-[Objective-C - LLVM Coverage](objc-llvm-coverage/)
-
 [SonarQube-Scanner-Ant](sonarqube-scanner-ant/)
-
-[SonarQube-Scanner-Build-Wrapper-Linux](sonarqube-scanner-build-wrapper-linux/)
 
 [SonarQube-Scanner-Gradle](sonarqube-scanner-gradle/gradle-basic/)
 
@@ -29,6 +25,8 @@
 [SonarQube-Scanner-MSBuild CSharp](sonarqube-scanner-msbuild/CSharpProject/)
 
 [SonarQube-Scanner-Swift Code Coverage](swift-coverage/)
+
+**_NOTE:_** All examples related to C, C++ and Objective-C can be found here: [sonarsource-cfamily-examples](https://github.com/sonarsource-cfamily-examples)
 
 ## License
 

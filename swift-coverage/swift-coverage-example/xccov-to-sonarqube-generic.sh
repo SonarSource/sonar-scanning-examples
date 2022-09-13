@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 set -euo pipefail
 
-if [[ $# -ne 1 ]]; then
+if [[ $# -lt 1 ]]; then
 	echo -e "Export coverage from Xcode xcresult or xccovarchive in Sonarcube Generic Test Data format\n"
     echo "Usage: $(basename $0) <xcresult/xccovarchive> [<xcresult/xccovarchive> ...]" >&2
     exit 2

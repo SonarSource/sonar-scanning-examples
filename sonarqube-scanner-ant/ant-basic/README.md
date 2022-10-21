@@ -4,8 +4,8 @@ This example demonstrates how to analyze a simple project with Apache Ant.
 
 ## Prerequisites
 
-* [SonarQube](http://www.sonarqube.org/downloads/) 7.9+
-* [SonarQube Scanner for Ant](http://redirect.sonarsource.com/doc/ant-task.html) 2.7+
+* [SonarQube](http://www.sonarqube.org/downloads/) 8.9 LTS or Latest
+* [SonarQube Scanner for Ant](http://redirect.sonarsource.com/doc/ant-task.html) 2.7.1+
 * [Ant](http://ant.apache.org/) 1.10.0 or higher
 
 ## Usage

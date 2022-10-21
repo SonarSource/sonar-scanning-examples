@@ -4,9 +4,8 @@ This example demonstrates how to import Xcode Coverage data (aka ProfData) to So
 
 ## Prerequisites
 
-* [SonarQube](http://www.sonarqube.org/downloads/) 6.7+
-* [SonarQube Scanner](http://docs.sonarqube.org/display/SCAN/Analyzing+with+SonarQube+Scanner) 3.1+
-* [SonarSource Swift Plugin](http://redirect.sonarsource.com/plugins/swift.html) 3.2+
+* [SonarQube](http://www.sonarqube.org/downloads/) 8.9 LTS or Latest
+* [SonarQube Scanner](http://docs.sonarqube.org/display/SCAN/Analyzing+with+SonarQube+Scanner) 4.7+
 
 ## Usage
 

@@ -22,3 +22,9 @@ bw-outputs/
 
 # MSBuild
 obj/
+
+# JS/TS dependencies
+node_modules
+
+# XCode folders
+project.xcworkspace

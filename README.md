@@ -30,6 +30,8 @@
 
 [SonarQube-Scanner-Swift Code Coverage](swift-coverage/)
 
+[Sonar-Scanner-npm](sonar-scanner-npm/)
+
 ## License
 
 Copyright 2016-2020 SonarSource.

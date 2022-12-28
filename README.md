@@ -8,11 +8,7 @@
 
 [Java - Jacoco Code Coverage](doc/jacoco.md)
 
-[Objective-C - LLVM Coverage](objc-llvm-coverage/)
-
 [SonarQube-Scanner-Ant](sonarqube-scanner-ant/)
-
-[SonarQube-Scanner-Build-Wrapper-Linux](sonarqube-scanner-build-wrapper-linux/)
 
 [SonarQube-Scanner-Gradle](sonarqube-scanner-gradle/gradle-basic/)
 
@@ -32,8 +28,10 @@
 
 [Sonar-Scanner-npm](sonar-scanner-npm/)
 
+**_NOTE:_** All SonarQube Scanner examples for C, C++ and Objective-C can be found [here](https://github.com/sonarsource-cfamily-examples?q=-sq).
+
 ## License
 
-Copyright 2016-2020 SonarSource.
+Copyright 2016-2022 SonarSource.
 
 Licensed under the [GNU Lesser General Public License, Version 3.0](http://www.gnu.org/licenses/lgpl.txt)

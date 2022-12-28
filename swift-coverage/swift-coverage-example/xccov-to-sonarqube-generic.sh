@@ -23,7 +23,7 @@ function xccov_to_generic {
       exit 1
     fi
 
-    if [ $sdk_version -gt 10 ]; then # Apply optimization
+    if [ $xcode_version -gt 10 ]; then # Apply optimization
        xccovarchive_file=$(optimize_format)
     fi
 
@@ -38,14 +38,14 @@ function xccov_to_generic {
   echo '</coverage>'
 }
 
-function check_sdk_version {
-  sdk_major_version=`xcrun --show-sdk-version | cut -d . -f 1`
+function check_xcode_version {
+  xcode_major_version=`xcodebuild -version | head -n 1 | cut -d " " -f2 | cut -d . -f1`
 
   if [ $? -ne 0 ]; then 
     echo 'Failed to execute xcrun show-sdk-version' 1>&2
     exit -1
   fi
-  echo $sdk_major_version
+  echo $xcode_major_version
 }
 
 function cleanup_tmp_files {
@@ -80,7 +80,7 @@ function optimize_format {
   echo "tmp.xccovarchive"
 }
 
-sdk_version=$(check_sdk_version)
+xcode_version=$(check_xcode_version)
 if [ $? -ne 0 ]; then
   exit -1
 fi

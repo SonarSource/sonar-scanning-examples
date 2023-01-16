@@ -1,6 +1,19 @@
 #!/usr/bin/env bash
 set -euo pipefail
 
+function convert_xccov_to_xml {
+    sed -n                                                                                       \
+        -e '/:$/s/&/\&amp;/g;s/^\(.*\):$/  <file path="\1">/p'                                   \
+        -e 's/^ *\([0-9][0-9]*\): 0.*$/    <lineToCover lineNumber="\1" covered="false"\/>/p'    \
+        -e 's/^ *\([0-9][0-9]*\): [1-9].*$/    <lineToCover lineNumber="\1" covered="true"\/>/p' \
+        -e 's/^$/  <\/file>/p'
+}
+
+function convert_archive {
+  local xccovarchive_file="$1"
+  xcrun xccov view --archive "$xccovarchive_file" | convert_xccov_to_xml
+}
+
 function convert_file {
   local xccovarchive_file="$1"
   local file_name="$2"
@@ -21,6 +34,11 @@ function xccov_to_generic {
     then
       echo "Coverage FILE NOT FOUND AT PATH: $xccovarchive_file" 1>&2;
       exit 1
+    fi
+
+    if (( xcode_version >= 14 )) && [[ $xccovarchive_file == *".xcresult"* ]]; then
+      convert_archive "$xccovarchive_file"
+      continue
     fi
 
     if [ $xcode_version -gt 10 ]; then # Apply optimization

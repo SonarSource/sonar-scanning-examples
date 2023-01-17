@@ -36,7 +36,7 @@ function xccov_to_generic {
       exit 1
     fi
 
-    if (( xcode_version >= 14 )) && [[ $xccovarchive_file == *".xcresult"* ]]; then
+    if (( xcode_version >= 13 )) && [[ $xccovarchive_file == *".xcresult"* ]]; then
       convert_archive "$xccovarchive_file"
       continue
     fi

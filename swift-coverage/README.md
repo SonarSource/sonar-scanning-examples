@@ -19,30 +19,42 @@ xcodebuild -project swift-coverage-example.xcodeproj/ -scheme swift-coverage-exa
 
 1.b Using xccov (recommended)
 
-Create code coverage report
+The `xccov` command line tool is the recommended option to view Xcode coverage
+data and is more straightforward to use than the older `llvm-cov` tool. With
+the script `xccov-to-sonarqube-generic.sh`, you can convert Xcode test results
+stored in `*.xcresult` folders to a SonarQube generic XML file and then pass it
+to the Sonar Scanner to get your Xcode coverage data into SonarQube.
+
+First, convert your Xcode coverage to the SonarQube generic format with the
+command:
 
 ```shell
 bash xccov-to-sonarqube-generic.sh Build/Logs/Test/*.xcresult/ >Coverage.xml
 ```
 
-Import code coverage report
+Then, configure the report file with the `sonar.coverageReportPaths` option
+when executing sonar-scanner:
 
 ```shell
-sonar-scanner -Dsonar.projectKey=TestCoverage -Dsonar.sources=. -Dsonar.coverageReportPaths=Coverage.xml
+sonar-scanner -Dsonar.projectKey=TestCoverage -Dsonar.coverageReportPaths=Coverage.xml
 ```
 
 1.b Using llvm-cov 
 
-Create code coverage report
+You can also provide code coverage data using the `llvm-cov` format. The
+process of generating an llvm-cov report requires several steps to get the
+coverage for the application executable and the dynamic library binaries. For
+the project example, you can use the following command where `<id>` should
+match the folder name under `ProfileData`:
 
 ```shell
 xcrun --run llvm-cov show -instr-profile=Build/Build/ProfileData/<id>/Coverage.profdata \
       Build/Build/Products/Debug/swift-coverage-example.app/Contents/MacOS/swift-coverage-example \
-      -object ./Build/Build/Products/Debug/swift-coverage-example.app/Contents/PlugIns/swift-coverage-exampleTests.xctest/Contents/MacOS/swift-coverage-exampleTests \
       >Coverage.report
 ```
 
-Import code coverage report
+Then, configure the report file with the `sonar.swift.coverage.reportPaths`
+option when executing sonar-scanner:
 
 ```shell
 sonar-scanner -Dsonar.projectKey=TestCoverage -Dsonar.sources=. -Dsonar.swift.coverage.reportPaths=Coverage.report

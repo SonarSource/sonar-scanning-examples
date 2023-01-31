@@ -24,11 +24,11 @@ data and is more straightforward to use than the older `llvm-cov` tool. With
 the script `xccov-to-sonarqube-generic.sh`, you can convert Xcode test results
 stored in `*.xcresult` folders to the [SonarQube generic test coverage format](https://docs.sonarqube.org/latest/analyzing-source-code/test-coverage/generic-test-data/).
 
-First, convert your Xcode coverage to the SonarQube format with the
-command:
+First, locate the Xcode test result folder and convert the coverage data to the
+SonarQube format using the script as in the following example:
 
 ```shell
-bash xccov-to-sonarqube-generic.sh Build/Logs/Test/*.xcresult/ >Coverage.xml
+bash xccov-to-sonarqube-generic.sh Build/Logs/Test/Run-swift-coverage-example-2023.01.27_16-07-44-+0100.xcresult >Coverage.xml
 ```
 
 Then, use the parameter `sonar.coverageReportPaths` to reference the generated report:
@@ -45,10 +45,12 @@ You can also provide code coverage data using the `llvm-cov` format. The
 process of generating an llvm-cov report requires several steps to get the
 coverage for the application executable and the dynamic library binaries.
 
-In the case of the project example, first, locate the `Coverage.profdata` file under the `ProfileData` folder. Then, generate an `llvm-cov` report with the command:
+In the case of the project example, first, locate the `Coverage.profdata` file
+under the `ProfileData` folder. Then, generate an `llvm-cov` report as in the
+following example:
 
 ```shell
-xcrun --run llvm-cov show -instr-profile=Build/Build/ProfileData/xxxx/Coverage.profdata \
+xcrun --run llvm-cov show -instr-profile=Build/Build/ProfileData/00006000-000428843C29801E/Coverage.profdata \
       Build/Build/Products/Debug/swift-coverage-example.app/Contents/MacOS/swift-coverage-example \
       >Coverage.report
 ```

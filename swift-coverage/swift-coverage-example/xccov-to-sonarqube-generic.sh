@@ -26,7 +26,7 @@ if ! xcode_version="$(xcodebuild -version | sed -n '1s/^Xcode \([0-9.]*\)$/\1/p'
   echo 'Failed to get Xcode version' 1>&2
   exit 1
 elif check_xcode_version ${xcode_version//./ }; then
-  echo "Xcode version '$xcode_version' not supported version 13.3 or above is required" 1>&2;
+  echo "Xcode version '$xcode_version' not supported, version 13.3 or above is required" 1>&2;
   exit 1
 fi
 

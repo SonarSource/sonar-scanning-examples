@@ -1,11 +1,12 @@
 # SonarQube-Scanner for Swift Code Coverage
 
-This example demonstrates how to import Xcode Coverage data to SonarQube for a Swift project. It supports Xcode 13 and above.
+This example demonstrates how to import Xcode Coverage data to SonarQube for a Swift project.
 
 ## Prerequisites
 
-* [SonarQube](http://www.sonarqube.org/downloads/) 8.9 LTS or Latest
-* [SonarQube Scanner](http://docs.sonarqube.org/display/SCAN/Analyzing+with+SonarQube+Scanner) 4.7+
+* [SonarQube](https://www.sonarsource.com/products/sonarqube/downloads/) 8.9 LTS or Latest
+* [SonarQube Scanner](https://docs.sonarqube.org/latest/analyzing-source-code/scanners/sonarscanner/) 4.7+
+* [Xcode](https://developer.apple.com/xcode/) 13.3+
 
 ## Usage
 
@@ -24,11 +25,10 @@ data and is more straightforward to use than the older `llvm-cov` tool. With
 the script `xccov-to-sonarqube-generic.sh`, you can convert Xcode test results
 stored in `*.xcresult` folders to the [SonarQube generic test coverage format](https://docs.sonarqube.org/latest/analyzing-source-code/test-coverage/generic-test-data/).
 
-First, locate the Xcode test result folder and convert the coverage data to the
-SonarQube format using the script as in the following example:
+First, locate the Xcode test result folder (`*.xcresult`). Then use it as a parameter to the script converting the coverage data to the SonarQube format as in the following example:
 
 ```shell
-bash xccov-to-sonarqube-generic.sh Build/Logs/Test/Run-swift-coverage-example-2023.01.27_16-07-44-+0100.xcresult >Coverage.xml
+bash xccov-to-sonarqube-generic.sh Build/Logs/Test/Run-swift-coverage-example-2023.01.27_16-07-44-+0100.xcresult/ >Coverage.xml
 ```
 
 Then, use the parameter `sonar.coverageReportPaths` to reference the generated report:
@@ -47,7 +47,7 @@ coverage for the application executable and the dynamic library binaries.
 
 In the case of the project example, first, locate the `Coverage.profdata` file
 under the `ProfileData` folder. Then, generate an `llvm-cov` report as in the
-following example:
+following example (the located `Coverage.profdata` file should be the value of `-instr-profile` parameter):
 
 ```shell
 xcrun --run llvm-cov show -instr-profile=Build/Build/ProfileData/00006000-000428843C29801E/Coverage.profdata \

@@ -17,28 +17,25 @@ function xccov_to_generic {
   echo '</coverage>'
 }
 
-function check_xcode_version {
-  xcode_major_version=`xcodebuild -version | head -n 1 | cut -d " " -f2 | cut -d . -f1`
-
-  if [ $? -ne 0 ]; then 
-    echo 'Failed to execute xcrun show-sdk-version' 1>&2
-    exit -1
-  fi
-  echo $xcode_major_version
+function check_xcode_version() {
+  local major=${1:-0} minor=${2:-0}
+  return $(( (major >= 14) || (major == 13 && minor >= 3) ))
 }
 
-xcode_version=$(check_xcode_version)
-if [ $? -ne 0 ]; then
-  exit -1
+if ! xcode_version="$(xcodebuild -version | sed -n '1s/^Xcode \([0-9.]*\)$/\1/p')"; then
+  echo 'Failed to get Xcode version' 1>&2
+  exit 1
+elif check_xcode_version ${xcode_version//./ }; then
+  echo "Xcode version '$xcode_version' not supported version 13.3 or above is required" 1>&2;
+  exit 1
 fi
 
 xcresult="$1"
-
-if (( xcode_version < 13 )); then
-  echo "Xcode version not supported ($xcode_version) version 13 or above is required" 1>&2;
+if [[ $# -ne 1 ]]; then
+  echo "Invalid number of arguments. Expecting 1 path matching '*.xcresult'"
   exit 1
 elif [[ ! -d $xcresult ]]; then
-  echo "Coverage file not found at path: $xcresult" 1>&2;
+  echo "Path not found: $xcresult" 1>&2;
   exit 1
 elif [[ $xcresult != *".xcresult"* ]]; then
   echo "Expecting input to match '*.xcresult', got: $xcresult" 1>&2;

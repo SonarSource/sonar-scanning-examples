@@ -10,15 +10,17 @@ This example demonstrates how to import Xcode Coverage data to SonarQube for a S
 
 ## Usage
 
-1. Run from "swift-coverage-example"
+Run the following commands in folder `swift-coverage-example`.
 
-1.a Build project
+### Build project
+
+Use `xcodebuild` to build and test the project example with the command:
 
 ```shell
 xcodebuild -project swift-coverage-example.xcodeproj/ -scheme swift-coverage-example -derivedDataPath Build/ -enableCodeCoverage YES clean build test CODE_SIGN_IDENTITY="" CODE_SIGNING_REQUIRED=NO
 ```
 
-1.b Using xccov (recommended)
+### Using xccov (recommended)
 
 The `xccov` command line tool is the recommended option to view Xcode coverage
 data and is more straightforward to use than the older `llvm-cov` tool. With
@@ -39,7 +41,7 @@ sonar-scanner -Dsonar.coverageReportPaths=Coverage.xml
 
 This parameter accepts a comma-separated list of files, which means you can also provide multiple coverage reports from multiple test results.
 
-1.b Using llvm-cov 
+### Using llvm-cov 
 
 You can also provide code coverage data using the `llvm-cov` format. The
 process of generating an llvm-cov report requires several steps to get the
@@ -61,4 +63,6 @@ Finally, use the parameter `sonar.swift.coverage.reportPaths` to reference the g
 sonar-scanner -Dsonar.swift.coverage.reportPaths=Coverage.report
 ```
 
-2. Verify that for the project "swift-coverage-example" the coverage value is around 75%.
+### Verify in SonarQube
+
+Verify in SonarQube that for the project `swift-coverage-example` the coverage value is around 75%.

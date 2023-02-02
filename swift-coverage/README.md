@@ -65,4 +65,4 @@ sonar-scanner -Dsonar.swift.coverage.reportPaths=Coverage.report
 
 ### Verify in SonarQube
 
-Verify in SonarQube that for the project "swift-coverage-example" the coverage value is around 75%.
+Verify in SonarQube that for the project `swift-coverage-example` the coverage value is around 75%.

@@ -1,11 +1,12 @@
 # SonarQube-Scanner for Swift Code Coverage
 
-This example demonstrates how to import Xcode Coverage data (aka ProfData) to SonarQube for a Swift project.
+This example demonstrates how to import Xcode Coverage data to SonarQube for a Swift project.
 
 ## Prerequisites
 
-* [SonarQube](http://www.sonarqube.org/downloads/) 8.9 LTS or Latest
-* [SonarQube Scanner](http://docs.sonarqube.org/display/SCAN/Analyzing+with+SonarQube+Scanner) 4.7+
+* [SonarQube](https://www.sonarsource.com/products/sonarqube/downloads/) 8.9 LTS or Latest
+* [SonarQube Scanner](https://docs.sonarqube.org/latest/analyzing-source-code/scanners/sonarscanner/) 4.7+
+* [Xcode](https://developer.apple.com/xcode/) 13.3+
 
 ## Usage
 
@@ -17,22 +18,47 @@ This example demonstrates how to import Xcode Coverage data (aka ProfData) to So
 xcodebuild -project swift-coverage-example.xcodeproj/ -scheme swift-coverage-example -derivedDataPath Build/ -enableCodeCoverage YES clean build test CODE_SIGN_IDENTITY="" CODE_SIGNING_REQUIRED=NO
 ```
 
-1.b Create code coverage report
+1.b Using xccov (recommended)
 
-**Note** : The <device_id> used in the below command can be found from the XCode tools command: `instruments -s devices`
+The `xccov` command line tool is the recommended option to view Xcode coverage
+data and is more straightforward to use than the older `llvm-cov` tool. With
+the script `xccov-to-sonarqube-generic.sh`, you can convert Xcode test results
+stored in `*.xcresult` folders to the [SonarQube generic test coverage format](https://docs.sonarqube.org/latest/analyzing-source-code/test-coverage/generic-test-data/).
 
-XCode version | Command
---- | ---
-XCode 8+ - 9.2 | `xcrun llvm-cov show -instr-profile=Build/ProfileData/<device_id>/Coverage.profdata Build/Products/Debug/swift-coverage-example.app/Contents/MacOS/swift-coverage-example > Coverage.report`
-XCode 9.3 - 9.4.1 | `bash xccov-to-sonarqube-generic.sh Build/Logs/Test/*.xccovarchive/ > sonarqube-generic-coverage.xml`
-XCode 10 | `bash xccov-to-sonarqube-generic.sh Build/Logs/Test/*.xcresult/*_Test/*.xccovarchive/ > sonarqube-generic-coverage.xml`
-XCode 11 & 12 | `bash xccov-to-sonarqube-generic.sh Build/Logs/Test/*.xcresult/ > sonarqube-generic-coverage.xml` <br> **Requires [jq](https://stedolan.github.io/jq/) (remove the optimize_format function use if you can't use it)**
+First, locate the Xcode test result folder (`*.xcresult`). Then use it as a parameter to the script converting the coverage data to the SonarQube format as in the following example:
 
-1.c Import code coverage report
+```shell
+bash xccov-to-sonarqube-generic.sh Build/Logs/Test/Run-swift-coverage-example-2023.01.27_16-07-44-+0100.xcresult/ >Coverage.xml
+```
 
-XCode version | Command
---- | ---
-XCode 8.x - 9.2 | `sonar-scanner -Dsonar.projectKey=TestCoverage -Dsonar.sources=. -Dsonar.swift.coverage.reportPaths=Coverage.report`
-XCode 9.3+ | `sonar-scanner -Dsonar.projectKey=TestCoverage -Dsonar.sources=. -Dsonar.coverageReportPaths=sonarqube-generic-coverage.xml`
+Then, use the parameter `sonar.coverageReportPaths` to reference the generated report:
 
-2. Verify that for the project "swift-coverage-example" the coverage value is > 65%.
+```shell
+sonar-scanner -Dsonar.coverageReportPaths=Coverage.xml
+```
+
+This parameter accepts a comma-separated list of files, which means you can also provide multiple coverage reports from multiple test results.
+
+1.b Using llvm-cov 
+
+You can also provide code coverage data using the `llvm-cov` format. The
+process of generating an llvm-cov report requires several steps to get the
+coverage for the application executable and the dynamic library binaries.
+
+In the case of the project example, first, locate the `Coverage.profdata` file
+under the `ProfileData` folder. Then, generate an `llvm-cov` report as in the
+following example (the located `Coverage.profdata` file should be the value of `-instr-profile` parameter):
+
+```shell
+xcrun --run llvm-cov show -instr-profile=Build/Build/ProfileData/00006000-000428843C29801E/Coverage.profdata \
+      Build/Build/Products/Debug/swift-coverage-example.app/Contents/MacOS/swift-coverage-example \
+      >Coverage.report
+```
+
+Finally, use the parameter `sonar.swift.coverage.reportPaths` to reference the generated report. This parameter also accepts a comma-separated list of files.
+
+```shell
+sonar-scanner -Dsonar.swift.coverage.reportPaths=Coverage.report
+```
+
+2. Verify that for the project "swift-coverage-example" the coverage value is around 75%.

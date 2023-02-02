@@ -3,4 +3,5 @@ Index/
 Logs/
 Build/
 .scannerwork
-sonarqube-generic-coverage.xml
+Coverage.xml
+Coverage.report

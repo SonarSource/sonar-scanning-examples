@@ -5,7 +5,7 @@ plugins {
     id "org.sonarqube" version "4.0.0.2929"
 }
 
-description = 'Example of SonarQube Scanner for Gradle Usage'
+description = 'Example of Sonar Scanner for Gradle Usage'
 version = '1.0'
 
 sonar {

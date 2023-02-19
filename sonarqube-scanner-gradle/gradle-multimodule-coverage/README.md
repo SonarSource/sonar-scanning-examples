@@ -5,26 +5,26 @@
 This example project demonstrates how to analyze a multimodule project with Jacoco code coverage built with Gradle.
 
 ## Prerequisites
-* [SonarQube](http://www.sonarqube.org/downloads/) 8.9 LTS or Latest
+* [SonarQube](http://www.sonarqube.org/downloads/) 9.9 LTS or Latest
 * A Gradle wrapper is included that bundles Gradle. All other required plugins will be pulled by Gradle as needed.
 
 ## Usage
 Run the following command (update `sonar.host.url`, `sonar.login`, `sonar.password`, etc. properties as needed either at command line or in `sonar.gradle`):
 * On Unix-like systems:
-  ` ./gradlew clean build codeCoverageReport -Dsonar.host.url=http://localhost:9000 -Dsonar.login=admin -Dsonar.password=admin sonarqube`
+  ` ./gradlew clean build codeCoverageReport -Dsonar.host.url=http://localhost:9000 -Dsonar.login=admin -Dsonar.password=admin sonar`
 * On Windows:
-  `.\gradlew.bat clean build codeCoverageReport -Dsonar.host.url=http://localhost:9000 -Dsonar.login=admin -Dsonar.password=admin sonarqube`
+  `.\gradlew.bat clean build codeCoverageReport -Dsonar.host.url=http://localhost:9000 -Dsonar.login=admin -Dsonar.password=admin sonar`
 
 ## Coverage
 This example project is based on the original example project from Gradle's [sample project](https://docs.gradle.org/6.4-rc-1/samples/sample_jvm_multi_project_with_code_coverage.html) for reporting code coverage for Jacoco (Gradle 6.4-rc-1 and Gradle 6.6.1) as well as Andranik Azizbekian's [article](https://developer.disqo.com/blog/setup-android-project/)  integrating SonarQube with a Kotlin Android project.
 
 Here are the important changes compared to the original Gradle sample project linked above in order for SonarQube to pick up the code coverage metric:
 * ensure `settings.gradle` references your modules
-* add `id org.sonarqube" version "3.2.0"` to the `plugins{}` block to root `build.gradle`  (use a different SonarScanner for Gradle version if you so desire)
+* add `id org.sonarqube" version "4.0.0.2929"` to the `plugins{}` block to root `build.gradle`  (use a different SonarScanner for Gradle version if you so desire)
 * add the following to `subprojects{}` block of root `build.gradle`:
     * ```shell
       apply plugin: "org.sonarqube"
-      sonarqube {
+      sonar {
           properties {
               property "sonar.coverage.jacoco.xmlReportPaths", "$projectDir.parentFile.path/build/reports/jacoco/codeCoverageReport/codeCoverageReport.xml"
           }
@@ -33,7 +33,7 @@ Here are the important changes compared to the original Gradle sample project li
 * add a new file to root of project called `sonar.gradle` with the following contents:
     * ```shell
       apply plugin: "org.sonarqube"
-      sonarqube {
+      sonar {
          properties {
             property 'sonar.projectName', 'gradle-multimodule'
             property "sonar.projectKey", "gradle-multimodule"

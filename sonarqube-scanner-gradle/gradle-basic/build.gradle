@@ -2,13 +2,13 @@ plugins {
     id "jacoco"
     id "java"
     id "application"
-    id "org.sonarqube" version "3.4.0.2513"
+    id "org.sonarqube" version "4.0.0.2929"
 }
 
-description = 'Example of SonarQube Scanner for Gradle Usage'
+description = 'Example of Sonar Scanner for Gradle Usage'
 version = '1.0'
 
-sonarqube {
+sonar {
     properties {
         property 'sonar.projectName', 'Example of SonarQube Scanner for Gradle Usage'
     }
@@ -18,22 +18,27 @@ sonarqube {
 repositories {
     // Use jcenter for resolving your dependencies.
     // You can declare any Maven/Ivy/file repository here.
-    jcenter()
+    mavenCentral()
 }
 
 dependencies {
     // This dependency is found on compile classpath of this component and consumers.
-    implementation 'com.google.guava:guava:21.0'
+    implementation 'com.google.guava:guava:31.1-jre'
 
     // Use JUnit test framework
-    testImplementation 'junit:junit:4.12'
+    testImplementation 'org.junit.jupiter:junit-jupiter:5.9.2'
 }
 
 // Define the main class for the application
 mainClassName = 'App'
 
+test {
+    useJUnitPlatform()
+}
+
 jacocoTestReport {
     reports {
-        xml.enabled true
+        xml.required = true
+        html.outputLocation = layout.buildDirectory.dir('jacocoHtml')
     }
 }

@@ -1,6 +1,6 @@
 plugins {
     id "java-library"
-    id "org.sonarqube" version "3.4.0.2513"
+    id "org.sonarqube" version "4.0.0.2929"
 }
 
 allprojects {
@@ -11,9 +11,9 @@ allprojects {
   version = "$baseVersion" + (snapshotVersion ? "-SNAPSHOT" : "")
 }
 
-sonarqube {
+sonar {
     properties {
-        property "sonar.projectName", "Example of SonarQube Scanner for Gradle - Multimodule"
+        property "sonar.projectName", "Example of Sonar Scanner for Gradle - Multimodule"
         property "sonar.projectKey", "org.sonarqube:gradle-multimodule"
     }
 }
@@ -21,16 +21,14 @@ sonarqube {
 subprojects {
     apply plugin: 'java-library'
     apply plugin: 'org.sonarqube'
-    sonarqube {
+    sonar {
         properties {
-            //property "sonar.java.libraries", 
-   	}
+            //property "sonar.java.libraries",
+   	    }
     }
 }
 
 // In this section you declare where to find the dependencies of your project
 repositories {
-    // Use jcenter for resolving your dependencies.
-    // You can declare any Maven/Ivy/file repository here.
-    jcenter()
+    mavenCentral()
 }

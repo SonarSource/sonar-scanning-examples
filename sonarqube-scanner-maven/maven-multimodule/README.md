@@ -9,7 +9,7 @@ For a basic example see [basic maven project](../maven-basic/README.md).
 * Build the project, execute all the tests and analyze the project with SonarQube Scanner for Maven:
 
 ```shell
-        mvn clean verify sonar:sonar
+./mvnw clean verify sonar:sonar
 ```
 
 ## Description
@@ -87,7 +87,7 @@ This will create a report in `tests/target/site/jacoco-aggregate/jacoco.xml`. To
 Alternately we can set this property on the command line with the `-D` switch:
 
 ```shell
-mvn -Dsonar.coverage.jacoco.xmlReportPaths=C:\projects\sonar-scanning-examples\sonarscanner-maven-aggregate\tests\target\site\jacoco-aggregate\jacoco.xml clean verify sonar:sonar 
+./mvnw -Dsonar.coverage.jacoco.xmlReportPaths=C:\projects\sonar-scanning-examples\sonarscanner-maven-aggregate\tests\target\site\jacoco-aggregate\jacoco.xml clean verify sonar:sonar 
 ```
 
 We have to use an absolute path, because the report will be imported for each module separately and the path is resolved relative to the module dir.

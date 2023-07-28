@@ -7,7 +7,7 @@ This example repository exemplifies usage of integrating [SonarScanner for Gradl
 ## Example Usage
 Obtain your user token from your own account. See [Generating and using tokens](https://docs.sonarqube.org/latest/user-guide/user-account/generating-and-using-tokens/) for more information.
 
-Run the following command (update `sonar.host.url`, etc. properties as needed either at command line or in `build.gradle.kts`'s `sonar` block):
+Run the following command (update `sonar.host.url`, `sonar.organization`, etc. properties as needed either at command line or in `build.gradle.kts`'s `sonar` block):
 * On Unix-like systems:
   `./gradlew clean build jacocoTestReport -Dsonar.host.url=http://localhost:9000 -Dsonar.login=<INSERT-USER-TOKEN> sonar`
 * On Windows:

@@ -6,7 +6,8 @@ plugins {
     jacoco
     `java-library`
     id("org.flywaydb.flyway") version "9.20.0"
-    id("org.sonarqube") version "4.2.1.3168"
+    id("org.sonarqube") version "4.3.0.3225"
+    id("org.gradle.maven-publish") // Noncompliant - kotlin:S6634 Core plugins IDs should be replaced by their shortcuts
 }
 
 version = "1.0-SNAPSHOT"
@@ -56,15 +57,26 @@ tasks.check { dependsOn(integrationTest) }
 
 dependencies {
     api("com.google.inject:guice:7.0.0")
+    testImplementation("org.mockito:mockito-core:5.4.0")
     implementation("com.google.guava:guava:32.1.0-jre")
     testImplementation("org.junit.jupiter:junit-jupiter-api:5.9.3")
-    testImplementation("org.mockito:mockito-core:5.4.0")
     testRuntimeOnly("org.junit.platform:junit-platform-launcher")
     testRuntimeOnly("org.junit.jupiter:junit-jupiter-engine")
 }
 
 tasks.getByName<Test>("test") {
     useJUnitPlatform()
+}
+
+// Noncompliant - kotlin:S6623 "tasks.register()" should be preferred over "tasks.create()"
+tasks.create("dummyTaskThatI'llDoLater") {
+    group = JavaBasePlugin.DOCUMENTATION_GROUP
+    description = "My task."
+    // other configuration logic
+
+    doLast {
+        // ...
+    }
 }
 
 tasks.register("helloUserCmd") {

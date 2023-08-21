@@ -10,8 +10,8 @@ version = '1.0'
 
 sonar {
     properties {
-        property('sonar.projectName', 'Example of SonarQube Scanner for Gradle Usage')
-        property("sonar.projectKey", "sonarqube-scanner-gradle")
+        property('sonar.projectName', 'sonar-scanning-examples')
+        property("sonar.projectKey", "test-curvc_sonar-scanning-examples_AYoXKm4zrOm7NT8pBCN0")
         property("sonar.sources", "src/main")
         property "sonar.tests", "src/test"
     }

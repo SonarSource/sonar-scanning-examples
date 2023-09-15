@@ -9,12 +9,14 @@ This repository showcases basic examples of usage and code coverage for SonarSca
 
 Documentation on [Java - Jacoco Code Coverage](doc/jacoco.md)
 
+Sonar's [Clean Code solution](https://www.sonarsource.com/solutions/clean-code/) helps developers deliver high-quality, efficient code standards that benefit the entire team or organization. 
+
 ## Examples
 ### Various Languages
 * [SonarQube-Scanner for various languages](sonarqube-scanner)
 
 ### Ant
-If you have an Ant project, we recommend usage of [SonarScanner for Ant](https://docs.sonarsource.com/sonarqube/latest/analyzing-source-code/scanners/sonarscanner-for-ant) or the equivalent SonarScanner for Ant on your CI pipeline.
+If you have an Ant project, we recommend the usage of [SonarScanner for Ant](https://docs.sonarsource.com/sonarqube/latest/analyzing-source-code/scanners/sonarscanner-for-ant) or the equivalent SonarScanner for Ant on your CI pipeline.
 * [SonarQube-Scanner-Ant Basic](sonarqube-scanner-ant/ant-basic)
 * [SonarQube-Scanner-Ant Coverage](sonarqube-scanner-ant/ant-coverage)
 
@@ -26,13 +28,13 @@ If you have a Gradle project, we recommend usage of [SonarScanner for Gradle](ht
 * [SonarQube-Scanner-Gradle Multi-Module Code Coverage](sonarqube-scanner-gradle/gradle-multimodule-coverage)
 
 ### Maven
-If you have a Maven project, we recommend usage of [SonarScanner for Maven](https://docs.sonarsource.com/sonarqube/latest/analyzing-source-code/scanners/sonarscanner-for-maven) or the equivalent SonarScanner for Maven on your CI pipeline.
+If you have a Maven project, we recommend the usage of [SonarScanner for Maven](https://docs.sonarsource.com/sonarqube/latest/analyzing-source-code/scanners/sonarscanner-for-maven) or the equivalent SonarScanner for Maven on your CI pipeline.
 * [SonarQube-Scanner-Maven](sonarqube-scanner-maven/maven-basic)
 * [SonarQube-Scanner-Maven (Java + Kotlin with coverage)](sonarqube-scanner-maven/maven-multilingual)
 * [SonarQube-Scanner-Maven Multi-Module](sonarqube-scanner-maven/maven-multimodule)
 
 ### DotNet/C#
-If you have a .NET project, we recommend usage of [SonarScanner for .NET](https://docs.sonarsource.com/sonarqube/latest/analyzing-source-code/scanners/sonarscanner-for-dotnet) or the equivalent SonarScanner for .NET on your CI pipeline.
+If you have a .NET project, we recommend the usage of [SonarScanner for .NET](https://docs.sonarsource.com/sonarqube/latest/analyzing-source-code/scanners/sonarscanner-for-dotnet) or the equivalent SonarScanner for .NET on your CI pipeline.
 * [SonarQube-Scanner-MSBuild CSharp](sonarqube-scanner-msbuild/CSharpProject)
 
 ### Swift

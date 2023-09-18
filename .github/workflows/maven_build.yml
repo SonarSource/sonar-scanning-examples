@@ -34,5 +34,6 @@ jobs:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}  # Needed to get PR information, if any
           SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
           SONAR_HOST_URL: ${{ secrets.SONAR_HOST_URL }}
+          SONAR_PROJECT_KEY: sonar-scanning-examples-maven
         run: mvn -B verify org.sonarsource.scanner.maven:sonar-maven-plugin:sonar
         working-directory: ./sonarqube-scanner-maven/maven-basic

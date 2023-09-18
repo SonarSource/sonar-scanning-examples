@@ -36,6 +36,6 @@ jobs:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}  # Needed to get PR information, if any
           SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
           SONAR_HOST_URL: ${{ secrets.SONAR_HOST_URL }}
-          SONAR_PROJECT_KEY: sonar-scanning-examples-maven
+          SONAR_PROJECT_KEY: sonar-scanning-examples-gradle
         run: ./gradlew build sonar --info
         working-directory: ./sonarqube-scanner-gradle/gradle-basic

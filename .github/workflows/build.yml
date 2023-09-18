@@ -1,4 +1,4 @@
-name: Build
+name: SonarScanner for Gradle
 
 on:
   push:

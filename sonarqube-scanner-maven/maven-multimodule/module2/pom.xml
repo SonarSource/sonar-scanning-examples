@@ -13,4 +13,8 @@
 
   <name>Module 2</name>
 
+  <properties>
+    <sonar.organization>denis-troller</sonar.organization>
+    <sonar.host.url>https://sonarcloud.io</sonar.host.url>
+  </properties>
 </project>

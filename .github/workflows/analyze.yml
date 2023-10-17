@@ -36,4 +36,4 @@ jobs:
           SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
         run: |
           cd sonarqube-scanner-maven/maven-multimodule
-          mvn -B verify org.sonarsource.scanner.maven:sonar-maven-plugin:sonar -Dsonar.projectKey=denis-troller_sonar-scanning-examples
+          mvn -B verify sonar:sonar -Dsonar.projectKey=denis-troller_sonar-scanning-examples

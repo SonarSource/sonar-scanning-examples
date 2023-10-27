@@ -16,7 +16,7 @@ For more details on JaCoCo integration with Ant, see [JaCoCo Ant Tasks](https://
 * [SonarQube Scanner for Ant](http://redirect.sonarsource.com/doc/ant-task.html) 2.7 or higher
 * [Ant](http://ant.apache.org/) 1.10.0 or higher
 * [JaCoCo](https://www.eclemma.org/jacoco/) 0.8.7 or higher
-  * You can find org.jacoco.ant artifacts by version [here](https://repo1.maven.org/maven2/org/jacoco/org.jacoco.ant/).
+  * You can find Jacoco artifacts by version [here](https://repo1.maven.org/maven2/org/jacoco/jacoco/). Once unzipped, look for lib/jacocoant.jar
 
 ## Usage
 

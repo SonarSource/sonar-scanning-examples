@@ -14,6 +14,7 @@ function xccov_to_generic {
 
   echo '<coverage version="1">'
   xcrun xccov view --archive "$xcresult" | convert_xccov_to_xml
+  # xcrun xccov view --archive "$xcresult" | while read -r line; do echo "${line#$PWD/}"; done | convert_xccov_to_xml
   echo '</coverage>'
 }
 

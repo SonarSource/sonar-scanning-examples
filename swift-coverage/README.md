@@ -1,6 +1,6 @@
 # SonarScanner - Swift Code Coverage Example
 
-This example demonstrates how to import Xcode Coverage data to SonarQube for a Swift project.
+This example demonstrates how to import Xcode Coverage data to SonarQube for a Swift project. See [[Coverage & Test Data] Generate Reports for Swift](https://community.sonarsource.com/t/coverage-test-data-generate-reports-for-swift/9700) for more information including alternative methods to import coverage data into SonarQube/SonarCloud.
 
 ## Prerequisites
 * [SonarScanner](https://docs.sonarsource.com/sonarqube/latest/analyzing-source-code/scanners/sonarscanner/) 5.x or higher

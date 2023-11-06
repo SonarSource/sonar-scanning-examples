@@ -27,7 +27,7 @@
 	<property name="result.exec.file" location="${result.dir}/jacoco.exec" />
 
 	<!-- SonarQube -->
-	<property name="sonar.projectKey" value="org.sonarqube:sonarqube-scanner-ant-coverage" />
+	<property name="sonar.projectKey" value="org.sonarqube:sonar-scanner-ant-coverage" />
 	<property name="sonar.projectName" value="Example of Ant and JaCoCo Usage" />
 	<property name="sonar.host.url" value="http://localhost:9000" />
 	<property name="sonar.sources" value="src" />
@@ -37,7 +37,7 @@
 	<!-- Step 1: Import JaCoCo Ant tasks -->
 	<taskdef uri="antlib:org.jacoco.ant" resource="org/jacoco/ant/antlib.xml">
 		<!-- Update the following line with the location to the jacocoant.jar -->
-		<classpath path="/Users/jting/Documents/jacocoant.jar" />
+		<classpath path="path/to/jacoco-0.8.7/lib/jacocoant.jar" />
 	</taskdef>
 
 	<target name="clean">
@@ -94,10 +94,9 @@
 	<target name="sonar" depends="compile">
 		<taskdef uri="antlib:org.sonar.ant" resource="org/sonar/ant/antlib.xml">
 			<!-- Update the following line, or put the "sonar-ant-task-*.jar" file in your "$HOME/.ant/lib" folder -->
-			<!-- <classpath path="path/to/sonar/ant/task/lib/sonarqube-ant-task-*.jar" /> -->
-			<classpath path="/Users/jting/Documents/sonarqube-ant-task-2.7.1.1951.jar" />
+			<classpath path="path/to/sonar/ant/task/lib/sonarqube-ant-task-*.jar" />
 		</taskdef>
-		
+
 		<!-- Execute SonarQube Scanner for Ant Analysis -->
 		<sonar:sonar />
 	</target>

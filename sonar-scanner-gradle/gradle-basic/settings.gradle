@@ -15,4 +15,4 @@ include 'api'
 include 'services:webservice'
 */
 
-rootProject.name = 'sonarqube-scanner-gradle'
+rootProject.name = 'sonar-scanner-gradle:gradle-basic'

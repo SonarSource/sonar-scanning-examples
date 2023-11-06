@@ -9,7 +9,7 @@ This example demonstrates how to analyze a .NET Solution with the [SonarScanner 
 ## Usage
 1. Run SonarScanner for .NET/MSBuild begin phase:
     ```powershell
-    SonarScanner.MSBuild.exe begin /k:"org.sonarqube:sonarqube-scanner-msbuild" /n:"Example of SonarScanner for MSBuild Usage" /v:"1.0"
+    SonarScanner.MSBuild.exe begin /k:"org.sonarqube:sonar-scanner-msbuild" /n:"Example of SonarScanner for MSBuild Usage" /v:"1.0"
     ```
 2. Build the project with MSBuild:
     ```powershell

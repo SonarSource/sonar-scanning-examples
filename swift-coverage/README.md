@@ -1,11 +1,9 @@
-# SonarQube-Scanner for Swift Code Coverage
+# SonarScanner - Swift Code Coverage Example
 
-This example demonstrates how to import Xcode Coverage data to SonarQube for a Swift project.
+This example demonstrates how to import Xcode Coverage data to SonarQube for a Swift project. See [[Coverage & Test Data] Generate Reports for Swift](https://community.sonarsource.com/t/coverage-test-data-generate-reports-for-swift/9700) for more information including alternative methods to import coverage data into SonarQube/SonarCloud.
 
 ## Prerequisites
-
-* [SonarQube](https://www.sonarsource.com/products/sonarqube/downloads/) 8.9 LTS or Latest
-* [SonarQube Scanner](https://docs.sonarqube.org/latest/analyzing-source-code/scanners/sonarscanner/) 4.7+
+* [SonarScanner](https://docs.sonarsource.com/sonarqube/latest/analyzing-source-code/scanners/sonarscanner/) 5.x or higher
 * [Xcode](https://developer.apple.com/xcode/) 13.3+
 
 ## Usage
@@ -25,7 +23,7 @@ xcodebuild -project swift-coverage-example.xcodeproj/ -scheme swift-coverage-exa
 The `xccov` command line tool is the recommended option to view Xcode coverage
 data and is more straightforward to use than the older `llvm-cov` tool. With
 the script `xccov-to-sonarqube-generic.sh`, you can convert Xcode test results
-stored in `*.xcresult` folders to the [SonarQube generic test coverage format](https://docs.sonarqube.org/latest/analyzing-source-code/test-coverage/generic-test-data/).
+stored in `*.xcresult` folders to the [SonarQube generic test coverage format](https://docs.sonarsource.com/sonarqube/latest/analyzing-source-code/test-coverage/generic-test-data/).
 
 First, locate the Xcode test result folder (`*.xcresult`). Then use it as a parameter to the script converting the coverage data to the SonarQube format as in the following example:
 

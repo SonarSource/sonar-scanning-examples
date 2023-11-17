@@ -1,0 +1,106 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!--
+   Copyright (c) 2009, 2021 Mountainminds GmbH & Co. KG and Contributors
+   This program and the accompanying materials are made available under
+   the terms of the Eclipse Public License 2.0 which is available at
+   http://www.eclipse.org/legal/epl-2.0
+
+   SPDX-License-Identifier: EPL-2.0
+
+   Contributors:
+      Marc R. Hoffmann - initial API and implementation
+-->
+
+<project name="Example Ant Build with JaCoCo" default="rebuild" xmlns:jacoco="antlib:org.jacoco.ant" xmlns:sonar="antlib:org.sonar.ant">
+
+	<description>
+	  Example Ant build file that demonstrates how a JaCoCo coverage report
+	  can be integrated into an existing build in three simple steps with
+	  SonarQube Sonar Scanner for Ant.
+	</description>
+
+	<property name="src.dir" location="./src/main/java" />
+	<property name="result.dir" location="./target" />
+	<property name="result.classes.dir" location="${result.dir}/classes" />
+	<property name="result.report.dir" location="${result.dir}/site/jacoco" />
+	<property name="result.exec.file" location="${result.dir}/jacoco.exec" />
+
+	<!-- SonarQube -->
+	<property name="sonar.projectKey" value="org.sonarqube:sonar-scanner-ant-coverage" />
+	<property name="sonar.projectName" value="Example of Ant and JaCoCo Usage" />
+	<property name="sonar.host.url" value="http://localhost:9000" />
+	<property name="sonar.sources" value="src" />
+	<property name="sonar.java.binaries" value="target" />
+	<property name="sonar.coverage.jacoco.xmlReportPaths" value="${result.report.dir}/report.xml" />
+
+	<!-- Step 1: Import JaCoCo Ant tasks -->
+	<taskdef uri="antlib:org.jacoco.ant" resource="org/jacoco/ant/antlib.xml">
+		<!-- Update the following line with the location to the jacocoant.jar -->
+		<classpath path="path/to/jacoco-0.8.7/lib/jacocoant.jar" />
+	</taskdef>
+
+	<target name="clean">
+		<delete dir="${result.dir}" />
+	</target>
+
+	<target name="compile">
+		<mkdir dir="${result.classes.dir}" />
+		<javac srcdir="${src.dir}" destdir="${result.classes.dir}" debug="true" includeantruntime="false" />
+	</target>
+
+	<target name="test" depends="compile">
+		<!-- Step 2: Wrap test execution with the JaCoCo coverage task -->
+		<jacoco:coverage destfile="${result.exec.file}">
+			<java classname="org.jacoco.examples.parser.Main" fork="true">
+				<classpath path="${result.classes.dir}" />
+				<arg value="2 * 3 + 4"/>
+				<arg value="2 + 3 * 4"/>
+				<arg value="(2 + 3) * 4"/>
+				<arg value="2 * 2 * 2 * 2"/>
+				<arg value="1 + 2 + 3 + 4"/>
+				<arg value="2 * 3 + 2 * 5"/>
+			</java>
+		</jacoco:coverage>
+	</target>
+
+	<target name="report" depends="test">
+		<!-- Step 3: Create coverage report -->
+		<jacoco:report>
+
+			<!-- This task needs the collected execution data and ... -->
+			<executiondata>
+				<file file="${result.exec.file}" />
+			</executiondata>
+
+			<!-- the class files and optional source files ... -->
+			<structure name="JaCoCo Ant Example">
+				<classfiles>
+					<fileset dir="${result.classes.dir}" />
+				</classfiles>
+				<sourcefiles encoding="UTF-8">
+					<fileset dir="${src.dir}" />
+				</sourcefiles>
+			</structure>
+
+			<!-- to produce reports in different formats. -->
+			<html destdir="${result.report.dir}" />
+			<csv destfile="${result.report.dir}/report.csv" />
+			<xml destfile="${result.report.dir}/report.xml" />
+		</jacoco:report>
+	</target>
+
+	<!-- ========= Define SonarQube Scanner for Ant Target ========= -->
+	<target name="sonar" depends="compile">
+		<taskdef uri="antlib:org.sonar.ant" resource="org/sonar/ant/antlib.xml">
+			<!-- Update the following line, or put the "sonar-ant-task-*.jar" file in your "$HOME/.ant/lib" folder -->
+			<classpath path="path/to/sonar/ant/task/lib/sonarqube-ant-task-*.jar" />
+		</taskdef>
+
+		<!-- Execute SonarQube Scanner for Ant Analysis -->
+		<sonar:sonar />
+	</target>
+
+	<target name="rebuild" depends="clean,compile,test,report,sonar" />
+
+</project>

@@ -1,0 +1,34 @@
+plugins {
+    id "java-library"
+    id "org.sonarqube" version "4.4.1.3373"
+}
+
+allprojects {
+  ext.baseVersion = "0.1"
+  ext.snapshotVersion = true
+
+  group = "org.sonarqube"
+  version = "$baseVersion" + (snapshotVersion ? "-SNAPSHOT" : "")
+}
+
+sonar {
+    properties {
+        property "sonar.projectName", "Example of SonarScanner for Gradle - Multimodule"
+        property "sonar.projectKey", "org.sonarqube:gradle-multimodule"
+    }
+}
+
+subprojects {
+    apply plugin: 'java-library'
+    apply plugin: 'org.sonarqube'
+    sonar {
+        properties {
+            //property "sonar.java.libraries",
+   	    }
+    }
+}
+
+// In this section you declare where to find the dependencies of your project
+repositories {
+    mavenCentral()
+}

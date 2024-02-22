@@ -1,13 +1,17 @@
 package com.acme.basic;
 
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
+
 public class HelloWorld {
+  private static final Log LOG = LogFactory.getLog(HelloWorld.class);
 
   void sayHello() {
-    System.out.println("Hello World!");
+    LOG.debug("Hello world");
   }
 
   void notCovered() {
-    System.out.println("This method is not covered by unit tests");
+    LOG.debug("This method is not covered by unit tests");
   }
 
 }

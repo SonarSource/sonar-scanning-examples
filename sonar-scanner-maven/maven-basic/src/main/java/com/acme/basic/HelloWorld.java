@@ -1,13 +1,14 @@
 package com.acme.basic;
 
+import java.util.logging.Logger;
+
 public class HelloWorld {
 
-  void sayHello() {
-    System.out.println("Hello World!");
-  }
+  Logger logger = Logger.getLogger(getClass().getName());
 
-  void notCovered() {
-    System.out.println("This method is not covered by unit tests");
+  String sayHello() {
+    logger.info("Hello World!");
+    return "Hello";
   }
 
 }

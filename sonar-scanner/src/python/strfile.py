@@ -25,7 +25,7 @@
 import struct, string, sys
 
 if len(sys.argv)==1:
-    print "Usage: strfile.py <filename>"
+    print("Usage: strfile.py <filename>")
     sys.exit()
 
 # C long variables are different sizes on 32-bit and 64-bit machines,

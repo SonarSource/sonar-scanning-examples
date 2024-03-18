@@ -1,0 +1,43 @@
+on:
+  # Trigger analysis when pushing to your main branches, and when creating a pull request.
+  push:
+    branches:
+      - main
+      - master
+      - develop
+      - 'releases/**'
+  pull_request:
+      types: [opened, synchronize, reopened]
+
+name: SonarQube Gradle Scanner
+jobs:
+  sonar-scanner-gradle:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+        with:
+          fetch-depth: 0  # Shallow clones should be disabled for a better relevancy of analysis
+      - name: Set up JDK 17
+        uses: actions/setup-java@v1
+        with:
+          java-version: 17
+      - name: Cache SonarQube packages
+        uses: actions/cache@v1
+        working-directory: sonar-scanner-gradle/gradle-multimodule-coverage
+        with:
+          path: ~/.sonar/cache
+          key: ${{ runner.os }}-sonar
+          restore-keys: ${{ runner.os }}-sonar
+      - name: Cache Gradle packages
+        uses: actions/cache@v1
+        working-directory: sonar-scanner-gradle/gradle-multimodule-coverage
+        with:
+          path: ~/.gradle/caches
+          key: ${{ runner.os }}-gradle-${{ hashFiles('**/*.gradle') }}
+          restore-keys: ${{ runner.os }}-gradle
+      - name: Build and analyze
+        working-directory: sonar-scanner-gradle/gradle-multimodule-coverage
+        env:
+          SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
+          SONAR_HOST_URL: ${{ secrets.SONAR_HOST_URL }}
+        run: ./gradlew build codeCoverageReport sonar --info

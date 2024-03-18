@@ -50,6 +50,6 @@ jobs:
         shell: powershell
         working-directory: sonar-scanner-msbuild\CSharpProject
         run: |
-          .\.sonar\scanner\dotnet-sonarscanner begin /k:"sonar-scanner-dotnet" /d:sonar.token="${{ secrets.SONAR_TOKEN }}" /d:sonar.host.url="${{ secrets.SONAR_HOST_URL }}"
+          .\.sonar\scanner\dotnet-sonarscanner begin /k:"sonar-scanner-dotnet" /n:"Example of SonarScanner for .Net" /d:sonar.token="${{ secrets.SONAR_TOKEN }}" /d:sonar.host.url="${{ secrets.SONAR_HOST_URL }}"
           dotnet build
           .\.sonar\scanner\dotnet-sonarscanner end /d:sonar.token="${{ secrets.SONAR_TOKEN }}"

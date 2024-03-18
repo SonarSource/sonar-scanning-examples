@@ -8,11 +8,11 @@ on:
       - develop
       - 'releases/**'
     paths:
-      - 'sonar-scanner-gradle/gradle-multimodule-coverage/**'
+      - 'sonar-scanner-msbuild/CSharpProject/**'
   pull_request:
     types: [opened, synchronize, reopened]
     paths:
-      - 'sonar-scanner-gradle/gradle-multimodule-coverage/**'
+      - 'sonar-scanner-msbuild/CSharpProject/**'
 
 name: SonarQube .NET Scanner
 jobs:
@@ -44,7 +44,7 @@ jobs:
         shell: powershell
         working-directory: sonar-scanner-msbuild\CSharpProject
         run: |
-          New-Item -Path sonar-scanner-msbuild\CSharpProject\.sonar\scanner -ItemType Directory
+          New-Item -Path .\.sonar\scanner -ItemType Directory
           dotnet tool update dotnet-sonarscanner --tool-path .\.sonar\scanner
       - name: Build and analyze
         shell: powershell

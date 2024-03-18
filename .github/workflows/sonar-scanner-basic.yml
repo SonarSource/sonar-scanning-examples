@@ -6,6 +6,8 @@ on:
       - master
       - develop
       - 'releases/**'
+  paths:
+      - 'sonar-scanner/**'
   pull_request:
       types: [opened, synchronize, reopened]
 

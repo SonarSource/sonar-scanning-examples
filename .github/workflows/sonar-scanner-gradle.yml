@@ -9,7 +9,9 @@ on:
     paths:
       - 'sonar-scanner-gradle/gradle-multimodule-coverage/**'
   pull_request:
-      types: [opened, synchronize, reopened]
+    types: [opened, synchronize, reopened]
+    paths:
+      - 'sonar-scanner-gradle/gradle-multimodule-coverage/**'
 
 name: SonarQube Gradle Scanner
 jobs:

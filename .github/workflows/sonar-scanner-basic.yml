@@ -9,7 +9,9 @@ on:
     paths:
       - 'sonar-scanner/**'
   pull_request:
-      types: [opened, synchronize, reopened]
+    types: [opened, synchronize, reopened]
+    paths:
+      - 'sonar-scanner/**'
 
 name: SonarQube Basic Scanner
 jobs:

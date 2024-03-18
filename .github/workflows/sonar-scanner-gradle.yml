@@ -6,6 +6,8 @@ on:
       - master
       - develop
       - 'releases/**'
+  paths:
+      - 'sonar-scanner-gradle/gradle-multimodule-coverage/**'
   pull_request:
       types: [opened, synchronize, reopened]
 

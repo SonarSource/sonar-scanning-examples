@@ -23,14 +23,12 @@ jobs:
           java-version: 17
       - name: Cache SonarQube packages
         uses: actions/cache@v1
-        working-directory: sonar-scanner-gradle/gradle-multimodule-coverage
         with:
           path: ~/.sonar/cache
           key: ${{ runner.os }}-sonar
           restore-keys: ${{ runner.os }}-sonar
       - name: Cache Gradle packages
         uses: actions/cache@v1
-        working-directory: sonar-scanner-gradle/gradle-multimodule-coverage
         with:
           path: ~/.gradle/caches
           key: ${{ runner.os }}-gradle-${{ hashFiles('**/*.gradle') }}

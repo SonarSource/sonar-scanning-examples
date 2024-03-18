@@ -9,9 +9,9 @@ on:
   pull_request:
       types: [opened, synchronize, reopened]
 
-name: Main Workflow
+name: SonarQube Basic Scanner
 jobs:
-  sonarqube:
+  sonar-scanner-basic:
     runs-on: ubuntu-latest
     steps:
     - uses: actions/checkout@v4

@@ -1,5 +1,4 @@
 # Sonar Scanning Examples
-
 This repository showcases basic examples of usage and code coverage for SonarScanners.
 * [SonarScanner for Gradle](https://docs.sonarsource.com/sonarqube/latest/analyzing-source-code/scanners/sonarscanner-for-gradle)
 * [SonarScanner for .NET](https://docs.sonarsource.com/sonarqube/latest/analyzing-source-code/scanners/sonarscanner-for-dotnet)

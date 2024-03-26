@@ -14,11 +14,11 @@ Run the following command (updating the sonar.host.url property as appropriate):
 * On Unix-like systems:
 
 ```shell
-  ./gradlew -Dsonar.host.url=http://myhost:9000 sonar
+  ./gradlew build -Dsonar.host.url=http://myhost:9000 sonar
 ```
 
 * On Windows:
 
 ```powershell
-  .\gradle.bat -Dsonar.host.url=http://myhost:9000 sonar
+  .\gradle.bat build -Dsonar.host.url=http://myhost:9000 sonar
 ```

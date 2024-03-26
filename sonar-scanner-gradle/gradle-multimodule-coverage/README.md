@@ -24,7 +24,7 @@ Here are the important changes compared to the original Gradle sample project li
 * add reference to the SonarScanner for Gradle to the root `build.gradle`:
   ```groovy
   plugins {
-    id "org.sonarqube" version "4.3.1.3277"
+    id "org.sonarqube" version "5.0.0.4638"
   }
   ```
 * add the following to `subprojects{}` block of root `build.gradle`:

@@ -11,13 +11,22 @@ Run the following command (updating the sonar.host.url property as appropriate):
 
 * On Unix-like systems:
   ```text
-  ./gradlew -Dsonar.host.url=http://myhost:9000 sonar
+  ./gradlew build -Dsonar.host.url=http://myhost:9000 sonar
   ```
 * On Windows:
   ```text
-  .\gradlew.bat -D'sonar.host.url=http://myhost:9000' sonar
+  .\gradlew.bat build -D'sonar.host.url=http://myhost:9000' sonar
   ```
 
 ## Coverage
 
 To get the project [test coverage](https://community.sonarsource.com/t/coverage-test-data-importing-jacoco-coverage-report-in-xml-format) computed, add gradle task `jacocoTestReport` to your command line.
+
+* On Unix-like systems:
+  ```text
+  ./gradlew build jacocoTestReport -Dsonar.host.url=http://myhost:9000 sonar
+  ```
+* On Windows:
+  ```text
+  .\gradlew.bat build jacocoTestReport -D'sonar.host.url=http://myhost:9000' sonar
+  ```

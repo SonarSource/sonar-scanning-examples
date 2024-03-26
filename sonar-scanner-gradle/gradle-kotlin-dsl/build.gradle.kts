@@ -6,7 +6,7 @@ plugins {
     jacoco
     `java-library`
     id("org.flywaydb.flyway") version "9.20.0"
-    id("org.sonarqube") version "4.4.1.3373"
+    id("org.sonarqube") version "5.0.0.4638"
     id("org.gradle.maven-publish") // Noncompliant - kotlin:S6634 Core plugins IDs should be replaced by their shortcuts
 }
 

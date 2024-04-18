@@ -18,7 +18,7 @@
     </property>
     <property>
       <key><![CDATA[JAVA_HOME]]></key>
-      <value><![CDATA[C:\Program Files\Java\jdk1.6.0_27]]></value>
+      <value><![CDATA[C:\Program Files\Java\jdk11]]></value>
     </property>
   </properties>
   <profiles>

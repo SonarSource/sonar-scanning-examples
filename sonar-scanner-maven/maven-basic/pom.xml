@@ -29,6 +29,22 @@
     </dependency>
   </dependencies>
 
+  <pluginRepositories>
+        <pluginRepository>
+            <id>temp.repo</id>
+            <name>Temp Repo</name>
+            <url>file://${user.home}/.m2/temp-repository</url>
+        </pluginRepository>
+  </pluginRepositories>
+
+  <distributionManagement>
+        <repository>
+            <id>dev</id>
+            <name>Local repository</name>
+            <url>file://${user.home}/.m2/temp-repository</url>
+        </repository>
+  </distributionManagement>
+
   <build>
     <pluginManagement>
       <plugins>
@@ -57,6 +73,11 @@
       <activation>
         <activeByDefault>true</activeByDefault>
       </activation>
+        <properties>
+          <!-- Optional URL to server. Default value is http://localhost:9000 -->
+          <sonar.host.url>http://localhost:9000</sonar.host.url>
+          <sonar.token>squ_4b1f5d4919a67a4c88ab96406c331b31e44e27ba</sonar.token>
+        </properties>
       <build>
         <plugins>
           <plugin>

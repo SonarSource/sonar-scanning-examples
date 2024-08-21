@@ -4,6 +4,8 @@ on:
   push:
     branches:
       - main
+    paths:
+      - 'sonar-scanner/src/python/**'
   pull_request:
     types: [opened, synchronize, reopened]
 

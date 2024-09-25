@@ -22,3 +22,7 @@ bw-outputs/
 
 # MSBuild
 obj/
+
+.coverage
+
+__pycache__

@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuites>
+	<testsuite name="tests.test_shapes.TestShapes-20240925162431" tests="8" file="tests/test_shapes.py" time="0.003" timestamp="2024-09-25T16:24:31" failures="1" errors="0" skipped="0">
+		<testcase classname="tests.test_shapes.TestShapes" name="test_parallelogram_area" time="0.002" timestamp="2024-09-25T16:24:31" file="src/python/tests/test_shapes.py" line="31"/>
+		<testcase classname="tests.test_shapes.TestShapes" name="test_parallelogram_init" time="0.000" timestamp="2024-09-25T16:24:31" file="src/python/tests/test_shapes.py" line="28"/>
+		<testcase classname="tests.test_shapes.TestShapes" name="test_polygon_init" time="0.000" timestamp="2024-09-25T16:24:31" file="src/python/tests/test_shapes.py" line="12"/>
+		<testcase classname="tests.test_shapes.TestShapes" name="test_quadrilateral_init" time="0.000" timestamp="2024-09-25T16:24:31" file="src/python/tests/test_shapes.py" line="25"/>
+		<testcase classname="tests.test_shapes.TestShapes" name="test_rectangle_init" time="0.000" timestamp="2024-09-25T16:24:31" file="src/python/tests/test_shapes.py" line="40"/>
+		<testcase classname="tests.test_shapes.TestShapes" name="test_shape_init" time="0.000" timestamp="2024-09-25T16:24:31" file="src/python/tests/test_shapes.py" line="9"/>
+		<testcase classname="tests.test_shapes.TestShapes" name="test_square_init" time="0.000" timestamp="2024-09-25T16:24:31" file="src/python/tests/test_shapes.py" line="37"/>
+		<testcase classname="tests.test_shapes.TestShapes" name="test_triangle_init" time="0.000" timestamp="2024-09-25T16:24:31" file="src/python/tests/test_shapes.py" line="18">
+			<failure type="AssertionError" message="40 != 20.0"><![CDATA[Traceback (most recent call last):
+  File "sonar-scanner/src/python/tests/test_shapes.py", line 23, in test_triangle_init
+    self.assertEqual(t.area(), (b*h)/2)
+AssertionError: 40 != 20.0
+]]></failure>
+		</testcase>
+	</testsuite>
+</testsuites>

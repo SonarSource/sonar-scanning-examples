@@ -5,15 +5,31 @@ on:
     branches:
       - main
     paths:
+      - 'sonar-scanner/src/abap/**'
       - 'sonar-scanner/src/python/**'
   pull_request:
     types: [opened, synchronize, reopened]
 
 jobs:
-  build:
+  analyze-sonar-scanner-src-abap:
     name: Build and analyze
     runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+      - uses: sonarsource/sonarqube-scan-action@master
+        env:
+          SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
+          SONAR_HOST_URL: ${{ secrets.SONAR_HOST_URL }}
+        with:
+          projectBaseDir: sonar-scanner/src/abap
+          args: >
+            -Dsonar.verbose=true
 
+  analyze-sonar-scanner-src-python:
+    name: Build and analyze
+    runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
         with:

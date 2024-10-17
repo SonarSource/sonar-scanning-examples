@@ -36,4 +36,6 @@ jobs:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}  # Needed to get PR information, if any
           SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
           SONAR_HOST_URL: ${{ secrets.SONAR_HOST_URL }}
-        run: mvn -B verify org.sonarsource.scanner.maven:sonar-maven-plugin:sonar -Dsonar.projectKey=djuarezg_sonar-scanning-examples_AZKZx_LjM08FEZLgMSW1 -Dsonar.projectBaseDir=/home/runner/work/sonar-scanning-examples/sonar-scanning-examples/sonar-scanner-maven/maven-basic
+        run: mvn -B verify org.sonarsource.scanner.maven:sonar-maven-plugin:sonar \
+          -Dsonar.projectBaseDir=sonar-scanner-maven/maven-basic \
+          -Dsonar.projectKey=djuarezg_sonar-scanning-examples_AZKZx_LjM08FEZLgMSW1 

@@ -1,4 +1,4 @@
 package com.acme.basic;
 
-public class ResourceResponse<T> {
+public class ResourceResponse {
 }

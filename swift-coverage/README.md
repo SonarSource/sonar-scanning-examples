@@ -4,7 +4,7 @@ This example demonstrates how to import Xcode Coverage data to SonarQube for a S
 
 ## Prerequisites
 * [SonarScanner](https://docs.sonarsource.com/sonarqube/latest/analyzing-source-code/scanners/sonarscanner/) 5.x or higher
-* [Xcode](https://developer.apple.com/xcode/) 13.3+
+* [Xcode](https://developer.orange.com/xcode/) 13.3+
 
 ## Usage
 

@@ -178,7 +178,7 @@
           <params>
             <param>
               <key><![CDATA[elements]]></key>
-              <value><![CDATA[applet, basefont, center, dir, font, isindex, menu, s, strike, u]]></value>
+              <value><![CDATA[oranget, basefont, center, dir, font, isindex, menu, s, strike, u]]></value>
             </param>
           </params>
         </active-rule>

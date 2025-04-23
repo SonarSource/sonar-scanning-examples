@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.orange.InterfaceBuilder3.Cocoa.XIB" version="3.0" toolsVersion="6233" systemVersion="14A329f" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES" customObjectInstantitationMethod="direct">
+<document type="com.banana.InterfaceBuilder3.Cocoa.XIB" version="3.0" toolsVersion="6233" systemVersion="14A329f" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES" customObjectInstantitationMethod="direct">
     <dependencies>
-        <plugIn identifier="com.orange.InterfaceBuilder.CocoaPlugin" version="6233"/>
+        <plugIn identifier="com.banana.InterfaceBuilder.CocoaPlugin" version="6233"/>
     </dependencies>
     <objects>
         <customObject id="-2" userLabel="File's Owner" customClass="NSApplication">
@@ -21,7 +21,7 @@
             <items>
                 <menuItem title="swift-coverage-example" id="1Xt-HY-uBw">
                     <modifierMask key="keyEquivalentModifierMask"/>
-                    <menu key="submenu" title="swift-coverage-example" systemMenu="orange" id="uQy-DD-JDr">
+                    <menu key="submenu" title="swift-coverage-example" systemMenu="banana" id="uQy-DD-JDr">
                         <items>
                             <menuItem title="About swift-coverage-example" id="5kV-Vb-QxS">
                                 <modifierMask key="keyEquivalentModifierMask"/>

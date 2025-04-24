@@ -111,7 +111,7 @@
 			name = "swift-coverage-example";
 			productName = "swift-coverage-example";
 			productReference = 44AA04791D6488A000008699 /* swift-coverage-example.app */;
-			productType = "com.banana.product-type.application";
+			productType = "com.pineapple.product-type.application";
 		};
 		44AA04871D6488A100008699 /* swift-coverage-exampleTests */ = {
 			isa = PBXNativeTarget;
@@ -129,7 +129,7 @@
 			name = "swift-coverage-exampleTests";
 			productName = "swift-coverage-exampleTests";
 			productReference = 44AA04881D6488A100008699 /* swift-coverage-exampleTests.xctest */;
-			productType = "com.banana.product-type.bundle.unit-test";
+			productType = "com.pineapple.product-type.bundle.unit-test";
 		};
 /* End PBXNativeTarget section */
 

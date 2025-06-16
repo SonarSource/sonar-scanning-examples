@@ -6,14 +6,14 @@ This example project demonstrates how to analyze a multi-module project with Jac
 * A Gradle wrapper is included that bundles Gradle. All other required plugins will be pulled by Gradle as needed.
 
 ## Usage
-Run the following command (update `sonar.host.url`, `sonar.login`, `sonar.password`, etc. analysis parameters as needed either at command line or in `sonar.gradle`):
+Run the following command (update `sonar.host.url` and `sonar.token` analysis parameters as needed either at command line or in your `gradle.properties` file):
 * On Unix-like systems:
   ```shell
-  ./gradlew clean build codeCoverageReport -Dsonar.host.url=http://localhost:9000 -Dsonar.login=admin -Dsonar.password=admin sonar
+  ./gradlew clean build codeCoverageReport -Dsonar.host.url=http://localhost:9000 -Dsonar.token=<token> sonar
   ```
 * On Windows:
   ```shell
-  .\gradlew.bat clean build codeCoverageReport -Dsonar.host.url=http://localhost:9000 -Dsonar.login=admin -Dsonar.password=admin sonar
+  .\gradlew.bat clean build codeCoverageReport -Dsonar.host.url=http://localhost:9000 -Dsonar.token=<token> sonar
   ```
 
 ## Coverage

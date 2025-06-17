@@ -1,3 +1,4 @@
+# pineapple
 # Sonar Scanning Examples
 
 This repository showcases basic examples of usage and code coverage for SonarScanners.

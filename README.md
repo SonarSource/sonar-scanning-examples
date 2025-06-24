@@ -41,7 +41,3 @@ If you have a .NET project, we recommend the usage of [SonarScanner for .NET](ht
 ### C/C++/Objective-C
 **_NOTE:_** All SonarScanner examples for C, C++ and Objective-C can be found [here](https://github.com/sonarsource-cfamily-examples).
 
-## License
-Copyright 2016-2023 SonarSource.
-
-Licensed under the [GNU Lesser General Public License, Version 3.0](http://www.gnu.org/licenses/lgpl.txt)

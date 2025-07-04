@@ -4,7 +4,7 @@ This repository showcases basic examples of usage and code coverage for SonarSca
 * [SonarScanner for Gradle](https://docs.sonarsource.com/sonarqube/latest/analyzing-source-code/scanners/sonarscanner-for-gradle)
 * [SonarScanner for .NET](https://docs.sonarsource.com/sonarqube/latest/analyzing-source-code/scanners/sonarscanner-for-dotnet)
 * [SonarScanner for Maven](https://docs.sonarsource.com/sonarqube/latest/analyzing-source-code/scanners/sonarscanner-for-maven)
-* [SonarScanner for Ant](https://docs.sonarsource.com/sonarqube/latest/analyzing-source-code/scanners/sonarscanner-for-ant) - This scanner is now deprecated. See link for more details.
+* SonarScanner CLI in a Java Ant project (Formerly [SonarScanner for Ant](https://docs.sonarsource.com/sonarqube/9.9/analyzing-source-code/scanners/sonarscanner-for-ant) - This scanner is now deprecated. See link for more details)
 * [SonarScanner CLI](https://docs.sonarsource.com/sonarqube/latest/analyzing-source-code/scanners/sonarscanner)
 
 Sonar's [Clean Code solution](https://www.sonarsource.com/solutions/clean-code/) helps developers deliver high-quality, efficient code standards that benefit the entire team or organization. 
@@ -14,9 +14,12 @@ Sonar's [Clean Code solution](https://www.sonarsource.com/solutions/clean-code/)
 * [SonarScanner for various languages](sonar-scanner)
 
 ### Ant
-[SonarScanner for Ant](https://docs.sonarsource.com/sonarqube/latest/analyzing-source-code/scanners/sonarscanner-for-ant) is now deprecated. Please migrate to the SonarScanner CLI.
+Scaning an Ant project is no different than scanning a plain Java (no build tool) project. Ant is used to build the project, but not to run the scan. Instead, the SonarScanner CLI is used.
 * [SonarScanner for Ant - Basic](sonar-scanner-ant/ant-basic)
 * [SonarScanner for Ant - Code Coverage](sonar-scanner-ant/ant-coverage)
+
+[SonarScanner for Ant](https://docs.sonarsource.com/sonarqube/latest/analyzing-source-code/scanners/sonarscanner-for-ant) is now deprecated. Please migrate to the SonarScanner CLI.
+
 
 ### Gradle
 If you have a Gradle project, we recommend usage of [SonarScanner for Gradle](https://docs.sonarsource.com/sonarqube/latest/analyzing-source-code/scanners/sonarscanner-for-gradle) or the equivalent SonarScanner for Gradle on your CI pipeline.
@@ -42,6 +45,6 @@ If you have a .NET project, we recommend the usage of [SonarScanner for .NET](ht
 **_NOTE:_** All SonarScanner examples for C, C++ and Objective-C can be found [here](https://github.com/sonarsource-cfamily-examples).
 
 ## License
-Copyright 2016-2023 SonarSource.
+Copyright 2016-2025 SonarSource.
 
 Licensed under the [GNU Lesser General Public License, Version 3.0](http://www.gnu.org/licenses/lgpl.txt)

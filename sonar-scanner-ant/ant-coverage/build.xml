@@ -16,8 +16,7 @@
 
 	<description>
 	  Example Ant build file that demonstrates how a JaCoCo coverage report
-	  can be integrated into an existing build in three simple steps with
-	  SonarQube Sonar Scanner for Ant.
+	  can be integrated into an existing build with SonarScanner CLI for an Ant project.
 	</description>
 
 	<property name="src.dir" location="./src/main/java" />
@@ -25,14 +24,6 @@
 	<property name="result.classes.dir" location="${result.dir}/classes" />
 	<property name="result.report.dir" location="${result.dir}/site/jacoco" />
 	<property name="result.exec.file" location="${result.dir}/jacoco.exec" />
-
-	<!-- SonarQube -->
-	<property name="sonar.projectKey" value="org.sonarqube:sonar-scanner-ant-coverage" />
-	<property name="sonar.projectName" value="Example of Ant and JaCoCo Usage" />
-	<property name="sonar.host.url" value="http://localhost:9000" />
-	<property name="sonar.sources" value="src" />
-	<property name="sonar.java.binaries" value="target" />
-	<property name="sonar.coverage.jacoco.xmlReportPaths" value="${result.report.dir}/report.xml" />
 
 	<!-- Step 1: Import JaCoCo Ant tasks -->
 	<taskdef uri="antlib:org.jacoco.ant" resource="org/jacoco/ant/antlib.xml">
@@ -90,17 +81,6 @@
 		</jacoco:report>
 	</target>
 
-	<!-- ========= Define SonarQube Scanner for Ant Target ========= -->
-	<target name="sonar" depends="compile">
-		<taskdef uri="antlib:org.sonar.ant" resource="org/sonar/ant/antlib.xml">
-			<!-- Update the following line, or put the "sonar-ant-task-*.jar" file in your "$HOME/.ant/lib" folder -->
-			<classpath path="path/to/sonar/ant/task/lib/sonarqube-ant-task-*.jar" />
-		</taskdef>
-
-		<!-- Execute SonarQube Scanner for Ant Analysis -->
-		<sonar:sonar />
-	</target>
-
-	<target name="rebuild" depends="clean,compile,test,report,sonar" />
+	<target name="rebuild" depends="clean,compile,test,report" />
 
 </project>

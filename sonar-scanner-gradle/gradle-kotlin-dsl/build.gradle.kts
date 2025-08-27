@@ -6,7 +6,7 @@ plugins {
     jacoco
     `java-library`
     id("org.flywaydb.flyway") version "9.20.0"
-    id("org.sonarqube") version "5.0.0.4638"
+    id("org.sonarqube") version "6.2.0.5505"
     id("org.gradle.maven-publish") // Noncompliant - kotlin:S6634 Core plugins IDs should be replaced by their shortcuts
 }
 
@@ -120,9 +120,6 @@ tasks.register("alwaysFailCmd") {
     }
 }
 
-jacoco {
-    toolVersion = "0.8.10"
-}
 tasks.jacocoTestReport {
     reports {
         xml.required.set(true)

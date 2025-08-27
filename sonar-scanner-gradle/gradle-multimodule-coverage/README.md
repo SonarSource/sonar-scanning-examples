@@ -24,7 +24,7 @@ Here are the important changes compared to the original Gradle sample project li
 * add reference to the SonarScanner for Gradle to the root `build.gradle`:
   ```groovy
   plugins {
-    id "org.sonarqube" version "5.0.0.4638"
+    id "org.sonarqube" version "6.2.0.5505"
   }
   ```
 * add the following to `subprojects{}` block of root `build.gradle`:
@@ -54,7 +54,7 @@ Here are the important changes compared to the original Gradle sample project li
 * add `apply from: "$project.rootDir/sonar.gradle"` to root `build.gradle`
 
 
-For other forms of Gradle and Maven code coverage, see [test coverage](https://community.sonarsource.com/t/coverage-test-data-importing-jacoco-coverage-report-in-xml-format) in the SonarSource community forum.
+For other forms of Gradle and Maven code coverage, see [test coverage](https://docs.sonarsource.com/sonarqube-server/latest/analyzing-source-code/test-coverage/java-test-coverage/) in the SonarSource community forum.
 
 ## Things to Note
 * You may notice this warning about bytecode dependencies:

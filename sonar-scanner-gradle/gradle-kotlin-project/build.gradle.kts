@@ -1,6 +1,6 @@
 plugins {
     jacoco
-    id("org.sonarqube") version "5.0.0.4638"
+    id("org.sonarqube") version "6.2.0.5505"
     kotlin("jvm") version "2.2.0"
 }
 
@@ -27,9 +27,6 @@ tasks.test {
 }
 kotlin {
     jvmToolchain(21)
-}
-jacoco {
-    toolVersion = "0.8.10"
 }
 
 tasks.jacocoTestReport {

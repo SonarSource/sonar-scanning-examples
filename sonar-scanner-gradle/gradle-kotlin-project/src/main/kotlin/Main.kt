@@ -13,4 +13,8 @@ fun main() {
         // for you, but you can always add more by pressing <shortcut actionId="ToggleLineBreakpoint"/>.
         println("i = $i")
     }
+
+    if (true) {
+        println("Can confirm: true is still true")
+    }
 }

@@ -3,8 +3,8 @@
 This example demonstrates how to import Xcode Coverage data to SonarQube for a Swift project. See [[Coverage & Test Data] Generate Reports for Swift](https://community.sonarsource.com/t/coverage-test-data-generate-reports-for-swift/9700) for more information including alternative methods to import coverage data into SonarQube/SonarCloud.
 
 ## Prerequisites
-* [SonarScanner](https://docs.sonarsource.com/sonarqube/latest/analyzing-source-code/scanners/sonarscanner/) 5.x or higher
-* [Xcode](https://developer.apple.com/xcode/) 13.3+
+* [SonarScanner CLI](https://docs.sonarsource.com/sonarqube-server/analyzing-source-code/scanners/sonarscanner) 8.x or higher
+* [Xcode](https://developer.apple.com/xcode/) 16
 
 ## Usage
 
@@ -18,12 +18,62 @@ Use `xcodebuild` to build and test the project example with the command:
 xcodebuild -project swift-coverage-example.xcodeproj/ -scheme swift-coverage-example -derivedDataPath Build/ -enableCodeCoverage YES clean build test CODE_SIGN_IDENTITY="" CODE_SIGNING_REQUIRED=NO
 ```
 
+### Using slather (recommended)
+
+[Slather](https://github.com/SlatherOrg/slather) is a Ruby gem that generates coverage reports for Xcode projects and can hook into CI.
+See various options and output formats [here](https://github.com/SlatherOrg/slather/blob/master/lib/slather/command/coverage_command.rb).
+
+```shell
+slather coverage --sonarqube-xml --scheme <schemeName> --build-directory <buildDirectory>  path/to/project.xcodeproj
+```
+This command uses the [SonarQube generic test coverage format](https://docs.sonarsource.com/sonarqube-server/analyzing-source-code/test-coverage/generic-test-data) generating the default `sonarqube-generic-coverage.xml` coverage file in the base directory. This means you need to use `sonar.coverageReportPaths=<path/to/sonarqube-generic-coverage.xml>` when running the SonarScanner.
+
+Example of a simple GitHub Actions workflow. Notice the usage of Ruby version and `bundle exec` commands:
+```yaml
+name: Build
+on:
+  push:
+    branches:
+      - main
+  pull_request:
+    types: [opened, synchronize, reopened]
+jobs:
+  sonarqube:
+    name: SonarQube
+    runs-on: macos-latest
+    steps:
+      - uses: actions/checkout@v6
+        with:
+            fetch-depth: 0
+      - uses: ruby/setup-ruby@v1
+        with:
+          ruby-version: '3.2' # Not needed with a .ruby-version, .tool-versions or mise.toml
+          bundler-cache: true
+      - name: Build and test, collect coverage
+        run: xcodebuild clean build test -project CodecovDemo.xcodeproj -scheme CodecovDemo -destination 'platform=iOS Simulator,OS=26.1,name=iPhone 17' -enableCodeCoverage YES
+      - name: Convert xcresult coverage to SonarQube coverage format
+        run:  bundle exec slather coverage --sonarqube-xml --scheme CodecovDemo ./CodecovDemo.xcodeproj
+      - name: SonarQube Scan
+        uses: SonarSource/sonarqube-scan-action@v7
+        env:
+          SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
+        with:
+          args: >
+            -X
+            -Dsonar.sources=CodecovDemo
+            -Dsonar.tests=CodecovDemoTests,CodecovDemoUITests
+            -Dsonar.inclusions=**/*.swift
+            -Dsonar.exclusions=vendor/**
+            -Dsonar.coverage.exclusions=**/GeneratedAssetSymbols.swift
+            -Dsonar.coverageReportPaths=sonarqube-generic-coverage.xml
+```
+
 ### Using xccov (recommended)
 
 The `xccov` command line tool is the recommended option to view Xcode coverage
 data and is more straightforward to use than the older `llvm-cov` tool. With
 the script `xccov-to-sonarqube-generic.sh`, you can convert Xcode test results
-stored in `*.xcresult` folders to the [SonarQube generic test coverage format](https://docs.sonarsource.com/sonarqube/latest/analyzing-source-code/test-coverage/generic-test-data/).
+stored in `*.xcresult` folders to the [SonarQube generic test coverage format](https://docs.sonarsource.com/sonarqube-server/analyzing-source-code/test-coverage/generic-test-data).
 
 First, locate the Xcode test result folder (`*.xcresult`). Then use it as a parameter to the script converting the coverage data to the SonarQube format as in the following example:
 

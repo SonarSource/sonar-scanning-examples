@@ -1,9 +1,9 @@
-123456789012     C* Expressions in Extended Factor 2 syntax 
-123456789012     C                   IF        A=X OR A=Y AND A=Z 
+123456789012     C* Expressions in Extended Factor 2 syntax
+123456789012     C                   IF        A=X OR A=Y AND A=Z
 123456789012     C                             AND B=Y
 123456789012     C                   READ      Y
 123456789012     C                   ENDIF
-123456789012     C                   IF        A=X OR A=Y AND A=Z 
+123456789012     C                   IF        A=X OR A=Y AND A=Z
 123456789012     C                             AND B=Y OR B=Z
 123456789012     C                   READ      Y
 123456789012     C                   ENDIF

@@ -1,6 +1,0 @@
-{
-    "sonarlint.connectedMode.project": {
-        "connectionId": "https-ee20256-jting-us-ngrok-io",
-        "projectKey": "swift-coverage-example"
-    }
-}

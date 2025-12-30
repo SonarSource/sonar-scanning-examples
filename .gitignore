@@ -26,3 +26,6 @@ obj/
 .coverage
 
 __pycache__
+
+.vscode/
+**/.vscode/

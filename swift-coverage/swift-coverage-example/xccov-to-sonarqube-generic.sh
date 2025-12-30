@@ -34,7 +34,7 @@ command -v xcodebuild >/dev/null 2>&1 || { echo >&2 "xcodebuild is required but 
 if ! xcode_version="$(xcodebuild -version | sed -n '1s/^Xcode \([0-9.]*\)$/\1/p')"; then
   echo 'Failed to get Xcode version' 1>&2
   exit 1
-elif check_xcode_version "$xcode_version"; then
+elif ! check_xcode_version "$xcode_version"; then
   echo "Xcode version '$xcode_version' not supported, version 13.3 or above is required" 1>&2;
   exit 1
 fi

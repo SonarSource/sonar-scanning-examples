@@ -1,31 +1,37 @@
 # Multi-module Maven Example
 
-This project imports JaCoCo's aggregate XML report to be able to report coverage across modules as well as unit test coverage inside the module.
+This project imports both:
 
-For a basic example, see [basic maven project](../maven-basic/README.md).
+- JaCoCo's aggregate XML report to enable code coverage reporting across modules
+- Maven Surefire XML test reports to include unit test results for each module
+
+For a basic example, see [basic Maven project](../maven-basic/README.md).
 
 ## Usage
-* Build the project, execute all the tests and analyze the project with SonarScanner for Maven:
+
+Build the project, execute all the tests, and analyze it with SonarScanner for Maven:
+
 ```shell
-mvn clean verify sonar:sonar
+mvn clean verify sonar:sonar \
+  -Dsonar.coverage.jacoco.xmlReportPaths=$(pwd)/tests/target/site/jacoco-aggregate/jacoco.xml \
+  -Dsonar.junit.reportPaths=target/surefire-reports
 ```
 
 ## Description
 
-This project consists of 3 modules.
+This project consists of 3 modules:
 
 * [`module1`](module1/pom.xml) and [`module2`](module2/pom.xml) contain "business logic" and related unit tests.
 
 * [`tests`](tests/pom.xml) module contains integration tests which test functionality using both modules.
  `tests` module is also the one which creates the aggregate coverage report imported into SonarQube.
 
-To generate the report we configure the JaCoCo plugin to attach its agent to the JVM which is executing the tests in the top level [pom](pom.xml). 
+## Code Coverage with JaCoCo
+To collect code coverage across all modules:
+### 1. JaCoCo Agent Setup
+In the top-level pom.xml, the JaCoCo plugin is configured under <pluginManagement> so it applies to all submodules. It is wrapped in the coverage profile to make it activatable (e.g. in CI):
 
-This configuration is done in the `<pluginManagment>` section, so it will be applied on every submodule.
-
-It is also configured inside the `coverage` profile, so this can be activated as needed (e.g. only in CI pipeline).
-
-```xml
+```
 <build>
   <pluginManagement>
     <plugins>
@@ -45,15 +51,10 @@ It is also configured inside the `coverage` profile, so this can be activated as
 </build>
 ```
 
-Once we have configured JaCoCo to collect coverage data, we need to generate the XML coverage report to be imported into SonarQube.
+### 2. Generate Aggregate Coverage Report
+In the `tests` module, the `report-aggregate` goal is configured to run in the `verify` phase to generate a coverage report combining all modules:
 
-We will use [report-aggregate](https://www.jacoco.org/jacoco/trunk/doc/report-aggregate-mojo.html) goal which collects data from all modules dependent on the `tests` module.
-
-To achieve this we configure the JaCoCo plugin by configuring execution of `report-aggregate` goal in `verify` phase.
-
-See [pom.xml](tests/pom.xml)
-
-```xml
+```
 <build>
   <plugins>
     <plugin>
@@ -73,22 +74,66 @@ See [pom.xml](tests/pom.xml)
 </build>
 ```
 
-This will create a report in `tests/target/site/jacoco-aggregate/jacoco.xml`. To import this report we will set
-`sonar.coverage.jacoco.xmlReportPaths` property with the `${maven.multiModuleProjectDirectory}` so every module knows where the coverage should be imported from
+This creates the report at:
+```
+tests/target/site/jacoco-aggregate/jacoco.xml
+```
 
-```xml
+To import it into SonarQube, set the path in the top-level `pom.xml`:
+
+```
 <properties>
   <sonar.coverage.jacoco.xmlReportPaths>${maven.multiModuleProjectDirectory}/tests/target/site/jacoco-aggregate/jacoco.xml</sonar.coverage.jacoco.xmlReportPaths>
 </properties>
 ```
 
-Alternately we can set this property on the command line with the `-D` switch:
+Or pass it directly via the command line:
 
-```shell
-mvn -Dsonar.coverage.jacoco.xmlReportPaths=C:\projects\sonar-scanning-examples\sonarscanner-maven-aggregate\tests\target\site\jacoco-aggregate\jacoco.xml clean verify sonar:sonar 
+```
+-Dsonar..coverage.jacoco.xmlReportPaths=absolute/path/to/jacoco.xml
 ```
 
-We have to use an absolute path, because the report will be imported for each module separately and the path is resolved relative to the module dir.
+## Unit Test Result Reporting
+To include unit test results (e.g. passed/failed/skipped test count, execution time) in SonarQube:
+
+### Surefire Plugin Configuration
+
+The maven-surefire-report-plugin (version 3.5.3) is included in the root pom.xml under <pluginManagement>, ensuring all modules inherit it:
+
+```
+<pluginManagement>
+  <plugins>
+    <plugin>
+      <groupId>org.apache.maven.plugins</groupId>
+      <artifactId>maven-surefire-report-plugin</artifactId>
+      <version>3.5.3</version>
+    </plugin>
+  </plugins>
+</pluginManagement>
+```
+
+During the `verify` phase, this generates XML reports in each module's `target/surefire-reports/` directory:
+
+```
+module1/target/surefire-reports/TEST-com.example.FooTest.xml
+module2/target/surefire-reports/TEST-com.example.BarTest.xml
+```
+
+To import these into SonarQube, set:
+
+```
+-Dsonar.junit.reportPaths=target/surefire-reports
+```
+
+## SonarQube Results
+After analysis, SonarQube will display:
+
+- Code coverage metrics from jacoco.xml
+- Test execution stats from Surefire XML files:
+  - Total tests
+  - Passed/failed/skipped
+  - Execution duration
+- Trends and drill-down under the "Tests" and "Coverage" tabs
 
 ## Documentation
 

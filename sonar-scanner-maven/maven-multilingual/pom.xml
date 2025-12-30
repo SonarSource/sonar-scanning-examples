@@ -44,9 +44,14 @@
           <version>0.8.11</version>
         </plugin>
         <plugin>
+          <groupId>org.apache.maven.plugins</groupId>
+          <artifactId>maven-surefire-report-plugin</artifactId>
+          <version>3.5.3</version>
+        </plugin>
+        <plugin>
           <groupId>org.sonarsource.scanner.maven</groupId>
           <artifactId>sonar-maven-plugin</artifactId>
-          <version>3.10.0.2594</version>
+          <version>5.1.0.4751</version>
         </plugin>
       </plugins>
     </pluginManagement>

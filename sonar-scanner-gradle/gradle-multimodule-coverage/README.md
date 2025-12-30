@@ -6,14 +6,14 @@ This example project demonstrates how to analyze a multi-module project with Jac
 * A Gradle wrapper is included that bundles Gradle. All other required plugins will be pulled by Gradle as needed.
 
 ## Usage
-Run the following command (update `sonar.host.url`, `sonar.login`, `sonar.password`, etc. analysis parameters as needed either at command line or in `sonar.gradle`):
+Run the following command (update `sonar.host.url` and `sonar.token` analysis parameters as needed either at command line or in your `gradle.properties` file):
 * On Unix-like systems:
   ```shell
-  ./gradlew clean build codeCoverageReport -Dsonar.host.url=http://localhost:9000 -Dsonar.login=admin -Dsonar.password=admin sonar
+  ./gradlew clean build codeCoverageReport -Dsonar.host.url=http://localhost:9000 -Dsonar.token=<token> sonar
   ```
 * On Windows:
   ```shell
-  .\gradlew.bat clean build codeCoverageReport -Dsonar.host.url=http://localhost:9000 -Dsonar.login=admin -Dsonar.password=admin sonar
+  .\gradlew.bat clean build codeCoverageReport -Dsonar.host.url=http://localhost:9000 -Dsonar.token=<token> sonar
   ```
 
 ## Coverage
@@ -24,7 +24,7 @@ Here are the important changes compared to the original Gradle sample project li
 * add reference to the SonarScanner for Gradle to the root `build.gradle`:
   ```groovy
   plugins {
-    id "org.sonarqube" version "5.0.0.4638"
+    id "org.sonarqube" version "latest.release"
   }
   ```
 * add the following to `subprojects{}` block of root `build.gradle`:
@@ -54,7 +54,7 @@ Here are the important changes compared to the original Gradle sample project li
 * add `apply from: "$project.rootDir/sonar.gradle"` to root `build.gradle`
 
 
-For other forms of Gradle and Maven code coverage, see [test coverage](https://community.sonarsource.com/t/coverage-test-data-importing-jacoco-coverage-report-in-xml-format) in the SonarSource community forum.
+For other forms of Gradle and Maven code coverage, see [test coverage](https://docs.sonarsource.com/sonarqube-server/latest/analyzing-source-code/test-coverage/java-test-coverage/) in the SonarSource community forum.
 
 ## Things to Note
 * You may notice this warning about bytecode dependencies:

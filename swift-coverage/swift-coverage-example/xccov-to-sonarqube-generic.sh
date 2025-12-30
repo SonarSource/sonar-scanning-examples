@@ -131,13 +131,13 @@ function convert_xccov_to_coverage_xml {
   xcrun xccov view --archive "$xcresult" | convert_xccov_to_xml
   echo '</coverage>'
 }
-
-function check_xcode_version() {
-  local required_version="13.3"
-  if [[ "$(echo -e "$1\n$required_version" | sort -V | head -n1)" != "$required_version" ]]; then
-    return 0
+function is_xcode_version_supported() {
+  local major=${1:-0} minor=${2:-0}
+  # Return 0 (success) if version is supported, 1 (failure) if not
+  if (( (major >= 14) || (major == 13 && minor >= 3) )); then
+    return 0  # supported
   else
-    return 1
+    return 1  # not supported
   fi
 }
 
@@ -149,7 +149,7 @@ command -v xcodebuild >/dev/null 2>&1 || { echo >&2 "xcodebuild is required but 
 if ! xcode_version="$(xcodebuild -version | sed -n '1s/^Xcode \([0-9.]*\)$/\1/p')"; then
   echo 'Failed to get Xcode version' 1>&2
   exit 1
-elif ! check_xcode_version "$xcode_version"; then
+elif ! is_xcode_version_supported ${xcode_version//./ }; then
   echo "Xcode version '$xcode_version' not supported, version 13.3 or above is required" 1>&2;
   exit 1
 fi

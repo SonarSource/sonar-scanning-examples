@@ -26,11 +26,13 @@ xcodebuild -project swift-coverage-example.xcodeproj/ -scheme swift-coverage-exa
 See various options and output formats [here](https://github.com/SlatherOrg/slather/blob/master/lib/slather/command/coverage_command.rb).
 
 ```shell
+# --build-directory flag is optional if you defined a build folder earlier such as `xcodebuild -derivedDataPath Build/`
 slather coverage --sonarqube-xml --scheme <schemeName> --build-directory <buildDirectory>  path/to/project.xcodeproj
 ```
-This command uses the [SonarQube generic test coverage format](https://docs.sonarsource.com/sonarqube-server/analyzing-source-code/test-coverage/generic-test-data) generating the default `sonarqube-generic-coverage.xml` coverage file in the base directory. This means you need to use `sonar.coverageReportPaths=<path/to/sonarqube-generic-coverage.xml>` when running the SonarScanner.
+This command uses the [SonarQube generic test coverage format](https://docs.sonarsource.com/sonarqube-server/analyzing-source-code/test-coverage/generic-test-data) generating the default `sonarqube-generic-coverage.xml` coverage file in the base directory. This means you need to use `sonar.coverageReportPaths=sonarqube-generic-coverage.xml` when running the SonarScanner. Modify the path to the coverage file as needed so that the Sonar scanner can find it.
 
-Example of a simple GitHub Actions workflow. Notice the usage of Ruby version and `bundle exec` commands:
+Example of a simple GitHub Actions workflow for this swift-coverage-example project for SonarQube Cloud.
+Notice the usage of Ruby version and `bundle exec` command:
 ```yaml
 name: Build
 on:
@@ -59,18 +61,23 @@ jobs:
         uses: SonarSource/sonarqube-scan-action@v7
         env:
           SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
+          # Add SONAR_HOST_URL secret if you need to reference a SonarQube server and not SonarQube Cloud
+          # SONAR_HOST_URL: ${{ secrets.SONAR_HOST_URL }}
         with:
+          # You can optionally move some of these SonarQube analysis parameters into the sonar-project.properties file itself
           args: >
             -X
+            -Dsonar.projectKey=swift-coverage-example
+            -Dsonar.organization=sonar-example-repos
             -Dsonar.sources=swift-coverage-example
             -Dsonar.tests=swift-coverage-exampleTests
-            -Dsonar.inclusions=**/*.swift
             -Dsonar.exclusions=vendor/**
-            -Dsonar.coverage.exclusions=**/GeneratedAssetSymbols.swift
+            -Dsonar.inclusions=**/*.swift
+            -Dsonar.coverage.exclusions=**/GeneratedAssetSymbols.swift,**/swift-coverage-exampleTests/**
             -Dsonar.coverageReportPaths=sonarqube-generic-coverage.xml
 ```
 
-### Using xccov
+### Using xccov (not recommended)
 
 The `xccov` command line tool is the recommended option to view Xcode coverage data and is more straightforward to use than the older `llvm-cov` tool.
 
@@ -79,7 +86,7 @@ With the script `xccov-to-sonarqube-generic.sh`, you can convert Xcode test resu
 First, locate the Xcode test result folder (`*.xcresult`). Then use it as a parameter to the script converting the coverage data to the SonarQube format as in the following example:
 
 ```shell
-bash xccov-to-sonarqube-generic.sh Build/Logs/Test/Run-swift-coverage-example-2023.01.27_16-07-44-+0100.xcresult/ >Coverage.xml
+bash xccov-to-sonarqube-generic.sh Build/Logs/Test/Run-swift-coverage-example-2023.01.27_16-07-44-+0100.xcresult/ > Coverage.xml
 ```
 
 Then, use the parameter `sonar.coverageReportPaths` to reference the generated report:
@@ -90,7 +97,7 @@ sonar-scanner -Dsonar.coverageReportPaths=Coverage.xml
 
 This parameter accepts a comma-separated list of files, which means you can also provide multiple coverage reports from multiple test results.
 
-### Using llvm-cov 
+### Using llvm-cov (not recommended)
 
 You can also provide code coverage data using the `llvm-cov` format. The
 process of generating an llvm-cov report requires several steps to get the
@@ -103,7 +110,7 @@ following example (the located `Coverage.profdata` file should be the value of `
 ```shell
 xcrun --run llvm-cov show -instr-profile=Build/Build/ProfileData/00006000-000428843C29801E/Coverage.profdata \
       Build/Build/Products/Debug/swift-coverage-example.app/Contents/MacOS/swift-coverage-example \
-      >Coverage.report
+      > Coverage.report
 ```
 
 Finally, use the parameter `sonar.swift.coverage.reportPaths` to reference the generated report. This parameter also accepts a comma-separated list of files.
@@ -114,23 +121,23 @@ sonar-scanner -Dsonar.swift.coverage.reportPaths=Coverage.report
 
 ### Verify in SonarQube
 
-Verify in SonarQube that for the project `swift-coverage-example` the coverage value is around 75%.
+Verify in SonarQube that for the project `swift-coverage-example` the Overall Code coverage value is around 75%.
 
 ### Other example Swift projects with coverage
-Here is a list of sample Swift projects that have tests that allow you to compute coverage. I have added example commands that you can choose to modify:
-* https://github.com/jasonjrr/MVVM.Demo.SwiftUI.git
+Here is a list of sample Swift projects that have tests that allow you to compute coverage. I have added example commands for SonarQube Server that you can modify:
+* [https://github.com/jasonjrr/MVVM.Demo.SwiftUI.git](https://github.com/jasonjrr/MVVM.Demo.SwiftUI.git)
   ```
   $ xcodebuild -project MVVM.Demo.SwiftUI.xcodeproj -scheme MVVM.Demo.SwiftUI -enableCodeCoverage YES -destination 'platform=iOS Simulator,name=iPhone 17 Pro' clean build test CODE_SIGN_IDENTITY="" CODE_SIGNING_REQUIRED=NO
   $ slather coverage --sonarqube-xml --scheme MVVM.Demo.SwiftUI ./MVVM.Demo.SwiftUI.xcodeproj
   $ sonar-scanner -Dsonar.host.url=http://localhost:9000 -Dsonar.token=<YOUR-SONAR-TOKEN> -Dsonar.projectKey=MVVM.Demo.SwiftUI -Dsonar.coverageReportPaths=sonarqube-generic-coverage.xml -Dsonar.exclusions=Build/**,sonarqube-generic-coverage.xml -Dsonar.sources=MVVM.Demo.SwiftUI -Dsonar.tests=MVVM.Demo.SwiftUITests,MVVM.Demo.SwiftUIUITests
   ```
-* https://github.com/sonar-example-repos/Swift-Codecov-Demo
+* [https://github.com/sonar-example-repos/Swift-Codecov-Demo](https://github.com/sonar-example-repos/Swift-Codecov-Demo)
   ```
   $ xcodebuild clean build test -project CodecovDemo.xcodeproj -scheme CodecovDemo -destination 'platform=iOS Simulator,OS=26.1,name=iPhone 17' -enableCodeCoverage YES CODE_SIGN_IDENTITY="" CODE_SIGNING_REQUIRED=NO
   $ slather coverage --sonarqube-xml --scheme CodecovDemo ./CodecovDemo.xcodeproj
   $ sonar-scanner -Dsonar.host.url=http://localhost:9000 -Dsonar.token=<YOUR-SONAR-TOKEN> -Dsonar.projectKey=sonar-example-repos_Swift-Codecov-Demo -Dsonar.sources=CodecovDemo -Dsonar.tests=CodecovDemoTests,CodecovDemoUITests -Dsonar.inclusions=**/*.swift -Dsonar.exclusions=vendor/** -Dsonar.coverage.exclusions=**/GeneratedAssetSymbols.swift -Dsonar.coverageReportPaths=sonarqube-generic-coverage.xml
   ```
-* https://github.com/exelban/stats
+* [https://github.com/exelban/stats](https://github.com/exelban/stats)
   ```
   $ xcodebuild -project Stats.xcodeproj -scheme Stats -enableCodeCoverage YES -destination 'platform=macOS' clean build test CODE_SIGN_IDENTITY="-" CODE_SIGNING_REQUIRED=NO
   $ slather coverage --sonarqube-xml --scheme Stats ./Stats.xcodeproj

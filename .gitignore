@@ -1,3 +1,7 @@
+# SonarQube scanner files
+.scannerwork/
+**/.scannerwork/
+
 # Gradle files
 .gradle/
 .classpath
@@ -10,10 +14,8 @@ build/
 .sonar
 target/
 bw-outputs/
-.scannerwork
 
 # IntelliJ
-
 .idea
 *.iml
 
@@ -23,6 +25,7 @@ bw-outputs/
 # MSBuild
 obj/
 
+# Miscellaneous files
 .coverage
 
 __pycache__

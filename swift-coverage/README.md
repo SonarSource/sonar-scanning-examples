@@ -52,18 +52,19 @@ jobs:
           ruby-version: '3.2' # Not needed with a .ruby-version, .tool-versions or mise.toml
           bundler-cache: true
       - name: Build and test, collect coverage
-        run: xcodebuild clean build test -project CodecovDemo.xcodeproj -scheme CodecovDemo -destination 'platform=iOS Simulator,OS=26.1,name=iPhone 17' -enableCodeCoverage YES
+        run: xcodebuild clean build test -project swift-coverage-example.xcodeproj -scheme swift-coverage-example -destination 'platform=macOS' -enableCodeCoverage YES
       - name: Convert xcresult coverage to SonarQube coverage format
-        run:  bundle exec slather coverage --sonarqube-xml --scheme CodecovDemo ./CodecovDemo.xcodeproj
+        run:  bundle exec slather coverage --sonarqube-xml --scheme swift-coverage-example ./swift-coverage-example.xcodeproj
       - name: SonarQube Scan
         uses: SonarSource/sonarqube-scan-action@v7
         env:
           SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
+          SONAR_HOST_URL: ${{ secrets.SONAR_HOST_URL }}
         with:
           args: >
             -X
-            -Dsonar.sources=CodecovDemo
-            -Dsonar.tests=CodecovDemoTests,CodecovDemoUITests
+            -Dsonar.sources=swift-coverage-example
+            -Dsonar.tests=swift-coverage-exampleTests
             -Dsonar.inclusions=**/*.swift
             -Dsonar.exclusions=vendor/**
             -Dsonar.coverage.exclusions=**/GeneratedAssetSymbols.swift

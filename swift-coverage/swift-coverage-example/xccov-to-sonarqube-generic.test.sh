@@ -314,6 +314,103 @@ run_test "Empty input" \
 "" \
 ""
 
+# ==============================================================================
+# Version Check Tests
+# ==============================================================================
+
+echo ""
+echo "Version check tests"
+echo "------------------------------------------------------"
+
+# Extract the is_xcode_version_supported function from the source script
+extract_version_function() {
+  awk '/^function is_xcode_version_supported/,/^}$/' "$SOURCE_SCRIPT"
+}
+
+# Test helper for version checks
+run_version_test() {
+  local test_name="$1"
+  local major="$2"
+  local minor="$3"
+  local expected_supported="$4"  # "true" or "false"
+  
+  TESTS_RUN=$((TESTS_RUN + 1))
+  
+  # Create temp script with version function
+  local version_script
+  version_script=$(mktemp)
+  
+  cat > "$version_script" << 'HEADER'
+#!/usr/bin/env bash
+set -euo pipefail
+HEADER
+  
+  extract_version_function >> "$version_script"
+  
+  cat >> "$version_script" << FOOTER
+if is_xcode_version_supported $major $minor; then
+  echo "supported"
+else
+  echo "unsupported"
+fi
+FOOTER
+  
+  chmod +x "$version_script"
+  
+  local actual
+  actual=$(bash "$version_script" 2>&1)
+  rm -f "$version_script"
+  
+  local expected
+  if [[ "$expected_supported" == "true" ]]; then
+    expected="supported"
+  else
+    expected="unsupported"
+  fi
+  
+  if [[ "$actual" == "$expected" ]]; then
+    echo -e "${GREEN}✓ PASS${NC}: $test_name"
+    TESTS_PASSED=$((TESTS_PASSED + 1))
+    return 0
+  else
+    echo -e "${RED}✗ FAIL${NC}: $test_name"
+    echo -e "${YELLOW}Expected:${NC} $expected"
+    echo -e "${YELLOW}Actual:${NC} $actual"
+    TESTS_FAILED=$((TESTS_FAILED + 1))
+    return 1
+  fi
+}
+
+# ------------------------------------------------------------------------------
+# Supported versions (13.3+)
+# ------------------------------------------------------------------------------
+run_version_test "Xcode 26.2 should be supported" 26 2 "true"
+run_version_test "Xcode 16.0 should be supported" 16 0 "true"
+run_version_test "Xcode 16.2 should be supported" 16 2 "true"
+run_version_test "Xcode 15.0 should be supported" 15 0 "true"
+run_version_test "Xcode 15.4 should be supported" 15 4 "true"
+run_version_test "Xcode 14.0 should be supported" 14 0 "true"
+run_version_test "Xcode 14.3 should be supported" 14 3 "true"
+run_version_test "Xcode 13.3 should be supported (minimum)" 13 3 "true"
+run_version_test "Xcode 13.4 should be supported" 13 4 "true"
+
+# ------------------------------------------------------------------------------
+# Unsupported versions (< 13.3)
+# ------------------------------------------------------------------------------
+run_version_test "Xcode 13.2 should be unsupported" 13 2 "false"
+run_version_test "Xcode 13.1 should be unsupported" 13 1 "false"
+run_version_test "Xcode 13.0 should be unsupported" 13 0 "false"
+run_version_test "Xcode 12.5 should be unsupported" 12 5 "false"
+run_version_test "Xcode 12.0 should be unsupported" 12 0 "false"
+run_version_test "Xcode 11.0 should be unsupported" 11 0 "false"
+run_version_test "Xcode 10.0 should be unsupported" 10 0 "false"
+
+# ------------------------------------------------------------------------------
+# Edge cases
+# ------------------------------------------------------------------------------
+run_version_test "Xcode 0.0 should be unsupported" 0 0 "false"
+run_version_test "Xcode 99.0 (future) should be supported" 99 0 "true"
+
 # ------------------------------------------------------------------------------
 # Summary
 # ------------------------------------------------------------------------------

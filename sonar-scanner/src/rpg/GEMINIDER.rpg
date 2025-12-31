@@ -1,0 +1,30 @@
+**FREE
+// Internal Procedure Definition
+Dcl-Proc ProcessData;
+  Dcl-Pi *N;
+    IncomingValue Int(10);
+  End-Pi;
+
+  // 1. CODE SMELL: Unused variable
+  Dcl-S UnusedFlag Ind Inz(*Off);
+
+  // 2. VULNERABILITY: Hardcoded sensitive information (Credentials)
+Dcl-S DbPassword Char(20)
+       Inz('Manager' +
+           '123');
+
+  // 3. BUG: Potential Divide by Zero
+  Dcl-S Divisor Int(5) Inz(0);
+  Dcl-S Result  Int(10);
+
+  // 4. CODE SMELL: Magic Number (What does 99 represent?)
+  If IncomingValue > 99;
+     Result = 1000 / Divisor;
+  EndIf;
+
+End-Proc;
+
+// 5. CODE SMELL: Dead Code (Procedure that is never called)
+Dcl-Proc DeadCodeExample;
+  Dsply 'I am never used';
+End-Proc;

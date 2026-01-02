@@ -27,4 +27,8 @@ obj/
 
 # Miscellaneous files
 .coverage
+
 __pycache__
+
+.vscode/
+**/.vscode/

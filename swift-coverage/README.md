@@ -10,7 +10,7 @@ If you encounter issues with this bash script, use a dedicated Swift coverage to
 
 ## Usage
 
-Run the following commands in folder `swift-coverage-example`.
+Run the following commands in the folder `swift-coverage-example`.
 
 ### Build project
 
@@ -22,17 +22,17 @@ xcodebuild -project swift-coverage-example.xcodeproj/ -scheme swift-coverage-exa
 
 ### Using slather (highly recommended)
 
-[Slather](https://github.com/SlatherOrg/slather) is a Ruby gem that generates coverage reports for Xcode projects and can hook into CI.
+[Slather](https://github.com/SlatherOrg/slather) is a Ruby gem that generates coverage reports for Xcode projects and integrates with CI.
 See various options and output formats [here](https://github.com/SlatherOrg/slather/blob/master/lib/slather/command/coverage_command.rb).
 
 ```shell
 # --build-directory flag is optional if you defined a build folder earlier such as `xcodebuild -derivedDataPath Build/`
 slather coverage --sonarqube-xml --scheme <schemeName> --build-directory <buildDirectory>  path/to/project.xcodeproj
 ```
-This command uses the [SonarQube generic test coverage format](https://docs.sonarsource.com/sonarqube-server/analyzing-source-code/test-coverage/generic-test-data) generating the default `sonarqube-generic-coverage.xml` coverage file in the base directory. This means you need to use `sonar.coverageReportPaths=sonarqube-generic-coverage.xml` when running the SonarScanner. Modify the path to the coverage file as needed so that the Sonar scanner can find it.
+This command uses the [SonarQube generic test coverage format](https://docs.sonarsource.com/sonarqube-server/analyzing-source-code/test-coverage/generic-test-data) to generate the default `sonarqube-generic-coverage.xml` coverage file in the base directory. This means you need to use `sonar.coverageReportPaths=sonarqube-generic-coverage.xml` when running the SonarScanner. Modify the path to the coverage file as required so that the Sonar scanner can find it.
 
 Example of a simple GitHub Actions workflow for this swift-coverage-example project for SonarQube Cloud.
-Notice the usage of Ruby version and `bundle exec` command:
+Notice the usage of the Ruby version and the `bundle exec` command:
 ```yaml
 name: Build
 on:
@@ -79,11 +79,11 @@ jobs:
 
 ### Using xccov (not recommended)
 
-The `xccov` command line tool is the recommended option to view Xcode coverage data and is more straightforward to use than the older `llvm-cov` tool.
+The `xccov` command line tool is an option for viewing Xcode coverage data and is more straightforward to use than the older `llvm-cov` tool.
 
-With the script `xccov-to-sonarqube-generic.sh`, you can convert Xcode test results stored in `*.xcresult` folders to the [SonarQube generic test coverage format](https://docs.sonarsource.com/sonarqube-server/analyzing-source-code/test-coverage/generic-test-data). Note that this script is subject to changes and may not work in the future. I highly recommend you use [Slather](https://github.com/SlatherOrg/slather) instead, which is far more mature, maintained, and documented.
+With the script `xccov-to-sonarqube-generic.sh`, you can convert Xcode test results stored in `*.xcresult` folders to the [SonarQube generic test coverage format](https://docs.sonarsource.com/sonarqube-server/analyzing-source-code/test-coverage/generic-test-data). Note that this script is subject to changes and may not work in the future. I highly recommend using [Slather](https://github.com/SlatherOrg/slather) instead, which is far more mature, well-maintained, and well-documented.
 
-First, locate the Xcode test result folder (`*.xcresult`). Then use it as a parameter to the script converting the coverage data to the SonarQube format as in the following example:
+First, locate the Xcode test result folder (`*.xcresult`). Then use it as a parameter to the script converting the coverage data to the SonarQube format, as in the following example:
 
 ```shell
 bash xccov-to-sonarqube-generic.sh Build/Logs/Test/Run-swift-coverage-example-2023.01.27_16-07-44-+0100.xcresult/ > Coverage.xml
@@ -121,7 +121,7 @@ sonar-scanner -Dsonar.swift.coverage.reportPaths=Coverage.report
 
 ### Verify in SonarQube
 
-Verify in SonarQube that for the project `swift-coverage-example` the Overall Code coverage value is around 75%.
+Verify in SonarQube that the Overall Code coverage for the project `swift-coverage-example` is around 75%.
 
 ### Other example Swift projects with coverage
 Here is a list of sample Swift projects that have tests that allow you to compute coverage. I have added example commands for SonarQube Server that you can modify:

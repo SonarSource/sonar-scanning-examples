@@ -12,8 +12,7 @@ sonar {
     properties {
         property('sonar.projectName', 'Example of SonarScanner for Gradle Usage')
         property("sonar.projectKey", "sonar-scanner-gradle")
-        property("sonar.sources", "src/main")
-        property "sonar.tests", "src/test"
+
     }
 }
 
@@ -39,7 +38,6 @@ java {
     toolchain {
         languageVersion = JavaLanguageVersion.of(17)
     }
-    sourceSets.main.java.srcDirs = ['src']
 }
 
 application {

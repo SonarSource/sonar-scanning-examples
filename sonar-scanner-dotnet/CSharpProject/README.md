@@ -14,7 +14,7 @@ This example demonstrates how to analyze a .NET Solution with the [SonarScanner 
     ```
     or
     ```bash
-    dotnet sonarscanner begin /k:"org.sonarqube:sonar-scanner-msbuild" /n:"Example of SonarScanner for MSBuild Usage" /d:sonar.token="<token>" /d:sonar.host.url="http://localhost:9000 /v:"1.0"
+    dotnet sonarscanner begin /k:"org.sonarqube:sonar-scanner-msbuild" /n:"Example of SonarScanner for MSBuild Usage" /d:sonar.token="<token>" /d:sonar.host.url="http://localhost:9000" /v:"1.0"
     ```
 2. Build the project with MSBuild/dotnet:
     ```powershell

@@ -12,7 +12,7 @@ For a basic example, see [basic Maven project](../maven-basic/README.md).
 Build the project, execute all the tests, and analyze it with SonarScanner for Maven:
 
 ```shell
-mvn clean verify sonar:sonar \
+mvn clean verify org.sonarsource.scanner.maven:sonar-maven-plugin:5.6.0.6792:sonar \
   -Dsonar.coverage.jacoco.xmlReportPaths=$(pwd)/tests/target/site/jacoco-aggregate/jacoco.xml \
   -Dsonar.junit.reportPaths=target/surefire-reports
 ```

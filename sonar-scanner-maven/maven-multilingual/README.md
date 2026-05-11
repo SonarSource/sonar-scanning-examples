@@ -5,10 +5,12 @@ see [multi-module Maven project](../maven-multimodule/README.md)
         
 ## Usage
 
-* Build the project, execute all the tests and analyze the project with SonarQube Scanner for Maven(from root  of the project):
+* Build the project, execute all the tests and analyze the project with SonarScanner for Maven (from the root of the project):
 
-        mvn clean verify sonar:sonar
-        
+```shell
+mvn clean verify org.sonarsource.scanner.maven:sonar-maven-plugin:5.6.0.6792:sonar
+```
+
 ## Documentation
 
 [SonarScanner for Maven](https://docs.sonarsource.com/sonarqube/latest/analyzing-source-code/scanners/sonarscanner-for-maven/)
@@ -49,10 +51,12 @@ Once the project is analyzed, SonarQube will show:
 - Detailed test trends and metrics under the **Tests** tab of the project
 
 ## Usage
+
 * Build the project, execute all the tests and analyze the project with SonarScanner for Maven (from the root of the project):
-    ```shell
-    mvn clean verify sonar:sonar
-    ```
+
+```shell
+mvn clean verify org.sonarsource.scanner.maven:sonar-maven-plugin:5.6.0.6792:sonar
+```
 
 * You can confirm that the sonar.junit.reportPaths parameter was picked up by checking the debug output:
     ```

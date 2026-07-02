@@ -1,0 +1,4 @@
+bin/
+obj/
+CppProject/build/
+.sonarqube/

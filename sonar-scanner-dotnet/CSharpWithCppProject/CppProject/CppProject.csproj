@@ -1,0 +1,22 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>net9.0</TargetFramework>
+    <EnableDefaultCompileItems>false</EnableDefaultCompileItems>
+    <IsPackable>false</IsPackable>
+    <CppProjectBuildDir>$(MSBuildProjectDirectory)/build</CppProjectBuildDir>
+  </PropertyGroup>
+
+  <Target Name="CMakeConfigure" BeforeTargets="Build" Condition="!Exists('$(CppProjectBuildDir)/CMakeCache.txt')">
+    <Exec Command="cmake -S . -B build" WorkingDirectory="$(MSBuildProjectDirectory)" />
+  </Target>
+
+  <Target Name="CMakeBuild" BeforeTargets="Build" DependsOnTargets="CMakeConfigure">
+    <Exec Command="cmake --build build" WorkingDirectory="$(MSBuildProjectDirectory)" />
+  </Target>
+
+  <Target Name="CMakeClean" BeforeTargets="Clean">
+    <RemoveDir Directories="$(CppProjectBuildDir)" Condition="Exists('$(CppProjectBuildDir)')" />
+  </Target>
+
+</Project>

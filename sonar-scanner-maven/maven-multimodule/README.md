@@ -13,7 +13,6 @@ Build the project, execute all the tests, and analyze it with SonarScanner for M
 
 ```shell
 mvn clean verify org.sonarsource.scanner.maven:sonar-maven-plugin:5.6.0.6792:sonar \
-  -Dsonar.coverage.jacoco.xmlReportPaths=$(pwd)/tests/target/site/jacoco-aggregate/jacoco.xml \
   -Dsonar.junit.reportPaths=target/surefire-reports
 ```
 
@@ -83,14 +82,14 @@ To import it into SonarQube, set the path in the top-level `pom.xml`:
 
 ```
 <properties>
-  <sonar.coverage.jacoco.xmlReportPaths>${maven.multiModuleProjectDirectory}/tests/target/site/jacoco-aggregate/jacoco.xml</sonar.coverage.jacoco.xmlReportPaths>
+  <sonar.coverage.jacoco.aggregateXmlReportPaths>${maven.multiModuleProjectDirectory}/tests/target/site/jacoco-aggregate/jacoco.xml</sonar.coverage.jacoco.aggregateXmlReportPaths>
 </properties>
 ```
 
 Or pass it directly via the command line:
 
 ```
--Dsonar..coverage.jacoco.xmlReportPaths=absolute/path/to/jacoco.xml
+-Dsonar.coverage.jacoco.aggregateXmlReportPaths=absolute/path/to/jacoco.xml
 ```
 
 ## Unit Test Result Reporting

@@ -110,7 +110,7 @@ def play_once():
                 print "You don't have enough information yet."
                 # Temporarily remove the user's guess from
                 # possibilities, and pick a random letter.
-                temp=filter(lambda x, query=query: x!=query, possibilities)
+                temp=list(filter(lambda x, query=query: x!=query, possibilities))
                 r=int(random.random()*len(temp))
                 print "How do you know it isn't", temp[r]+',',
                 print "for example?"

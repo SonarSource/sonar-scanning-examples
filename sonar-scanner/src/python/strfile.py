@@ -25,7 +25,7 @@
 import struct, string, sys
 
 if len(sys.argv)==1:
-    print "Usage: strfile.py <filename>"
+    print("Usage: strfile.py <filename>")
     sys.exit()
 
 # C long variables are different sizes on 32-bit and 64-bit machines,
@@ -94,7 +94,7 @@ write_long(0)                           # Flags; we'll set them to zero
 output.write(delimiter + '\0'*(LONG_SIZE-1))
 output.close()
 
-print '''"%s.dat" created
+print('''"%s.dat" created
 There were %i strings
 Longest string: %i bytes
-Shortest string: %i bytes''' % (filename, numstr, longest, shortest)
+Shortest string: %i bytes''' % (filename, numstr, longest, shortest))

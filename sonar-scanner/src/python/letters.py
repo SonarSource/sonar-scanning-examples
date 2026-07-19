@@ -96,7 +96,7 @@ def play_once():
 
         except (EOFError, KeyboardInterrupt):
             # End-Of-File : the user
-            print '\nOK; give up if you like.'
+            print('\nOK; give up if you like.')
             return
 
         if len(query)==1:
@@ -107,12 +107,12 @@ def play_once():
                       "I think you made that guess just to see "
                       "what I would say.")
             elif len(possibilities)>1:
-                print "You don't have enough information yet."
+                print("You don't have enough information yet.")
                 # Temporarily remove the user's guess from
                 # possibilities, and pick a random letter.
                 temp=filter(lambda x, query=query: x!=query, possibilities)
                 r=int(random.random()*len(temp))
-                print "How do you know it isn't", temp[r]+',',
+                print("How do you know it isn't", temp[r]+',', end=' ')
                 print "for example?"
             else:
                 # query is in possibilities, and

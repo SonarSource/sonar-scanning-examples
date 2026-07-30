@@ -22,7 +22,7 @@
 # OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 # THE SOFTWARE.
 
-import struct, random, string
+import struct, secrets, string
 
 # C long variables are different sizes on 32-bit and 64-bit machines,
 # so we have to measure how big they are on the machine where this is running.
@@ -65,7 +65,7 @@ def get(filename):
     if is_64_bit: datfile.read(4)       # 64-bit machines align to 8 bytes
 
     # Pick a random number
-    r = random.randint(0, numstr)
+    r = secrets.randbelow(numstr + 1)
     datfile.seek(LONG_SIZE * r, 1)      # Seek to the chosen pointer
     data = datfile.read(LONG_SIZE * 2)
 

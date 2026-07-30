@@ -66,7 +66,7 @@ questions={'curves':CURVES, 'looseends':LOOSE_ENDS,
 
 def play_once():
     # Choose a random number between 0 and 26, inclusive.
-    choice=26*random.random()
+    choice=random.SystemRandom().randint(0, 25)
     # Convert the numeric choice to a letter: 0->a, 1->b, etc.
     choice=chr(ord('a')+choice)
 
@@ -111,7 +111,7 @@ def play_once():
                 # Temporarily remove the user's guess from
                 # possibilities, and pick a random letter.
                 temp=filter(lambda x, query=query: x!=query, possibilities)
-                r=int(random.random()*len(temp))
+                r=random.SystemRandom().randint(0, len(temp)-1)
                 print "How do you know it isn't", temp[r]+',',
                 print "for example?"
             else:

@@ -147,14 +147,14 @@ def play_once():
             else: asked.append(field)  # Note that this question was asked.
             print str(result)+'.'
             if (original_length==new_length):
-                print 'That was a wasted question; it did not exclude any possibilities.'
+                print('That was a wasted question; it did not exclude any possibilities.')
             elif (new_length<original_length/2 or new_length==1):
-                print "Good question."
+                print("Good question.")
         else:
-            print "I don't understand the question."
+            print("I don't understand the question.")
 
 # Print the instructions
-print """This is a guessing game about capital letters.
+print("""This is a guessing game about capital letters.
 You can ask various questions about the features of the letter:
 curves, loose ends, obliques (or diagonals), horizontals, verticals.
 To make a guess, just enter the letter of your choice.
@@ -171,7 +171,7 @@ Sample transcript:
         Next? s
         You don't have enough information yet.
         How do you know it isn't c, for example?
-"""
+""")
 
 # Play a single game
 play_once()

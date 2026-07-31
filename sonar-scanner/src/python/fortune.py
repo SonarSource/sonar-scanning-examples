@@ -87,6 +87,6 @@ def get(filename):
 if __name__ == '__main__':
     import sys
     if len(sys.argv) == 1:
-        print 'Usage: fortune.py <filename>'
+        print('Usage: fortune.py <filename>')
         sys.exit()
     print get(sys.argv[1])

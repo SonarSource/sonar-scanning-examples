@@ -14,17 +14,17 @@ Person.prototype = {
 
 var a = NaN;
 
-if (a === NaN) {  // Noncompliant; always false
-  console.log("a is not a number");  // this is dead code
+if (Number.isNaN(a)) {
+  console.log("a is not a number");
 }
-if (a !== NaN) { // Noncompliant; always true
-  console.log("a is not NaN"); // this statement is not necessarily true
+if (!Number.isNaN(a)) {
+  console.log("a is not NaN");
 }
 
-for (var i = 0; i < strings.length; i--) {
+for (var s of strings) {
   console.log("dead code")
 }
 
-if (str == null && str.length == 0) {
+if (str == null || str.length == 0) {
   console.log("String is empty");
 }

@@ -1,19 +1,11 @@
 ﻿using System;
 namespace SomeConsoleApplication
 {
-    public class Program
+    public static class Program
     {
         static void Main(string[] args)
         {
-            var iAmTrue = true;
-            if (iAmTrue)
-            {
-                Console.WriteLine("true");
-            }
-            else
-            {
-                Console.WriteLine("false");
-            }
+            Console.WriteLine("true");
 
             Console.ReadKey();
         }

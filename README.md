@@ -11,7 +11,6 @@ This repository showcases basic examples of usage and code coverage for SonarSca
 * SonarScanner CLI in a Java Ant project (Formerly [SonarScanner for Ant](https://docs.sonarsource.com/sonarqube-server/10.8/analyzing-source-code/scanners/sonarscanner-for-ant) - this scanner is now deprecated, use SonarScanner CLI)
 * [SonarScanner CLI](https://docs.sonarsource.com/sonarqube-server/analyzing-source-code/scanners/sonarscanner)
 
-
 ## Examples
 ### Various Languages
 [SonarScanner for various languages](sonar-scanner)

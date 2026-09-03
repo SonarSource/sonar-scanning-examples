@@ -51,14 +51,10 @@ def get(filename):
     datfile = open(filename+'.dat', 'r')
     data = datfile.read(5 * LONG_SIZE)
     if is_64_bit:
-        v1, v2, n1, n2, l1, l2, s1, s2, f1, f2 = struct.unpack('!10L', data)
-        version  = v1 + (v2 << 32)
+        _, _, n1, n2, _, _, _, _, _, _ = struct.unpack('!10L', data)
         numstr   = n1 + (n2 << 32)
-        longlen  = l1 + (l2 << 32)
-        shortlen = s1 + (s2 << 32)
-        flags    = f1 + (f2 << 32)
     else:
-        version, numstr, longlen, shortlen, flags = struct.unpack('5l', data)
+        _, numstr, _, _, _ = struct.unpack('5l', data)
 
     delimiter = datfile.read(1)
     datfile.read(3)                     # Throw away padding bytes

@@ -12,12 +12,12 @@ Person.prototype = {
 
 };
 
-var a = NaN;
+var a = Number.NaN;
 
-if (a === NaN) {  // Noncompliant; always false
+if (a === Number.NaN) {  // Noncompliant; always false
   console.log("a is not a number");  // this is dead code
 }
-if (a !== NaN) { // Noncompliant; always true
+if (a !== Number.NaN) { // Noncompliant; always true
   console.log("a is not NaN"); // this statement is not necessarily true
 }
 

@@ -2,7 +2,7 @@ namespace CSharpProject;
 
 public class Calculator
 {
-    public int Add(int a, int b) => a + b;
+    public static int Add(int a, int b) => a + b;
 
     public long Factorial(int n)
     {
@@ -20,7 +20,7 @@ public class Calculator
         return result;
     }
 
-    public bool IsPrime(int n)
+    public static bool IsPrime(int n)
     {
         if (n < 2)
         {

@@ -1,0 +1,12 @@
+# Version catalog: https://docs.gradle.org/current/userguide/version_catalogs.html
+#
+# buildSrc reuses this catalog (see buildSrc/settings.gradle.kts), so the convention plugin
+# and the modules resolve the same versions.
+
+[versions]
+junit = "6.1.3"
+
+[libraries]
+junit-bom = { module = "org.junit:junit-bom", version.ref = "junit" }
+junit-jupiter = { module = "org.junit.jupiter:junit-jupiter" }
+junit-platform-launcher = { module = "org.junit.platform:junit-platform-launcher" }

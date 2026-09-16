@@ -4,6 +4,7 @@
 
 # Gradle files
 .gradle/
+.kotlin/
 .classpath
 .project
 .settings/

@@ -32,6 +32,7 @@ gradle-multimodule
 │   └── libs.versions.toml              version catalog, shared with buildSrc
 ├── buildSrc
 │   ├── settings.gradle.kts             reuses the version catalog above
+│   ├── build.gradle.kts                applies `kotlin-dsl` so src/main/kotlin holds convention plugins
 │   └── src/main/kotlin
 │       └── buildlogic.java-conventions.gradle.kts     shared Java, test and JaCoCo setup
 ├── module-one
@@ -45,7 +46,8 @@ gradle-multimodule
 The `org.sonarqube` plugin is applied **only to the root project**, which is what the
 documentation calls for: apply it to the root of the hierarchy and it discovers the modules
 itself. Applying it to each module as well is redundant, because the root plugin already adds
-a `sonar` extension to every subproject.
+a `sonar` extension to every subproject. (The older `gradle-multimodule-coverage` example still
+applies it inside `subprojects {}`; that is not needed and should not be copied.)
 
 Everything that describes the analysis as a whole - here `sonar.projectKey` and
 `sonar.projectName` - goes in the root `sonar` block. Module keys are derived from it

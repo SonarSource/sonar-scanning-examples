@@ -115,48 +115,61 @@ run_test "Multiple lines with mixed coverage" \
   </file>'
 
 # ------------------------------------------------------------------------------
-# Test: Branch coverage - single tuple, one branch uncovered
+# Test: Covered zero-length subrange (if/guard "{") — crsantos issue 206
+# (36, 0, 1) is column 36, length 0, 1 hit: one covered region, not 1/2 branches
 # ------------------------------------------------------------------------------
-run_test "Branch coverage - single tuple, one branch uncovered" \
+run_test "Covered zero-length subrange is 1/1 not 1/2 (crsantos guard)" \
+"/path/to/File.swift:
+  339: 4 [
+(36, 0, 1)
+]
+" \
+'  <file path="/path/to/File.swift">
+    <lineToCover lineNumber="339" covered="true" branchesToCover="1" coveredBranches="1"/>
+  </file>'
+
+run_test "Covered zero-length subrange on if (crsantos)" \
+"/path/to/File.swift:
+  326: 4 [
+(39, 0, 3)
+]
+" \
+'  <file path="/path/to/File.swift">
+    <lineToCover lineNumber="326" covered="true" branchesToCover="1" coveredBranches="1"/>
+  </file>'
+
+# ------------------------------------------------------------------------------
+# Test: Uncovered subrange on a hit line
+# (33, 9, 0) is column 33, length 9, 0 hits: the line ran, the condition did not
+# ------------------------------------------------------------------------------
+run_test "Uncovered subrange on a hit line is 1/0" \
 "/path/to/File.swift:
   21: 1 [
 (33, 9, 0)
 ]
 " \
 '  <file path="/path/to/File.swift">
-    <lineToCover lineNumber="21" covered="true" branchesToCover="2" coveredBranches="1"/>
+    <lineToCover lineNumber="21" covered="true" branchesToCover="1" coveredBranches="0"/>
   </file>'
 
 # ------------------------------------------------------------------------------
-# Test: Branch coverage - single tuple, both branches covered
+# Test: Single covered subrange (length > 0, count > 0)
 # ------------------------------------------------------------------------------
-run_test "Branch coverage - single tuple, both branches covered" \
+run_test "Single covered subrange" \
 "/path/to/File.swift:
   21: 5 [
 (33, 9, 3)
 ]
 " \
 '  <file path="/path/to/File.swift">
-    <lineToCover lineNumber="21" covered="true" branchesToCover="2" coveredBranches="2"/>
+    <lineToCover lineNumber="21" covered="true" branchesToCover="1" coveredBranches="1"/>
   </file>'
 
 # ------------------------------------------------------------------------------
-# Test: Branch coverage - single tuple, no branches covered
+# Test: Line executed, all listed subranges have count 0 (nil coalescing chain)
+# Every subrange still counts toward the denominator
 # ------------------------------------------------------------------------------
-run_test "Branch coverage - single tuple, no branches covered" \
-"/path/to/File.swift:
-  21: 1 [
-(33, 0, 0)
-]
-" \
-'  <file path="/path/to/File.swift">
-    <lineToCover lineNumber="21" covered="true" branchesToCover="2" coveredBranches="0"/>
-  </file>'
-
-# ------------------------------------------------------------------------------
-# Test: Branch coverage - multiple tuples (nil coalescing chain)
-# ------------------------------------------------------------------------------
-run_test "Branch coverage - multiple tuples (nil coalescing chain)" \
+run_test "Hit line with only uncovered subranges is 2/0" \
 "/path/to/File.swift:
   26: 1 [
 (21, 5, 0)
@@ -164,13 +177,27 @@ run_test "Branch coverage - multiple tuples (nil coalescing chain)" \
 ]
 " \
 '  <file path="/path/to/File.swift">
-    <lineToCover lineNumber="26" covered="true" branchesToCover="4" coveredBranches="2"/>
+    <lineToCover lineNumber="26" covered="true" branchesToCover="2" coveredBranches="0"/>
   </file>'
 
 # ------------------------------------------------------------------------------
-# Test: Branch coverage - complex nested ternary (6 tuples)
+# Test: Multiple covered subranges (original issue sample)
 # ------------------------------------------------------------------------------
-run_test "Branch coverage - complex nested ternary (6 tuples)" \
+run_test "Multiple covered subranges (original issue sample)" \
+"/path/to/File.swift:
+  64: 8 [
+(1, 67, 2)
+(91, 0, 2)
+]
+" \
+'  <file path="/path/to/File.swift">
+    <lineToCover lineNumber="64" covered="true" branchesToCover="2" coveredBranches="2"/>
+  </file>'
+
+# ------------------------------------------------------------------------------
+# Test: Mixed covered and uncovered subranges
+# ------------------------------------------------------------------------------
+run_test "Mixed covered and uncovered subranges" \
 "/path/to/File.swift:
   40: 2 [
 (20, 5, 1)
@@ -182,13 +209,26 @@ run_test "Branch coverage - complex nested ternary (6 tuples)" \
 ]
 " \
 '  <file path="/path/to/File.swift">
-    <lineToCover lineNumber="40" covered="true" branchesToCover="12" coveredBranches="11"/>
+    <lineToCover lineNumber="40" covered="true" branchesToCover="6" coveredBranches="5"/>
   </file>'
 
 # ------------------------------------------------------------------------------
-# Test: Mixed lines - some with branches, some without
+# Test: Indented tuple lines (xccov may pad subranges)
 # ------------------------------------------------------------------------------
-run_test "Mixed lines - some with branches, some without" \
+run_test "Indented subrange tuples" \
+"/path/to/File.swift:
+  36: 10 [
+ (6, 0, 1)
+]
+" \
+'  <file path="/path/to/File.swift">
+    <lineToCover lineNumber="36" covered="true" branchesToCover="1" coveredBranches="1"/>
+  </file>'
+
+# ------------------------------------------------------------------------------
+# Test: Mixed lines - some with subranges, some without
+# ------------------------------------------------------------------------------
+run_test "Mixed lines - some with subranges, some without" \
 "/path/to/File.swift:
   10: 5
   11: 2 [
@@ -199,7 +239,7 @@ run_test "Mixed lines - some with branches, some without" \
 " \
 '  <file path="/path/to/File.swift">
     <lineToCover lineNumber="10" covered="true"/>
-    <lineToCover lineNumber="11" covered="true" branchesToCover="2" coveredBranches="1"/>
+    <lineToCover lineNumber="11" covered="true" branchesToCover="1" coveredBranches="0"/>
     <lineToCover lineNumber="12" covered="false"/>
     <lineToCover lineNumber="13" covered="true"/>
   </file>'
@@ -268,22 +308,23 @@ run_test "Non-executable lines (asterisk) should be ignored" \
   </file>'
 
 # ------------------------------------------------------------------------------
-# Test: Branch with uncovered line (edge case)
+# Test: Uncovered line that still has a subrange
 # ------------------------------------------------------------------------------
-run_test "Branch with execution count 0 (uncovered but has branch info)" \
+run_test "Uncovered line with subrange count 0" \
 "/path/to/File.swift:
   21: 0 [
 (33, 0, 0)
 ]
 " \
 '  <file path="/path/to/File.swift">
-    <lineToCover lineNumber="21" covered="false" branchesToCover="2" coveredBranches="0"/>
+    <lineToCover lineNumber="21" covered="false" branchesToCover="1" coveredBranches="0"/>
   </file>'
 
 # ------------------------------------------------------------------------------
 # Test: Real-world example from AppDelegate.swift
+# Lines 30 and 32 ran, but their single subrange never did: 1/0 each
 # ------------------------------------------------------------------------------
-run_test "Real-world example - if/else with branch info" \
+run_test "Real-world example - if/else with subrange info" \
 "/Users/test/AppDelegate.swift:
   29: 1
   30: 1 [
@@ -299,9 +340,9 @@ run_test "Real-world example - if/else with branch info" \
 " \
 '  <file path="/Users/test/AppDelegate.swift">
     <lineToCover lineNumber="29" covered="true"/>
-    <lineToCover lineNumber="30" covered="true" branchesToCover="2" coveredBranches="0"/>
+    <lineToCover lineNumber="30" covered="true" branchesToCover="1" coveredBranches="0"/>
     <lineToCover lineNumber="31" covered="false"/>
-    <lineToCover lineNumber="32" covered="true" branchesToCover="2" coveredBranches="1"/>
+    <lineToCover lineNumber="32" covered="true" branchesToCover="1" coveredBranches="0"/>
     <lineToCover lineNumber="33" covered="true"/>
     <lineToCover lineNumber="34" covered="true"/>
     <lineToCover lineNumber="35" covered="true"/>

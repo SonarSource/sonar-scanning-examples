@@ -6,7 +6,7 @@ Use [Slather](https://github.com/SlatherOrg/slather) when you only need line cov
 
 ## Prerequisites
 * [SonarScanner CLI](https://docs.sonarsource.com/sonarqube-server/analyzing-source-code/scanners/sonarscanner) 8.x or higher
-* [Xcode](https://developer.apple.com/xcode/) 16 or higher
+* [Xcode](https://developer.apple.com/xcode/) 26 or higher
 
 ## Usage
 

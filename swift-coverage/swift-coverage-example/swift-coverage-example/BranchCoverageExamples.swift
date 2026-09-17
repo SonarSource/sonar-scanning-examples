@@ -83,7 +83,11 @@ class BranchCoverageExamples {
     // MARK: - Combined Example
     
     /// This function has multiple branches on a single line
-    /// xccov will show subrange info like: `42: 5 [(1, 10, 2)(50, 0, 3)]`
+    /// xccov will show subrange info like:
+    ///   `42: 5 [`
+    ///   `(1, 10, 2)`
+    ///   `(50, 0, 3)`
+    ///   `]`
     func complexBranchExample(optionalBool: Bool?, threshold: Int?) -> String {
         let flag = optionalBool ?? false  // 2 branches
         let limit = threshold ?? 10       // 2 branches

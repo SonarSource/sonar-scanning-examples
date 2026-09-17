@@ -77,12 +77,6 @@ function convert_xccov_to_xml {
       if (in_branch_block) {
         covered = (current_exec > 0) ? "true" : "false"
         if (total_branches > 0) {
-          # Line executed but every listed subrange has count 0: the rest of
-          # the line ran, so report partial coverage rather than 0/N conditions
-          if (current_exec > 0 && covered_branches == 0) {
-            total_branches = 2
-            covered_branches = 1
-          }
           printf "    <lineToCover lineNumber=\"%s\" covered=\"%s\" branchesToCover=\"%d\" coveredBranches=\"%d\"/>\n", current_line, covered, total_branches, covered_branches
         } else {
           printf "    <lineToCover lineNumber=\"%s\" covered=\"%s\"/>\n", current_line, covered

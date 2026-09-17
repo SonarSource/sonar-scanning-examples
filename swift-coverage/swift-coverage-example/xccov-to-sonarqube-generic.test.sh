@@ -139,17 +139,17 @@ run_test "Covered zero-length subrange on if (crsantos)" \
   </file>'
 
 # ------------------------------------------------------------------------------
-# Test: Uncovered span on a hit line — partial coverage
-# (33, 9, 0) is column 33, length 9, 0 hits on a line that executed
+# Test: Uncovered subrange on a hit line
+# (33, 9, 0) is column 33, length 9, 0 hits: the line ran, the condition did not
 # ------------------------------------------------------------------------------
-run_test "Uncovered span on a hit line is partial" \
+run_test "Uncovered subrange on a hit line is 1/0" \
 "/path/to/File.swift:
   21: 1 [
 (33, 9, 0)
 ]
 " \
 '  <file path="/path/to/File.swift">
-    <lineToCover lineNumber="21" covered="true" branchesToCover="2" coveredBranches="1"/>
+    <lineToCover lineNumber="21" covered="true" branchesToCover="1" coveredBranches="0"/>
   </file>'
 
 # ------------------------------------------------------------------------------
@@ -167,8 +167,9 @@ run_test "Single covered subrange" \
 
 # ------------------------------------------------------------------------------
 # Test: Line executed, all listed subranges have count 0 (nil coalescing chain)
+# Every subrange still counts toward the denominator
 # ------------------------------------------------------------------------------
-run_test "Hit line with only uncovered subranges is partial" \
+run_test "Hit line with only uncovered subranges is 2/0" \
 "/path/to/File.swift:
   26: 1 [
 (21, 5, 0)
@@ -176,7 +177,7 @@ run_test "Hit line with only uncovered subranges is partial" \
 ]
 " \
 '  <file path="/path/to/File.swift">
-    <lineToCover lineNumber="26" covered="true" branchesToCover="2" coveredBranches="1"/>
+    <lineToCover lineNumber="26" covered="true" branchesToCover="2" coveredBranches="0"/>
   </file>'
 
 # ------------------------------------------------------------------------------
@@ -238,7 +239,7 @@ run_test "Mixed lines - some with subranges, some without" \
 " \
 '  <file path="/path/to/File.swift">
     <lineToCover lineNumber="10" covered="true"/>
-    <lineToCover lineNumber="11" covered="true" branchesToCover="2" coveredBranches="1"/>
+    <lineToCover lineNumber="11" covered="true" branchesToCover="1" coveredBranches="0"/>
     <lineToCover lineNumber="12" covered="false"/>
     <lineToCover lineNumber="13" covered="true"/>
   </file>'
@@ -307,7 +308,7 @@ run_test "Non-executable lines (asterisk) should be ignored" \
   </file>'
 
 # ------------------------------------------------------------------------------
-# Test: Uncovered line that still has a subrange (no partial-line heuristic)
+# Test: Uncovered line that still has a subrange
 # ------------------------------------------------------------------------------
 run_test "Uncovered line with subrange count 0" \
 "/path/to/File.swift:
@@ -321,8 +322,7 @@ run_test "Uncovered line with subrange count 0" \
 
 # ------------------------------------------------------------------------------
 # Test: Real-world example from AppDelegate.swift
-# Line 30: hit line, zero-count subrange → partial 2/1
-# Line 32: hit line, uncovered span (1, 9, 0) → partial 2/1
+# Lines 30 and 32 ran, but their single subrange never did: 1/0 each
 # ------------------------------------------------------------------------------
 run_test "Real-world example - if/else with subrange info" \
 "/Users/test/AppDelegate.swift:
@@ -340,9 +340,9 @@ run_test "Real-world example - if/else with subrange info" \
 " \
 '  <file path="/Users/test/AppDelegate.swift">
     <lineToCover lineNumber="29" covered="true"/>
-    <lineToCover lineNumber="30" covered="true" branchesToCover="2" coveredBranches="1"/>
+    <lineToCover lineNumber="30" covered="true" branchesToCover="1" coveredBranches="0"/>
     <lineToCover lineNumber="31" covered="false"/>
-    <lineToCover lineNumber="32" covered="true" branchesToCover="2" coveredBranches="1"/>
+    <lineToCover lineNumber="32" covered="true" branchesToCover="1" coveredBranches="0"/>
     <lineToCover lineNumber="33" covered="true"/>
     <lineToCover lineNumber="34" covered="true"/>
     <lineToCover lineNumber="35" covered="true"/>

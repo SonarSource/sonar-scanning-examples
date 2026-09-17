@@ -13,6 +13,11 @@
 
   <name>Tests</name>
 
+  <properties>
+    <!-- Test-only module: no target/classes, so point sonar.java.binaries at test output. -->
+    <sonar.java.binaries>${project.build.testOutputDirectory}</sonar.java.binaries>
+  </properties>
+
   <dependencies>
     <dependency>
       <groupId>org.sonarqube</groupId>

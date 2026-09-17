@@ -2,14 +2,14 @@
 //  BranchCoverageExamples.swift
 //  swift-coverage-example
 //
-//  Examples demonstrating branch coverage scenarios that xccov captures
-//  but the conversion script may not properly handle.
+//  Examples demonstrating branch coverage scenarios that xccov records
+//  as (column, length, execution count) subranges.
 //
 
 import Foundation
 
 /// This class contains examples of code with multiple branches per line
-/// that xccov tracks but the conversion script doesn't account for.
+/// that xccov tracks as subranges (column, length, execution count).
 class BranchCoverageExamples {
     
     // MARK: - Nil Coalescing Operator (??)
@@ -59,10 +59,31 @@ class BranchCoverageExamples {
         return a || b  // If a is true, b is never evaluated
     }
     
+    // MARK: - Fully exercised if / ?? / ternary / guard (issue 206)
+    
+    /// All paths are covered by `testBranchCoverage_*` tests so converted
+    /// subranges on these lines should report 100% conditions.
+    func testBranchCoverage(searchEnabled: Bool, maxItems: Int?, items: [String]) -> String {
+        let status = if searchEnabled {
+            "search-enabled"
+        } else {
+            "search-disabled"
+        }
+        
+        let limit = maxItems ?? 10
+        let description = limit > 5 ? "large-list" : "small-list"
+        
+        guard items.count > 0 else {
+            return "empty-\(status)"
+        }
+        
+        return "\(status)-\(description)-\(limit)"
+    }
+    
     // MARK: - Combined Example
     
     /// This function has multiple branches on a single line
-    /// xccov will show branch info like: `42: 5 [(1, 10, 2)(50, 0, 3)]`
+    /// xccov will show subrange info like: `42: 5 [(1, 10, 2)(50, 0, 3)]`
     func complexBranchExample(optionalBool: Bool?, threshold: Int?) -> String {
         let flag = optionalBool ?? false  // 2 branches
         let limit = threshold ?? 10       // 2 branches

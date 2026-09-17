@@ -2,7 +2,7 @@
 
 This example demonstrates how to import Xcode Coverage data to SonarQube for a Swift project. See [[Coverage & Test Data] Generate Reports for Swift](https://community.sonarsource.com/t/coverage-test-data-generate-reports-for-swift/9700) for more information including alternative methods to import coverage data into SonarQube/SonarCloud.
 
-If you encounter issues with this bash script, use a dedicated Swift coverage tool like [Slather](https://github.com/SlatherOrg/slather).
+Use [Slather](https://github.com/SlatherOrg/slather) when you only need line coverage. Use `xccov-to-sonarqube-generic.sh` when you also need branch/condition coverage (`branchesToCover` / `coveredBranches`). Slather's `--sonarqube-xml` output does not emit those attributes.
 
 ## Prerequisites
 * [SonarScanner CLI](https://docs.sonarsource.com/sonarqube-server/analyzing-source-code/scanners/sonarscanner) 8.x or higher
@@ -20,10 +20,12 @@ Use `xcodebuild` to build and test the project example with the command:
 xcodebuild -project swift-coverage-example.xcodeproj/ -scheme swift-coverage-example -derivedDataPath Build/ -enableCodeCoverage YES clean build test CODE_SIGN_IDENTITY="" CODE_SIGNING_REQUIRED=NO
 ```
 
-### Using slather (highly recommended)
+### Using slather (line coverage)
 
 [Slather](https://github.com/SlatherOrg/slather) is a Ruby gem that generates coverage reports for Xcode projects and integrates with CI.
 See various options and output formats [here](https://github.com/SlatherOrg/slather/blob/master/lib/slather/command/coverage_command.rb).
+
+Slather is a solid option for **line** coverage. It does **not** report branch/condition coverage: its SonarQube XML has no `branchesToCover` or `coveredBranches` attributes. If you need those, use `xccov-to-sonarqube-generic.sh` instead.
 
 ```shell
 # --build-directory flag is optional if you defined a build folder earlier such as `xcodebuild -derivedDataPath Build/`
@@ -77,11 +79,11 @@ jobs:
             -Dsonar.coverageReportPaths=sonarqube-generic-coverage.xml
 ```
 
-### Using xccov (not recommended)
+### Using xccov (line and branch coverage)
 
 The `xccov` command line tool is an option for viewing Xcode coverage data and is more straightforward to use than the older `llvm-cov` tool.
 
-With the script `xccov-to-sonarqube-generic.sh`, you can convert Xcode test results stored in `*.xcresult` folders to the [SonarQube generic test coverage format](https://docs.sonarsource.com/sonarqube-server/analyzing-source-code/test-coverage/generic-test-data). Note that this script is subject to changes and may not work in the future. I highly recommend using [Slather](https://github.com/SlatherOrg/slather) instead, which is far more mature, well-maintained, and well-documented.
+With the script `xccov-to-sonarqube-generic.sh`, you can convert Xcode test results stored in `*.xcresult` folders to the [SonarQube generic test coverage format](https://docs.sonarsource.com/sonarqube-server/analyzing-source-code/test-coverage/generic-test-data), including `branchesToCover` / `coveredBranches` from xccov subranges (`column`, `length`, `execution count`). Note that this script is an example and may need updates for future Xcode releases.
 
 First, locate the Xcode test result folder (`*.xcresult`). Then use it as a parameter to the script converting the coverage data to the SonarQube format, as in the following example:
 

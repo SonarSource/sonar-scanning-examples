@@ -4,18 +4,18 @@ set -euo pipefail
 # Convert xccov output to SonarQube Generic Coverage format
 # Supports both line coverage and branch coverage
 #
-# xccov output format:
+# xccov output format (see xccov(1)):
 #   /path/to/file.swift:
 #   10: *              <- non-executable line
 #   11: 0              <- uncovered line
 #   12: 5              <- covered line (executed 5 times)
-#   13: 2 [            <- covered line with branch info
-#   (33, 9, 0)         <- branch at column 33: 9 hits on one path, 0 on other
+#   13: 2 [            <- covered line with subrange info
+#   (33, 9, 0)         <- subrange at column 33, length 9, execution count 0
 #   ]
 #
-# Branch tuple format: (column, count1, count2)
-#   - count1 > 0 means first branch path was executed
-#   - count2 > 0 means second branch path was executed
+# Subrange tuple format: (column, length, execution count)
+#   Each subrange is one Sonar condition; covered iff execution count > 0
+#   A zero-length region (length 0) is still a single region, not two branches
 
 function convert_xccov_to_xml {
   awk '
@@ -55,32 +55,34 @@ function convert_xccov_to_xml {
       next
     }
 
-    # Match branch tuple: "(column, count1, count2)"
-    /^\([0-9]+, [0-9]+, [0-9]+\)$/ {
+    # Match subrange tuple: "(column, length, execution count)", optional indent
+    /^ *\([0-9]+, [0-9]+, [0-9]+\)$/ {
       if (in_branch_block) {
-        # Remove parentheses
         line = $0
         gsub(/[()]/, "", line)
-        # Split by ", "
         n = split(line, vals, ", ")
         if (n >= 3) {
-          count1 = vals[2] + 0
-          count2 = vals[3] + 0
-          
-          # Each tuple represents 2 branches
-          total_branches += 2
-          if (count1 > 0) covered_branches++
-          if (count2 > 0) covered_branches++
+          # vals[1]=column, vals[2]=length; coverage uses execution count only
+          exec_count = vals[3] + 0
+          # Each subrange is one Sonar condition
+          total_branches += 1
+          if (exec_count > 0) covered_branches++
         }
       }
       next
     }
 
     # Match branch block closing: "]"
-    /^\]$/ {
+    /^ *\]$/ {
       if (in_branch_block) {
         covered = (current_exec > 0) ? "true" : "false"
         if (total_branches > 0) {
+          # Line executed but every listed subrange has count 0: the rest of
+          # the line ran, so report partial coverage rather than 0/N conditions
+          if (current_exec > 0 && covered_branches == 0) {
+            total_branches = 2
+            covered_branches = 1
+          }
           printf "    <lineToCover lineNumber=\"%s\" covered=\"%s\" branchesToCover=\"%d\" coveredBranches=\"%d\"/>\n", current_line, covered, total_branches, covered_branches
         } else {
           printf "    <lineToCover lineNumber=\"%s\" covered=\"%s\"/>\n", current_line, covered

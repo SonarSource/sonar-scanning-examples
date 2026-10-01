@@ -1,3 +1,4 @@
+<!-- Sonar Marketing hosts these approved brand assets on its Kentico Kontent CDN (assets-eu-01.kc-usercontent.com). Shared URLs are intentional; consult Marketing before replacing them. -->
 <p align="center">
   <picture>
     <source media="(prefers-color-scheme: dark)" srcset="https://assets-eu-01.kc-usercontent.com/ef593040-b591-0198-9506-ed88b30bc023/a23fc7ba-23f0-489a-829d-ed88c0748521/Sonar_Logo_Dark%20Backgrounds.svg">
@@ -5,9 +6,21 @@
   </picture>
 </p>
 
+<!-- sonar-marketing:start -->
+<!-- Marketing maintains this section. For wording changes, consult the relevant Product Marketing Manager (PMM). Repository CODEOWNERS review accuracy and merge changes. -->
+
 # Sonar Scanning Examples
 
 This repository contains practical examples for running SonarScanners and importing code coverage across multiple languages and build systems.
+
+Choose an [example](#examples) for your language and build system, then follow its project-specific instructions.
+
+To learn more about the products used with these examples, visit the [SonarQube product page](https://www.sonarsource.com/products/sonarqube/).
+
+<!-- sonar-marketing:end -->
+
+## Scanner documentation
+
 * [SonarScanner for Gradle](https://docs.sonarsource.com/sonarqube-server/analyzing-source-code/scanners/sonarscanner-for-gradle)
 * [SonarScanner for .NET](https://docs.sonarsource.com/sonarqube-server/analyzing-source-code/scanners/dotnet/introduction)
 * [SonarScanner for Maven](https://docs.sonarsource.com/sonarqube-server/analyzing-source-code/scanners/sonarscanner-for-maven)

@@ -1,6 +1,6 @@
 # SonarScanner for Gradle Multi-Module Project with Code Coverage
 
-This example project demonstrates how to analyze a multi-module project with Jacoco code coverage built with Gradle, where the modules depend on each other and coverage has to be attributed across module boundaries. It uses the Groovy DSL. For a modern Kotlin DSL build structured with convention plugins in `buildSrc/`, where each module's tests only cover that module's own code, see [SonarScanner for Gradle - Multi-Module](../gradle-multimodule).
+This example project demonstrates how to analyze a multi-module project with Jacoco code coverage built with Gradle, where the modules depend on each other and coverage has to be attributed across module boundaries. It uses the Groovy DSL. For a minimal multi-module Gradle analysis without code coverage, see [SonarScanner for Gradle - Multi-Module](../gradle-multimodule).
 
 ## Prerequisites
 * A Gradle wrapper is included that bundles Gradle. All other required plugins will be pulled by Gradle as needed.
@@ -90,7 +90,7 @@ The more obvious approach — building one aggregated report and pointing every 
 
 Note that `sonar.coverage.jacoco.aggregateXmlReportPaths` does not solve this under Gradle, despite being the documented answer for Maven. Its importer runs once against the root project, and a root project with no Java sources of its own resolves nothing, so coverage silently drops to zero while the log gets quieter. This is a known issue with tickets open at SonarSource — see [this community thread](https://community.sonarsource.com/t/sonar-multimodule-with-coverage-logging-file-filename-not-found-in-project-sources/181980) for the full discussion. If you try it, check your coverage number rather than trusting the cleaner log.
 
-If your modules are independent enough that each one's tests only cover its own code, you do not need any of this: enable `xml.required` on each module's own `jacocoTestReport` task and drop the Sonar coverage configuration entirely, since the scanner then fills in `sonar.coverage.jacoco.xmlReportPaths` per module for you. See [SonarScanner for Gradle - Multi-Module](../gradle-multimodule) for that approach.
+If your modules are independent enough that each one's tests only cover its own code, you do not need any of this: enable `xml.required` on each module's own `jacocoTestReport` task and drop the Sonar coverage configuration entirely, since the scanner then fills in `sonar.coverage.jacoco.xmlReportPaths` per module for you.
 
 ## Things to Note
 * `utilities` applies `java-library` but not `jacoco`, so it gets no `sonarCoverageReport` task and its classes are reported as uncovered. Apply the `jacoco` plugin to a module to bring it into coverage.

@@ -37,8 +37,8 @@ class swift_coverage_exampleTests: XCTestCase {
     }
     
     // MARK: - Branch Coverage Tests
-    // These tests demonstrate scenarios where xccov captures branch info
-    // that the conversion script currently ignores.
+    // Partial-coverage cases show uncovered xccov subranges.
+    // testBranchCoverage_* exercises every if / ?? / ternary / guard path.
     
     let examples = BranchCoverageExamples()
     
@@ -111,6 +111,28 @@ class swift_coverage_exampleTests: XCTestCase {
         _ = examples.complexBranchExample(optionalBool: true, threshold: 10)
         _ = examples.complexBranchExample(optionalBool: nil, threshold: nil)
         // Many branch combinations are still uncovered
+    }
+    
+    // MARK: - Fully exercised if / ?? / ternary / guard (issue 206)
+    
+    func testBranchCoverage_searchEnabled_withMaxItems() {
+        let result = examples.testBranchCoverage(searchEnabled: true, maxItems: 15, items: ["a"])
+        XCTAssertEqual(result, "search-enabled-large-list-15")
+    }
+    
+    func testBranchCoverage_searchDisabled_withoutMaxItems() {
+        let result = examples.testBranchCoverage(searchEnabled: false, maxItems: nil, items: ["a"])
+        XCTAssertEqual(result, "search-disabled-large-list-10")
+    }
+    
+    func testBranchCoverage_searchEnabled_withSmallMaxItems() {
+        let result = examples.testBranchCoverage(searchEnabled: true, maxItems: 3, items: ["a"])
+        XCTAssertEqual(result, "search-enabled-small-list-3")
+    }
+    
+    func testBranchCoverage_emptyList() {
+        let result = examples.testBranchCoverage(searchEnabled: true, maxItems: 10, items: [])
+        XCTAssertEqual(result, "empty-search-enabled")
     }
     
     // MARK: - Guard Tests

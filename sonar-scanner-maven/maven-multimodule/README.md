@@ -22,8 +22,23 @@ This project consists of 3 modules:
 
 * [`module1`](module1/pom.xml) and [`module2`](module2/pom.xml) contain "business logic" and related unit tests.
 
-* [`tests`](tests/pom.xml) module contains integration tests which test functionality using both modules.
- `tests` module is also the one which creates the aggregate coverage report imported into SonarQube.
+* [`tests`](tests/pom.xml) is a test-only module (integration tests in `src/test/java`, no `src/main/java`). It also creates the aggregate coverage report imported into SonarQube.
+
+## Test-only modules and `sonar.java.binaries`
+
+SonarScanner for Maven sets `sonar.java.binaries` from `target/classes` for modules that compile main sources. You do not set it on `module1` or `module2`, or in the [basic Maven example](../maven-basic).
+
+A test-only module produces no `target/classes`. Recent scanner-engine versions then warn (`sonar.java.binaries not set`) and point at an empty placeholder so analysis can proceed. Test sources are still analyzed; the warning is cosmetic.
+
+This example sets the property on `tests` only, so running the sample does not look broken:
+
+```xml
+<properties>
+  <sonar.java.binaries>${project.build.testOutputDirectory}</sonar.java.binaries>
+</properties>
+```
+
+`mvn clean verify ... sonar` still has to run first so `target/test-classes` exists. See [Java analysis parameters](https://docs.sonarsource.com/sonarqube-server/analyzing-source-code/languages/java/).
 
 ## Code Coverage with JaCoCo
 To collect code coverage across all modules:

@@ -42,7 +42,7 @@ Scanning an Ant project is no different than scanning a plain Java (no build too
 
 
 ### Gradle
-If you have a Gradle project, we recommend the use of [SonarScanner for Gradle](https://docs.sonarsource.com/sonarqube-server/analyzing-source-code/scanners/sonarscanner-for-gradle) or the equivalent `gradle sonar` task in your CI pipeline.
+If you have a Gradle project, we recommend the use of [SonarScanner for Gradle](https://docs.sonarsource.com/sonarqube-server/analyzing-source-code/scanners/sonarscanner-for-gradle) or the equivalent `gradle sonar` task in your CI pipeline. For guidance on writing idiomatic, modern Gradle builds, see Gradle's official [best-practices agent skill](https://github.com/gradle/gradle-skills) and the announcement [Agent Skills for Gradle Best Practices and Wrapper Upgrades](https://blog.gradle.org/introducing-gradle-skills).
 * [SonarScanner for Gradle - Basic](sonar-scanner-gradle/gradle-basic)
 * [SonarScanner for Gradle - Kotlin DSL with build.gradle.kts](sonar-scanner-gradle/gradle-kotlin-dsl)
 * [SonarScanner for Gradle - Kotlin](sonar-scanner-gradle/gradle-kotlin-project)

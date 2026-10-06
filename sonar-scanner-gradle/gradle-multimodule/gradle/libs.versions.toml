@@ -1,6 +1,6 @@
 # Version catalog: https://docs.gradle.org/current/userguide/version_catalogs.html
 #
-# buildSrc reuses this catalog (see buildSrc/settings.gradle.kts), so the convention plugin
+# build-logic reuses this catalog (see build-logic/settings.gradle.kts), so the convention plugin
 # and the modules resolve the same versions.
 
 [versions]

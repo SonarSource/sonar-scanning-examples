@@ -23,3 +23,7 @@ Remove `jacocoTestReport` task to remove coverage report task
 - [Kotlin DSL for Gradle](https://www.baeldung.com/kotlin/gradle-dsl)
 - [Gradle's Kotlin DSL Primer](https://docs.gradle.org/current/userguide/kotlin_dsl.html)
 - [Migrating build logic from Groovy to Kotlin](https://docs.gradle.org/current/userguide/migrating_from_groovy_to_kotlin_dsl.html#migrating_groovy_kotlin)
+
+## Gradle best practices
+
+For guidance on writing idiomatic, modern Gradle builds, see Gradle's official [best-practices agent skill](https://github.com/gradle/gradle-skills) and the announcement [Agent Skills for Gradle Best Practices and Wrapper Upgrades](https://blog.gradle.org/introducing-gradle-skills).

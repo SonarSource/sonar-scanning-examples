@@ -99,3 +99,7 @@ If your modules are independent enough that each one's tests only cover its own 
   Bytecode of dependencies was not provided for analysis of source files, you might end up with less precise results. Bytecode can be provided using sonar.java.libraries property.
   ```
   This is primarily due to the lack of dependencies (e.g. empty `dependencies {}` block) in this example project. Your actual project may include dependencies that can may include vulnerabilities, which will require setting `sonar.java.binaries` and `sonar.java.libraries` parameters to scan for them. To avoid this warning and thus avoid needing to configure `sonar.java.binaries` and `sonar.java.libraries` manually, ensure that you are using SonarScanner for Gradle instead of SonarScanner. By using SonarScanner for Gradle, the setting of `sonar.java.binaries` and `sonar.java.libraries` is done automatically for you. See also [Java](https://docs.sonarsource.com/sonarqube/latest/analyzing-source-code/languages/java/) for more details.
+
+## Gradle best practices
+
+For guidance on writing idiomatic, modern Gradle builds, see Gradle's official [best-practices agent skill](https://github.com/gradle/gradle-skills) and the announcement [Agent Skills for Gradle Best Practices and Wrapper Upgrades](https://blog.gradle.org/introducing-gradle-skills).

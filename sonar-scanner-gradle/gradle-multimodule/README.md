@@ -2,7 +2,7 @@
 
 This example demonstrates how to analyze a multi-module Java project with Gradle, laid out the
 way a real Gradle build is structured today: Kotlin DSL, shared build logic in a convention
-plugin under `buildSrc/`, and a `build.gradle.kts` per module. See
+plugin held in a `build-logic` composite build, and a `build.gradle.kts` per module. See
 [SonarScanner for Gradle](https://docs.sonarsource.com/sonarqube-server/analyzing-source-code/scanners/sonarscanner-for-gradle)
 for more information.
 
@@ -25,16 +25,16 @@ Run the following command (update `sonar.host.url` and `sonar.token` analysis pa
 
 ```text
 gradle-multimodule
-├── settings.gradle.kts                 modules, project name
+├── settings.gradle.kts                 includeBuild("build-logic"), modules, project name
 ├── build.gradle.kts                    SonarScanner for Gradle, applied here and nowhere else
 ├── gradle.properties                   group, version and build options
 ├── gradle
-│   └── libs.versions.toml              version catalog, shared with buildSrc
-├── buildSrc
+│   └── libs.versions.toml              version catalog, shared with build-logic
+├── build-logic                         composite build holding the shared build logic
 │   ├── settings.gradle.kts             reuses the version catalog above
 │   ├── build.gradle.kts                applies `kotlin-dsl` so src/main/kotlin holds convention plugins
 │   └── src/main/kotlin
-│       └── buildlogic.java-conventions.gradle.kts     shared Java, test and JaCoCo setup
+│       └── gradle-multimodule.java-conventions.gradle.kts     shared Java, test and JaCoCo setup
 ├── module-one
 │   ├── build.gradle.kts
 │   └── src/{main,test}/java
@@ -53,7 +53,7 @@ Everything that describes the analysis as a whole - here `sonar.projectKey` and
 `sonar.projectName` - goes in the root `sonar` block. Module keys are derived from it
 automatically as `<root key>:<module path>`.
 
-There is deliberately **no Sonar configuration in `buildSrc/`**, and none in the module build
+There is deliberately **no Sonar configuration in `build-logic/`**, and none in the module build
 files either. The scanner reads Gradle's object model, so once a module applies the Java plugin
 it already knows that module's `sonar.sources`, `sonar.tests`, `sonar.java.binaries`,
 `sonar.java.libraries` and `sonar.junit.reportPaths`. Putting those in a convention plugin would
@@ -62,13 +62,14 @@ Sonar property that genuinely differs per module and that Gradle cannot infer.
 
 ## Sharing build logic without `allprojects` / `subprojects`
 
-The modules are configured by the `buildlogic.java-conventions` precompiled script plugin in
-`buildSrc/`, which each module applies like any other plugin:
+The modules are configured by the `gradle-multimodule.java-conventions` precompiled script plugin,
+which lives in the `build-logic` composite build and which each module applies like any other
+plugin:
 
 ```kotlin
 // module-one/build.gradle.kts
 plugins {
-    id("buildlogic.java-conventions")
+    id("gradle-multimodule.java-conventions")
 }
 ```
 
@@ -78,11 +79,28 @@ couples every module to the root build and is incompatible with Gradle's
 [isolated projects](https://docs.gradle.org/current/userguide/isolated_projects.html) work, so
 convention plugins are the recommended way to share configuration as of Gradle 9.
 
+The build logic sits in a `build-logic` [composite build](https://docs.gradle.org/current/userguide/composite_builds.html)
+rather than in `buildSrc/`, which is what the Gradle best practice
+[Favor `build-logic` Composite Builds for Build Logic](https://docs.gradle.org/current/userguide/best_practices_structuring_builds.html#favor_composite_builds)
+recommends. The root `settings.gradle.kts` wires it in through `pluginManagement`:
+
+```kotlin
+// settings.gradle.kts
+pluginManagement {
+    includeBuild("build-logic")
+}
+```
+
+Because the modules apply the convention plugin by id, the included build must be declared inside
+`pluginManagement {}` so Gradle can resolve the precompiled script plugin as a plugin; a bare
+top-level `includeBuild("build-logic")` only substitutes dependencies and would not make the
+plugin available to the `plugins {}` block.
+
 ## Dependency versions and the configuration cache
 
 Dependency versions live in the
 [version catalog](https://docs.gradle.org/current/userguide/version_catalogs.html) at
-`gradle/libs.versions.toml`, and `buildSrc/settings.gradle.kts` reuses that same file so the
+`gradle/libs.versions.toml`, and `build-logic/settings.gradle.kts` reuses that same file so the
 convention plugin resolves versions from one place. Precompiled script plugins do not get the
 type-safe `libs.` accessors that ordinary build scripts do, so the convention plugin reads the
 catalog through its extension instead.
@@ -105,3 +123,10 @@ aggregated report, that takes an extra Gradle task and a little more configurati
 [SonarScanner for Gradle - Multi-Module Code Coverage](../gradle-multimodule-coverage). For other
 forms of Gradle code coverage, see
 [test coverage](https://docs.sonarsource.com/sonarqube-server/latest/analyzing-source-code/test-coverage/java-test-coverage/).
+
+## Gradle best practices
+
+This example follows current Gradle conventions (Kotlin DSL, a convention plugin in a `build-logic`
+composite build, a version catalog, and the configuration cache). For guidance on writing idiomatic, modern Gradle
+builds, see Gradle's official [best-practices agent skill](https://github.com/gradle/gradle-skills)
+and the announcement [Agent Skills for Gradle Best Practices and Wrapper Upgrades](https://blog.gradle.org/introducing-gradle-skills).

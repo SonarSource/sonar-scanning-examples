@@ -31,3 +31,7 @@ To get the project [test coverage](https://docs.sonarsource.com/sonarqube-server
   ```text
   .\gradlew.bat build jacocoTestReport -D'sonar.host.url=<your-url>' -Dsonar.login=<your-token> sonar
   ```
+
+## Gradle best practices
+
+For guidance on writing idiomatic, modern Gradle builds, see Gradle's official [best-practices agent skill](https://github.com/gradle/gradle-skills) and the announcement [Agent Skills for Gradle Best Practices and Wrapper Upgrades](https://blog.gradle.org/introducing-gradle-skills).

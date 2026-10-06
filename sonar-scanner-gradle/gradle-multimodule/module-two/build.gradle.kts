@@ -1,5 +1,5 @@
 plugins {
-    id("buildlogic.java-conventions")
+    id("gradle-multimodule.java-conventions")
 }
 
 dependencies {

@@ -37,7 +37,8 @@ class BranchCoverageExamples {
     
     /// Nested ternary = more branches
     func nestedTernary(a: Bool, b: Bool) -> String {
-        return a ? (b ? "both" : "onlyA") : "neither"  // 4 branches on this line
+        guard a else { return "neither" }
+        return b ? "both" : "onlyA"  // 4 branches on this line
     }
     
     // MARK: - Optional Chaining

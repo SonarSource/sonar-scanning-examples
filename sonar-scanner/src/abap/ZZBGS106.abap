@@ -46,9 +46,10 @@ PARAMETERS:     PATH(60) TYPE C DEFAULT 'C:\SAP\'.
 *----------------------------------------------------------------------*
 * Work Variables and internal tables                                   *
 *----------------------------------------------------------------------*
-DATA: BEGIN OF TABSOURCE OCCURS 10
+DATA: BEGIN OF WA_TABSOURCE
        ,SOURCE(72) TYPE C
-     ,END OF TABSOURCE.
+     ,END OF WA_TABSOURCE.
+DATA: TABSOURCE LIKE TABLE OF WA_TABSOURCE.
 
 DATA: BEGIN OF TABTEXT OCCURS 50
        ,TAB LIKE TEXTPOOL
@@ -99,26 +100,36 @@ START-OF-SELECTION.
     <P> = '\'.
   ENDIF.
 
-  SELECT * FROM TRDIR INTO TABLE TABRDIR WHERE NAME IN REPO.
+  SELECT NAME FROM TRDIR INTO TABLE TABRDIR WHERE NAME IN REPO.
   DESCRIBE TABLE TABRDIR LINES RDIRROWS.
   CHECK RDIRROWS > 0.
 
 * For every selected program:
   LOOP AT TABRDIR.
     MOVE TABRDIR TO TRDIR.
-    PERFORM DOWNLOAD_SOURCE USING RC.
+    PERFORM DOWNLOAD_SOURCE CHANGING RC.
     CHECK RC = OK.
-    PERFORM DOWNLOAD_TEXTPOOL USING RC.
+    PERFORM DOWNLOAD_TEXTPOOL CHANGING RC.
   ENDLOOP.
 
 *----------------------------------------------------------------------*
 * FORM: Download_Sourcecode                                            *
 *----------------------------------------------------------------------*
-FORM DOWNLOAD_SOURCE USING RC.
+FORM DOWNLOAD_SOURCE CHANGING RC.
   RC = FAIL.
   CLEAR:   TABSOURCE, FILENAME.
   REFRESH: TABSOURCE.
-  READ REPORT TRDIR-NAME INTO TABSOURCE.
+
+  CALL FUNCTION 'RFC_READ_REPORT'
+       EXPORTING
+            PROGRAM   = TRDIR-NAME
+       TABLES
+            QTAB      = TABSOURCE
+       EXCEPTIONS
+            NOT_FOUND = 1
+            OTHERS    = 2.
+  CHECK SY-SUBRC = 0.
+
   DESCRIBE TABLE TABSOURCE LINES SOURCEROWS.
   CHECK SOURCEROWS > 0.
 
@@ -131,8 +142,8 @@ FORM DOWNLOAD_SOURCE USING RC.
             STRING = FILENAME                         "R. 2.2F
        EXCEPTIONS                                     "R. 2.2F
             TOO_SMALL = 01.                           "R. 2.2F
+  CHECK SY-SUBRC = 0.
 
-* CONCATENATE PATH TRDIR-NAME '.ABA' INTO FILENAME.   "R. 3.0D
   CONDENSE FILENAME NO-GAPS.
   PERFORM DOWNLOAD TABLES TABSOURCE USING FILENAME RC.
 
@@ -141,11 +152,23 @@ ENDFORM.
 *----------------------------------------------------------------------*
 * FORM: Download_Textpool                                              *
 *----------------------------------------------------------------------*
-FORM DOWNLOAD_TEXTPOOL USING RC.
+FORM DOWNLOAD_TEXTPOOL CHANGING RC.
   RC = FAIL.
   CLEAR:   TABTEXT, FILENAME.
   REFRESH: TABTEXT.
-  READ TEXTPOOL TRDIR-NAME INTO TABTEXT LANGUAGE SY-LANGU.
+
+  CALL FUNCTION 'RPY_TEXTPOOL_READ'
+       EXPORTING
+            PROGRAM_NAME       = TRDIR-NAME
+            LANGUAGE           = SY-LANGU
+       TABLES
+            TEXTPOOL           = TABTEXT
+       EXCEPTIONS
+            CANCELLED          = 1
+            PERMISSION_FAILURE = 2
+            OTHERS             = 3.
+  CHECK SY-SUBRC = 0.
+
   DESCRIBE TABLE TABTEXT LINES SOURCEROWS.
   CHECK SOURCEROWS > 0.
 
@@ -158,8 +181,8 @@ FORM DOWNLOAD_TEXTPOOL USING RC.
             STRING = FILENAME                         "R. 2.2F
        EXCEPTIONS                                     "R. 2.2F
             TOO_SMALL = 01.                           "R. 2.2F
+  CHECK SY-SUBRC = 0.
 
-* CONCATENATE PATH TRDIR-NAME '.TXT' INTO FILENAME.   "R. 3.0x
   CONDENSE FILENAME NO-GAPS.
   PERFORM DOWNLOAD TABLES TABTEXT USING FILENAME RC.
 

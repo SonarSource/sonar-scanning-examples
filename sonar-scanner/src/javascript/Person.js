@@ -6,25 +6,31 @@ var Person = function(first, last, middle) {
 
 Person.prototype = {
 
-    whoAreYou : function() {
+    whoAreYou() {
         return this.first + (this.middle ? ' ' + this.middle: '') + ' ' + this.last;
     }
 
 };
 
-var a = NaN;
-
-if (a === NaN) {  // Noncompliant; always false
-  console.log("a is not a number");  // this is dead code
-}
-if (a !== NaN) { // Noncompliant; always true
-  console.log("a is not NaN"); // this statement is not necessarily true
-}
-
-for (var i = 0; i < strings.length; i--) {
-  console.log("dead code")
+function describeNumber(a) {
+  if (Number.isNaN(a)) {
+    console.log("a is not a number");
+  } else {
+    console.log("a is not NaN");
+  }
 }
 
-if (str == null && str.length == 0) {
-  console.log("String is empty");
+describeNumber(Number.NaN);
+
+var strings = ["foo", "bar"];
+for (var value of strings) {
+  console.log(value);
 }
+
+function describeString(str) {
+  if (str == null || str.length === 0) {
+    console.log("String is empty");
+  }
+}
+
+describeString(null);

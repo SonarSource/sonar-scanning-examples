@@ -22,7 +22,7 @@ REPORT ZBCMKZ17.
 INCLUDE: <ICON>.
 TABLES: ZBCMKZ1, TRDIR, TSTCT, TSTC.
 DATA: BEGIN OF BTAB OCCURS 50,         "Hilfstabelle fuer Textpool
-            CODE(82),
+            TAB LIKE TEXTPOOL,
       END OF BTAB.
 DATA: BEGIN OF T OCCURS 100,
      NUMMER LIKE ZBCMKZ1-NUMMER,
@@ -38,7 +38,7 @@ DATA BEGIN OF MESSTAB OCCURS 10.
         INCLUDE STRUCTURE BDCMSGCOLL.
 DATA END OF MESSTAB.
 
-DATA REPORT.
+DATA RPT_FLAG.
 AUTHORITY-CHECK OBJECT 'S_PROGRAM'
          ID 'P_GROUP' FIELD '*'
          ID 'P_ACTION' FIELD '*'.
@@ -61,37 +61,46 @@ SELECT * FROM ZBCMKZ1 WHERE BNAME EQ SY-UNAME.
   CLEAR T.
 ENDSELECT.
 SORT T BY NUMMER CODE.
-REPORT = ' '.
-PERFORM LIST USING REPORT.
+RPT_FLAG = ' '.
+PERFORM LIST CHANGING RPT_FLAG.
 SELECT * FROM ZBCMKZ1  WHERE BNAME EQ SY-UNAME.
   CHECK ZBCMKZ1-NAME+5(1) NE ' '.
-  READ TEXTPOOL ZBCMKZ1-NAME INTO BTAB LANGUAGE SY-LANGU.
+  CALL FUNCTION 'RPY_TEXTPOOL_READ'
+       EXPORTING
+            PROGRAM_NAME       = ZBCMKZ1-NAME
+            LANGUAGE           = SY-LANGU
+       TABLES
+            TEXTPOOL           = BTAB
+       EXCEPTIONS
+            CANCELLED          = 1
+            PERMISSION_FAILURE = 2
+            OTHERS             = 3.
   CHECK SY-SUBRC EQ 0.
   LOOP AT BTAB.
-    IF BTAB-CODE(1) EQ 'R'.
+    IF BTAB-TAB-ID EQ 'R'.
       EXIT.
     ENDIF.
   ENDLOOP.
-  MOVE BTAB-CODE+9(70) TO T-CODE.
+  MOVE BTAB-TAB-ENTRY TO T-CODE.
   MOVE-CORRESPONDING ZBCMKZ1 TO T.
   APPEND T.
   CLEAR T.
 ENDSELECT.
 SORT T BY NUMMER CODE.
-REPORT = 'X'.
-PERFORM LIST USING REPORT.
+RPT_FLAG = 'X'.
+PERFORM LIST CHANGING RPT_FLAG.
 
 AT LINE-SELECTION.
   CHECK NOT ( T-NAME IS INITIAL ).
   GET CURSOR FIELD FI.
     IF T-NAME+5(1) EQ ' '.
-      REPORT = ' '.
+      RPT_FLAG = ' '.
     ELSE.
-      REPORT = 'X'.
+      RPT_FLAG = 'X'.
   ENDIF.
   IF FI = 'ICON_EXECUTE_OBJECT'.
-    PERFORM PERO USING T-NAME REPORT.
-  ELSEIF REPORT EQ ' '.
+    PERFORM PERO CHANGING T-NAME RPT_FLAG.
+  ELSEIF RPT_FLAG EQ ' '.
 * SELECT SINGLE * FROM TSTC WHERE TCODE EQ ZBCMKZ1-NAME.
 * IF T+5(1) EQ ' '.
     CALL TRANSACTION T-NAME.
@@ -104,9 +113,9 @@ AT LINE-SELECTION.
 *---------------------------------------------------------------------*
 *       ........                                                      *
 *---------------------------------------------------------------------*
-FORM LIST USING REPORT.
+FORM LIST CHANGING RPT_FLAG.
   LOOP AT T.
-    IF REPORT = ' '.
+    IF RPT_FLAG = ' '.
       WRITE: /5 ICON_EXECUTE_OBJECT AS ICON, T-NAME UNDER 'Name',
                  T-CODE UNDER 'Text'.
     ELSE.
@@ -128,8 +137,8 @@ ENDFORM.
 *---------------------------------------------------------------------*
 *  -->  T-NAME                                                        *
 *---------------------------------------------------------------------*
-FORM PERO USING T-NAME REPORT.
-  CHECK REPORT EQ ' '.
+FORM PERO CHANGING T-NAME RPT_FLAG.
+  CHECK RPT_FLAG EQ ' '.
   MOVE T-NAME TO T-NAME+2(4).
   MOVE '/o' TO T-NAME+0(2).
   BDCDATA-PROGRAM  = 'SAPMS01J'.

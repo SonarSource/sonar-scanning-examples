@@ -120,10 +120,10 @@ def handle_question(query, choice, possibilities, asked):
     # Various other things required by the function are set
     # as default arguments, so they're accessible inside the
     # scope of the anonymous function.
-    possibilities=filter(lambda letter, letter_stats=letter_stats,
+    possibilities=''.join(filter(lambda letter, letter_stats=letter_stats,
                                      field=field, result=result:
                                      letter_stats[letter][field]==result,
-                                     possibilities)
+                                     possibilities))
     new_length=len(possibilities)
     prefix=''
     if field in asked:

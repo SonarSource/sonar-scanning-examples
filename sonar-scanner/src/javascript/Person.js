@@ -12,21 +12,25 @@ Person.prototype = {
 
 };
 
-var a = Number.NaN;
+function describeNumber(a) {
+  if (Number.isNaN(a)) {
+    console.log("a is not a number");
+  } else {
+    console.log("a is not NaN");
+  }
+}
 
-if (Number.isNaN(a)) {
-  console.log("a is not a number");
-}
-if (!Number.isNaN(a)) {
-  console.log("a is not NaN");
-}
+describeNumber(Number.NaN);
 
 var strings = ["foo", "bar"];
 for (var value of strings) {
-  console.log("dead code")
+  console.log(value);
 }
 
-var str = null;
-if (str == null || str?.length === 0) {
-  console.log("String is empty");
+function describeString(str) {
+  if (str == null || str.length === 0) {
+    console.log("String is empty");
+  }
 }
+
+describeString(null);

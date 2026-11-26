@@ -99,7 +99,7 @@ AT LINE-SELECTION.
       RPT_FLAG = 'X'.
   ENDIF.
   IF FI = 'ICON_EXECUTE_OBJECT'.
-    PERFORM PERO USING T-NAME RPT_FLAG.
+    PERFORM PERO CHANGING T-NAME RPT_FLAG.
   ELSEIF RPT_FLAG EQ ' '.
 * SELECT SINGLE * FROM TSTC WHERE TCODE EQ ZBCMKZ1-NAME.
 * IF T+5(1) EQ ' '.
@@ -137,7 +137,7 @@ ENDFORM.
 *---------------------------------------------------------------------*
 *  -->  T-NAME                                                        *
 *---------------------------------------------------------------------*
-FORM PERO USING T-NAME RPT_FLAG.
+FORM PERO CHANGING T-NAME RPT_FLAG.
   CHECK RPT_FLAG EQ ' '.
   MOVE T-NAME TO T-NAME+2(4).
   MOVE '/o' TO T-NAME+0(2).

@@ -30,8 +30,7 @@ public class Milestone1_Task_Trigger_Utility {
 
     private static final Schema.SObjectType entitySubscriptionType = Milestone1_Schema_Helper.getGlobalDescribe().get('entitysubscription');
     public static final string SUBSCRIPTION_LIMIT_EXCEEDED = system.label.Milestone1_MaximumPer;
-
-    public class SuccessorLimitException extends Exception {}
+    public static final String SUCCESSOR_LIMIT_EXCEEDED = System.Label.Milestone1_Too_Many_Successors;
 
     public static void handleTaskAfterTrigger(List<Milestone1_Task__c> recs, List<Milestone1_Task__c> oldRecs) {
         //Place all the RecIds into a List for SOQL in Clause on Subscription Query
@@ -120,16 +119,42 @@ public class Milestone1_Task_Trigger_Utility {
     */
 
     public static void checkSuccessorDependencies(Map<Id, Milestone1_Task__c> oldMap, Map<Id, Milestone1_Task__c> newMap) {
-        Map<Id, Set<Milestone1_Task__c>> successorMap = buildSuccessorMap(newMap);
+        Set<Id> shiftedIds = collectShiftedPredecessors(oldMap, newMap);
+        if(shiftedIds.isEmpty()) {
+            return;
+        }
+        Map<Id, Set<Milestone1_Task__c>> successorMap = buildSuccessorMap(shiftedIds, newMap);
+        if(successorMap == null) {
+            return;
+        }
         List<Milestone1_Task__c> successorsToUpdate = shiftSuccessorDates(oldMap, newMap, successorMap);
         updateSuccessors(successorsToUpdate);
     }
 
-    private static Map<Id, Set<Milestone1_Task__c>> buildSuccessorMap(Map<Id, Milestone1_Task__c> newMap) {
+    private static Set<Id> collectShiftedPredecessors(Map<Id, Milestone1_Task__c> oldMap, Map<Id, Milestone1_Task__c> newMap) {
+        Set<Id> shiftedIds = new Set<Id>();
+        for(Id recId : newMap.keySet()) {
+            Milestone1_Task__c oldRec = oldMap.get(recId);
+            Milestone1_Task__c newRec = newMap.get(recId);
+            if(oldRec.Due_Date__c == null || newRec.Due_Date__c == null) {
+                continue;
+            }
+            if(oldRec.Due_Date__c == newRec.Due_Date__c) {
+                continue;
+            }
+            shiftedIds.add(recId);
+        }
+        return shiftedIds;
+    }
+
+    private static Map<Id, Set<Milestone1_Task__c>> buildSuccessorMap(Set<Id> shiftedIds, Map<Id, Milestone1_Task__c> newMap) {
         Map<Id, Set<Milestone1_Task__c>> successorMap = new Map<Id, Set<Milestone1_Task__c>>();
-        List<Milestone1_Task__c> successors = [SELECT Id, Start_Date__c, Due_Date__c, Predecessor_Task__c FROM Milestone1_Task__c WHERE Predecessor_Task__c IN :newMap.keySet() AND Id NOT IN :newMap.keySet() LIMIT 10001];
+        List<Milestone1_Task__c> successors = [SELECT Id, Start_Date__c, Due_Date__c, Predecessor_Task__c FROM Milestone1_Task__c WHERE Predecessor_Task__c IN :shiftedIds AND Id NOT IN :newMap.keySet() LIMIT 10001];
         if(successors.size() > 10000) {
-            throw new SuccessorLimitException('Too many successor tasks to reschedule in one transaction.');
+            for(Id pid : shiftedIds) {
+                newMap.get(pid).addError(SUCCESSOR_LIMIT_EXCEEDED);
+            }
+            return null;
         }
         for(Milestone1_Task__c successor : successors) {
             if(!successorMap.containsKey(successor.Predecessor_Task__c)) {

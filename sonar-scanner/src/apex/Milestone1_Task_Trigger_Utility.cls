@@ -30,7 +30,7 @@ public class Milestone1_Task_Trigger_Utility {
 
     private static final Schema.SObjectType entitySubscriptionType = Milestone1_Schema_Helper.getGlobalDescribe().get('entitysubscription');
     public static final string SUBSCRIPTION_LIMIT_EXCEEDED = system.label.Milestone1_MaximumPer;
-    public static final String SUCCESSOR_LIMIT_EXCEEDED = System.Label.Milestone1_Too_Many_Successors;
+    public static final String SUCCESSOR_LIMIT_EXCEEDED = 'Too many successor tasks to reschedule in a single transaction.';
 
     public static void handleTaskAfterTrigger(List<Milestone1_Task__c> recs, List<Milestone1_Task__c> oldRecs) {
         //Place all the RecIds into a List for SOQL in Clause on Subscription Query

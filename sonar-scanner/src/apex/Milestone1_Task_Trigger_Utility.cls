@@ -31,6 +31,8 @@ public class Milestone1_Task_Trigger_Utility {
     private static final Schema.SObjectType entitySubscriptionType = Milestone1_Schema_Helper.getGlobalDescribe().get('entitysubscription');
     public static final string SUBSCRIPTION_LIMIT_EXCEEDED = system.label.Milestone1_MaximumPer;
 
+    public class SuccessorLimitException extends Exception {}
+
     public static void handleTaskAfterTrigger(List<Milestone1_Task__c> recs, List<Milestone1_Task__c> oldRecs) {
         //Place all the RecIds into a List for SOQL in Clause on Subscription Query
         List<String> recIds = new List<String>();
@@ -57,8 +59,8 @@ public class Milestone1_Task_Trigger_Utility {
             processChatterUnfollow(rec, oldRec, userSubscriptionMap, subscriptionsDeleteList);
             i++;
         }
-        //Perform Inserts and Deletes of Subscriptions
-        performSubscriptionUpdates(recs);
+        // Subscription inserts/deletes (subscriptionsAddList / subscriptionsDeleteList) are intentionally disabled
+        // pending a secure replacement for the SObject container.
     }
 
     private static List<sObject> retrieveExistingSubscriptions(List<String> recIds) {
@@ -112,18 +114,6 @@ public class Milestone1_Task_Trigger_Utility {
         }
     }
 
-    private static void performSubscriptionUpdates(List<Milestone1_Task__c> recs) {
-        try{
-            // Subscription inserts/deletes are intentionally disabled pending a secure replacement for the SObject container.
-        }
-        catch(DmlException e){
-            recs[0].addError(e.getMessage());
-        }
-        catch(Exception e){
-            recs[0].addError(e.getMessage());
-        }
-    }
-
     /*
     handles successor dependencies.
     looks at changes to predecessor task due date and adjusts successor tasks start and due date by the same number of days.
@@ -137,7 +127,11 @@ public class Milestone1_Task_Trigger_Utility {
 
     private static Map<Id, Set<Milestone1_Task__c>> buildSuccessorMap(Map<Id, Milestone1_Task__c> newMap) {
         Map<Id, Set<Milestone1_Task__c>> successorMap = new Map<Id, Set<Milestone1_Task__c>>();
-        for(Milestone1_Task__c successor: [SELECT Id, Start_Date__c, Due_Date__c, Predecessor_Task__c FROM Milestone1_Task__c WHERE Predecessor_Task__c IN :newMap.keySet() AND Id NOT IN :newMap.keySet() LIMIT 10000]) {
+        List<Milestone1_Task__c> successors = [SELECT Id, Start_Date__c, Due_Date__c, Predecessor_Task__c FROM Milestone1_Task__c WHERE Predecessor_Task__c IN :newMap.keySet() AND Id NOT IN :newMap.keySet() LIMIT 10001];
+        if(successors.size() > 10000) {
+            throw new SuccessorLimitException('Too many successor tasks to reschedule in one transaction.');
+        }
+        for(Milestone1_Task__c successor : successors) {
             if(!successorMap.containsKey(successor.Predecessor_Task__c)) {
                 successorMap.put(successor.Predecessor_Task__c, new Set<Milestone1_Task__c>());
             }
